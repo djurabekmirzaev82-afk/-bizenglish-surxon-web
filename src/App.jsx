@@ -400,11 +400,102 @@ function WritingModule({ token, onBack, onXpChange }) {
   );
 }
 
+function useRecorder(token, onTranscribed) {
+  const [recording, setRecording] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [recError, setRecError] = useState("");
+  const mediaRef = { current: null };
+  const chunksRef = { current: [] };
+
+  async function start() {
+    setRecError("");
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mimeType = MediaRecorder.isTypeSupported("audio/ogg;codecs=opus")
+        ? "audio/ogg;codecs=opus"
+        : "audio/webm";
+      const recorder = new MediaRecorder(stream, { mimeType });
+      chunksRef.current = [];
+      recorder.ondataavailable = (e) => chunksRef.current.push(e.data);
+      recorder.onstop = async () => {
+        stream.getTracks().forEach((t) => t.stop());
+        setBusy(true);
+        try {
+          const blob = new Blob(chunksRef.current, { type: mimeType });
+          const base64 = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(",")[1]);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+          const data = await api("/speaking/transcribe", {
+            token,
+            method: "POST",
+            body: { audioBase64: base64, mimeType },
+          });
+          onTranscribed(data.transcript, data.pronunciationNote);
+        } catch (e) {
+          setRecError(e.message);
+        } finally {
+          setBusy(false);
+        }
+      };
+      recorder.start();
+      mediaRef.current = recorder;
+      window.__activeRecorder = recorder;
+      setRecording(true);
+    } catch (e) {
+      setRecError("Mikrofonga ruxsat berilmadi yoki topilmadi.");
+    }
+  }
+
+  function stop() {
+    if (window.__activeRecorder) {
+      window.__activeRecorder.stop();
+      window.__activeRecorder = null;
+    }
+    setRecording(false);
+  }
+
+  return { recording, busy, recError, start, stop };
+}
+
+function MicButton({ token, onTranscribed }) {
+  const { recording, busy, recError, start, stop } = useRecorder(token, onTranscribed);
+  return (
+    <div style={{ marginBottom: 12 }}>
+      <button
+        type="button"
+        onClick={recording ? stop : start}
+        disabled={busy}
+        style={{
+          padding: "8px 16px",
+          background: recording ? COLORS.red : COLORS.surface,
+          color: recording ? "#fff" : COLORS.primary,
+          border: `1px solid ${recording ? COLORS.red : COLORS.line}`,
+          borderRadius: 8,
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 600,
+          fontSize: 13,
+          cursor: busy ? "default" : "pointer",
+          opacity: busy ? 0.6 : 1,
+        }}
+      >
+        {busy ? "Tahlil qilinmoqda..." : recording ? "⏹ To'xtatish" : "🎤 Yozib olish"}
+      </button>
+      {recError && (
+        <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.red, marginTop: 6 }}>{recError}</div>
+      )}
+    </div>
+  );
+}
+
 function SpeakingModule({ token, onBack, onXpChange }) {
   const [topics, setTopics] = useState(null);
   const [topic, setTopic] = useState(null);
   const [stage, setStage] = useState("part1"); // part1 | part2 | part3
   const [answers, setAnswers] = useState({ part1: "", part2: "", part3: "" });
+  const [pronunciationNotes, setPronunciationNotes] = useState({});
   const [feedback, setFeedback] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -420,10 +511,16 @@ function SpeakingModule({ token, onBack, onXpChange }) {
       setTopic(full);
       setStage("part1");
       setAnswers({ part1: "", part2: "", part3: "" });
+      setPronunciationNotes({});
       setFeedback(null);
     } catch (e) {
       setError(e.message);
     }
+  }
+
+  function handleTranscribed(transcript, note) {
+    setAnswers((a) => ({ ...a, [stage]: (a[stage] ? a[stage] + " " : "") + transcript }));
+    if (note) setPronunciationNotes((n) => ({ ...n, [stage]: note }));
   }
 
   function next() {
@@ -435,7 +532,11 @@ function SpeakingModule({ token, onBack, onXpChange }) {
     setLoading(true);
     setError("");
     try {
-      const data = await api("/speaking/submit", { token, method: "POST", body: { topicId: topic.id, answers } });
+      const data = await api("/speaking/submit", {
+        token,
+        method: "POST",
+        body: { topicId: topic.id, answers, pronunciationNotes },
+      });
       setFeedback(data.feedback);
       onXpChange();
     } catch (e) {
@@ -496,11 +597,12 @@ function SpeakingModule({ token, onBack, onXpChange }) {
             </div>
           )}
 
+          <MicButton token={token} onTranscribed={handleTranscribed} />
           <textarea
             value={answers[stage]}
             onChange={(e) => setAnswers({ ...answers, [stage]: e.target.value })}
             rows={6}
-            placeholder="Javobingizni shu yerga yozing (mikrofon yozib olish keyingi bosqichda qo'shiladi)..."
+            placeholder="Mikrofonni bosib gapiring, yoki shu yerga to'g'ridan-to'g'ri yozing..."
             style={{ width: "100%", boxSizing: "border-box", padding: 12, borderRadius: 10, border: `1px solid ${COLORS.line}`, fontFamily: "Inter, sans-serif", fontSize: 14, marginBottom: 12 }}
           />
 
