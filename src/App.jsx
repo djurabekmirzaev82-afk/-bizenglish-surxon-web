@@ -1,23 +1,38 @@
 import { useState, useEffect, useCallback } from "react";
+import {
+  LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+} from "recharts";
 
 const FONTS = `
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
 `;
 
 const API_BASE = "https://business-english-surxon.onrender.com/api";
 
 const COLORS = {
-  bg: "#EEF2ED",
+  bg: "#F4F6FB",
   surface: "#FFFFFF",
-  primary: "#123832",
-  primaryDark: "#0B241F",
-  amber: "#D6A24A",
-  amberDark: "#8A6522",
+  primary: "#1E2A5E",
+  primaryDark: "#141C42",
+  amber: "#F5A623",
+  amberDark: "#9C6B0A",
   clay: "#8B6F47",
-  text: "#1A1A18",
-  textSoft: "#5B5D57",
-  line: "#DCE1D8",
-  red: "#B3261E",
+  text: "#12172B",
+  textSoft: "#5B6178",
+  line: "#E3E7F2",
+  red: "#E0483E",
+  green: "#0FA36B",
+  greenBg: "#E4F7EE",
+};
+
+// Har bir modulga o'z rangi — bo'limlarni bir-biridan vizual ravishda ajratib turadi
+const MODULE_COLORS = {
+  speaking: { accent: "#E0483E", bg: "#FCEAE8", dark: "#A8332B" },
+  writing: { accent: "#3B5BDB", bg: "#EAEDFC", dark: "#28409E" },
+  reading: { accent: "#0FA36B", bg: "#E4F7EE", dark: "#0B7850" },
+  listening: { accent: "#8B5CF6", bg: "#F1EBFE", dark: "#6633C4" },
+  business: { accent: "#F5A623", bg: "#FDF2DF", dark: "#9C6B0A" },
 };
 
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
@@ -30,15 +45,28 @@ const MODULES = [
   { id: "business", icon: "💼", name: "Business English", desc: "Ish mavzulari: muzokaralar, taqdimotlar, email", live: true },
 ];
 
-async function api(path, { token, method = "GET", body } = {}) {
-  const res = await fetch(`${API_BASE}${path}`, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
+async function api(path, { token, method = "GET", body, timeoutMs = 55000 } = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  let res;
+  try {
+    res = await fetch(`${API_BASE}${path}`, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: body ? JSON.stringify(body) : undefined,
+      signal: controller.signal,
+    });
+  } catch (err) {
+    if (err.name === "AbortError") {
+      throw new Error("Server javob bermadi (ehtimol uyg'onmoqda). Yana bir bor urinib ko'ring.");
+    }
+    throw new Error("Tarmoq xatoligi. Internetni tekshirib, qayta urinib ko'ring.");
+  } finally {
+    clearTimeout(timer);
+  }
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || "Server xatoligi.");
   return data;
@@ -50,7 +78,7 @@ function RiverPath({ current }) {
   const pathD = `M${pts.map((p) => p.join(",")).join(" L")}`;
   return (
     <svg viewBox="0 0 640 200" style={{ width: "100%", height: "auto", display: "block" }}>
-      <path d={pathD} fill="none" stroke={COLORS.line} strokeWidth="4" strokeLinecap="round" />
+      <path d={pathD} fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="4" strokeLinecap="round" />
       <path
         d={pathD}
         fill="none"
@@ -66,15 +94,15 @@ function RiverPath({ current }) {
             cx={x}
             cy={y}
             r={i === idx ? 16 : 12}
-            fill={i <= idx ? COLORS.amber : COLORS.surface}
-            stroke={i <= idx ? COLORS.amberDark : COLORS.line}
+            fill={i <= idx ? COLORS.amber : COLORS.primaryDark}
+            stroke={i <= idx ? "#FFFFFF" : "rgba(255,255,255,0.3)"}
             strokeWidth="2"
           />
           <text
             x={x}
             y={y + 4}
             textAnchor="middle"
-            style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 600, fill: i <= idx ? COLORS.primaryDark : COLORS.textSoft }}
+            style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, fill: i <= idx ? COLORS.primaryDark : "rgba(255,255,255,0.55)" }}
           >
             {LEVELS[i]}
           </text>
@@ -85,10 +113,14 @@ function RiverPath({ current }) {
 }
 
 function Badge({ children, tone = "amber" }) {
-  const bg = tone === "amber" ? "#F7E9CE" : "#E1F5EE";
-  const fg = tone === "amber" ? COLORS.amberDark : COLORS.primary;
+  const map = {
+    amber: { bg: "#FDF2DF", fg: COLORS.amberDark },
+    live: { bg: COLORS.greenBg, fg: "#0B7850" },
+    soon: { bg: "#EEF0F6", fg: "#6B7189" },
+  };
+  const { bg, fg } = map[tone] || map.amber;
   return (
-    <span style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600, color: fg, background: bg, borderRadius: 999, padding: "3px 10px" }}>
+    <span style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: 0.2, color: fg, background: bg, borderRadius: 999, padding: "4px 10px" }}>
       {children}
     </span>
   );
@@ -105,7 +137,7 @@ function Field({ label, ...props }) {
           boxSizing: "border-box",
           padding: "10px 12px",
           borderRadius: 8,
-          border: `1px solid ${COLORS.line}`,
+          border: `1.5px solid ${COLORS.line}`,
           fontFamily: "Inter, sans-serif",
           fontSize: 14,
         }}
@@ -138,14 +170,19 @@ function AuthScreen({ mode, setMode, onAuth }) {
   }
 
   return (
-    <div style={{ maxWidth: 360, margin: "60px auto", padding: "0 24px" }}>
-      <div style={{ fontFamily: "Fraunces, serif", fontSize: 24, fontWeight: 600, color: COLORS.text, marginBottom: 4, textAlign: "center" }}>
+    <div style={{ maxWidth: 380, margin: "60px auto", padding: "0 24px" }}>
+      <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 18 }}>
+        {["#E0483E", "#3B5BDB", "#0FA36B", "#8B5CF6", "#F5A623"].map((c) => (
+          <div key={c} style={{ width: 22, height: 6, borderRadius: 3, background: c }} />
+        ))}
+      </div>
+      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 26, fontWeight: 700, color: COLORS.text, marginBottom: 4, textAlign: "center" }}>
         BizEnglish Surxon
       </div>
       <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft, marginBottom: 24, textAlign: "center" }}>
         {mode === "login" ? "Hisobingizga kiring" : "Yangi hisob yarating"}
       </div>
-      <form onSubmit={submit} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 14, padding: 20 }}>
+      <form onSubmit={submit} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 22, boxShadow: "0 8px 24px rgba(30,42,94,0.06)" }}>
         {mode === "register" && (
           <Field label="To'liq ism" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
         )}
@@ -159,14 +196,14 @@ function AuthScreen({ mode, setMode, onAuth }) {
           disabled={loading}
           style={{
             width: "100%",
-            padding: "11px 0",
+            padding: "12px 0",
             background: COLORS.primary,
             color: "#fff",
             border: "none",
-            borderRadius: 8,
+            borderRadius: 10,
             fontFamily: "Inter, sans-serif",
             fontSize: 14,
-            fontWeight: 600,
+            fontWeight: 700,
             cursor: loading ? "default" : "pointer",
             opacity: loading ? 0.7 : 1,
           }}
@@ -178,7 +215,7 @@ function AuthScreen({ mode, setMode, onAuth }) {
         {mode === "login" ? "Hisobingiz yo'qmi?" : "Hisobingiz bormi?"}{" "}
         <button
           onClick={() => setMode(mode === "login" ? "register" : "login")}
-          style={{ background: "none", border: "none", color: COLORS.primary, fontWeight: 600, cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 13 }}
+          style={{ background: "none", border: "none", color: COLORS.primary, fontWeight: 700, cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 13 }}
         >
           {mode === "login" ? "Ro'yxatdan o'ting" : "Kiring"}
         </button>
@@ -189,20 +226,24 @@ function AuthScreen({ mode, setMode, onAuth }) {
 
 function TopBar({ user, xp, streak, onLogout }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 24px", borderBottom: `1px solid ${COLORS.line}`, background: COLORS.surface }}>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 24px", borderBottom: `1px solid ${COLORS.line}`, background: COLORS.surface }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <div style={{ width: 36, height: 36, borderRadius: 8, background: COLORS.primary, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Fraunces, serif", color: COLORS.amber, fontWeight: 600, fontSize: 18 }}>
+        <div style={{ width: 36, height: 36, borderRadius: 10, background: COLORS.primary, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Space Grotesk, sans-serif", color: COLORS.amber, fontWeight: 700, fontSize: 18 }}>
           B
         </div>
         <div>
-          <div style={{ fontFamily: "Fraunces, serif", fontSize: 16, fontWeight: 600, color: COLORS.text, lineHeight: 1.1 }}>BizEnglish Surxon</div>
+          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 16, fontWeight: 700, color: COLORS.text, lineHeight: 1.1 }}>BizEnglish Surxon</div>
           <div style={{ fontFamily: "Inter, sans-serif", fontSize: 11, color: COLORS.textSoft }}>{user?.full_name || user?.email}</div>
         </div>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <span style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: 13, color: COLORS.amberDark }}>🔥 {streak?.current_streak ?? 0}</span>
-        <span style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: 13, color: COLORS.primaryDark }}>{xp} XP</span>
-        <button onClick={onLogout} style={{ background: "none", border: "none", color: COLORS.textSoft, fontFamily: "Inter, sans-serif", fontSize: 12, cursor: "pointer" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <span style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: "IBM Plex Mono, monospace", fontSize: 13, fontWeight: 600, color: "#9C6B0A", background: "#FDF2DF", borderRadius: 999, padding: "5px 12px" }}>
+          🔥 {streak?.current_streak ?? 0}
+        </span>
+        <span style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: "IBM Plex Mono, monospace", fontSize: 13, fontWeight: 600, color: COLORS.primary, background: "#EAEDFC", borderRadius: 999, padding: "5px 12px" }}>
+          ⭐ {xp} XP
+        </span>
+        <button onClick={onLogout} style={{ background: "none", border: "none", color: COLORS.textSoft, fontFamily: "Inter, sans-serif", fontSize: 12, cursor: "pointer", marginLeft: 4 }}>
           Chiqish
         </button>
       </div>
@@ -210,32 +251,67 @@ function TopBar({ user, xp, streak, onLogout }) {
   );
 }
 
+function StatTile({ label, value, bg, fg, mono }) {
+  return (
+    <div style={{ background: bg, borderRadius: 14, padding: "16px 18px", flex: 1, minWidth: 130 }}>
+      <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600, color: fg, opacity: 0.85, marginBottom: 6 }}>{label}</div>
+      <div style={{ fontFamily: mono ? "IBM Plex Mono, monospace" : "Space Grotesk, sans-serif", fontSize: 26, fontWeight: 700, color: fg }}>{value}</div>
+    </div>
+  );
+}
+
 function Dashboard({ onOpen, xp, streak, level }) {
   return (
-    <div style={{ padding: "28px 24px 40px", maxWidth: 720, margin: "0 auto" }}>
-      <div style={{ background: COLORS.primary, borderRadius: 16, padding: "24px 28px", marginBottom: 24 }}>
-        <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "#BFD6CE", marginBottom: 4 }}>Sizning darajangiz</div>
-        <div style={{ fontFamily: "Fraunces, serif", fontSize: 30, fontWeight: 600, color: "#FFFFFF", marginBottom: 12 }}>
-          {level || "Hali aniqlanmagan"}
+    <div style={{ padding: "24px 24px 40px", maxWidth: 760, margin: "0 auto" }}>
+      <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
+        <StatTile label="DARAJA" value={level || "A1"} bg="#EAEDFC" fg={COLORS.primary} />
+        <StatTile label="XP BALL" value={xp} bg="#FDF2DF" fg={COLORS.amberDark} mono />
+        <StatTile label="KUNLIK SERIYA" value={`🔥 ${streak?.current_streak ?? 0}`} bg="#FCEAE8" fg="#A8332B" mono />
+      </div>
+
+      <div style={{ background: COLORS.primary, borderRadius: 16, padding: "20px 24px", marginBottom: 24 }}>
+        <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600, color: "#AEB8E0", marginBottom: 10, letterSpacing: 0.3 }}>
+          CEFR YO'LI
         </div>
         <RiverPath current={level || "A1"} />
       </div>
 
+      <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 700, color: COLORS.textSoft, letterSpacing: 0.5, marginBottom: 10 }}>
+        MODULLAR
+      </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14 }}>
-        {MODULES.map((m) => (
-          <button
-            key={m.id}
-            onClick={() => onOpen(m.id)}
-            style={{ textAlign: "left", background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 14, padding: "18px 18px", cursor: "pointer", display: "flex", flexDirection: "column", gap: 8 }}
-          >
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <span style={{ fontSize: 22 }}>{m.icon}</span>
-              <Badge tone={m.live ? "teal" : "amber"}>{m.live ? "Ishlaydi" : "Tez orada"}</Badge>
-            </div>
-            <div style={{ fontFamily: "Fraunces, serif", fontSize: 18, fontWeight: 600, color: COLORS.text }}>{m.name}</div>
-            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft, lineHeight: 1.4 }}>{m.desc}</div>
-          </button>
-        ))}
+        {MODULES.map((m) => {
+          const c = MODULE_COLORS[m.id];
+          return (
+            <button
+              key={m.id}
+              onClick={() => onOpen(m.id)}
+              style={{
+                textAlign: "left",
+                background: COLORS.surface,
+                border: `1px solid ${COLORS.line}`,
+                borderLeft: `4px solid ${c.accent}`,
+                borderRadius: 14,
+                padding: "16px 18px",
+                cursor: "pointer",
+                display: "flex",
+                flexDirection: "column",
+                gap: 8,
+                boxShadow: m.live ? "0 4px 14px rgba(20,25,50,0.05)" : "none",
+                opacity: m.live ? 1 : 0.75,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
+                  {m.icon}
+                </div>
+                <Badge tone={m.live ? "live" : "soon"}>{m.live ? "● Ishlaydi" : "Tez orada"}</Badge>
+              </div>
+              <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 17, fontWeight: 700, color: COLORS.text }}>{m.name}</div>
+              <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft, lineHeight: 1.4 }}>{m.desc}</div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -246,6 +322,18 @@ function BackButton({ onBack }) {
     <button onClick={onBack} style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.primary, background: "none", border: "none", cursor: "pointer", marginBottom: 16, padding: 0 }}>
       ← Bosh sahifa
     </button>
+  );
+}
+
+function ModuleHeader({ moduleId, icon, title }) {
+  const c = MODULE_COLORS[moduleId];
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 18 }}>
+      <div style={{ width: 40, height: 40, borderRadius: 10, background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
+        {icon}
+      </div>
+      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 22, fontWeight: 700, color: c.dark }}>{title}</div>
+    </div>
   );
 }
 
@@ -263,9 +351,7 @@ function BusinessModule({ token, onBack }) {
   return (
     <div style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
       <BackButton onBack={selected ? () => setSelected(null) : onBack} />
-      <div style={{ fontFamily: "Fraunces, serif", fontSize: 24, fontWeight: 600, color: COLORS.text, marginBottom: 16 }}>
-        💼 Business English
-      </div>
+      <ModuleHeader moduleId="business" icon="💼" title="Business English" />
       {error && <div style={{ color: COLORS.red, fontFamily: "Inter, sans-serif", fontSize: 14 }}>{error}</div>}
       {!modules && !error && (
         <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.textSoft }}>Yuklanmoqda...</div>
@@ -285,7 +371,7 @@ function BusinessModule({ token, onBack }) {
       )}
       {selected && (
         <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 14, padding: 20 }}>
-          <div style={{ fontFamily: "Fraunces, serif", fontSize: 18, fontWeight: 600, marginBottom: 12 }}>{selected.title}</div>
+          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 18, fontWeight: 600, marginBottom: 12 }}>{selected.title}</div>
           <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft, marginBottom: 6 }}>Lug'at:</div>
           <ul style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text, paddingLeft: 18, marginBottom: 14 }}>
             {selected.vocabulary?.map((v) => (
@@ -306,8 +392,73 @@ function BusinessModule({ token, onBack }) {
   );
 }
 
+const CHART_COLORS = [COLORS.primary, COLORS.amber, COLORS.clay, "#5B8C7E", "#B3261E"];
+
+function ChartVisual({ chart }) {
+  const data = chart.categories.map((cat, i) => {
+    const row = { name: cat };
+    chart.series.forEach((s) => { row[s.name] = s.data[i]; });
+    return row;
+  });
+  return (
+    <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, marginBottom: 14 }}>
+      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 15, fontWeight: 600, marginBottom: 4 }}>{chart.title}</div>
+      <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft, marginBottom: 10 }}>{chart.unit}</div>
+      <ResponsiveContainer width="100%" height={240}>
+        {chart.type === "line" ? (
+          <LineChart data={data}>
+            <CartesianGrid stroke={COLORS.line} />
+            <XAxis dataKey="name" tick={{ fontFamily: "Inter, sans-serif", fontSize: 11 }} />
+            <YAxis tick={{ fontFamily: "Inter, sans-serif", fontSize: 11 }} />
+            <Tooltip />
+            <Legend wrapperStyle={{ fontFamily: "Inter, sans-serif", fontSize: 12 }} />
+            {chart.series.map((s, i) => (
+              <Line key={s.name} type="monotone" dataKey={s.name} stroke={CHART_COLORS[i % CHART_COLORS.length]} strokeWidth={2} />
+            ))}
+          </LineChart>
+        ) : chart.type === "bar" ? (
+          <BarChart data={data}>
+            <CartesianGrid stroke={COLORS.line} />
+            <XAxis dataKey="name" tick={{ fontFamily: "Inter, sans-serif", fontSize: 11 }} />
+            <YAxis tick={{ fontFamily: "Inter, sans-serif", fontSize: 11 }} />
+            <Tooltip />
+            <Legend wrapperStyle={{ fontFamily: "Inter, sans-serif", fontSize: 12 }} />
+            {chart.series.map((s, i) => (
+              <Bar key={s.name} dataKey={s.name} fill={CHART_COLORS[i % CHART_COLORS.length]} />
+            ))}
+          </BarChart>
+        ) : (
+          <PieChart>
+            <Pie data={data} dataKey={chart.series[0].name} nameKey="name" outerRadius={90} label>
+              {data.map((_, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}
+            </Pie>
+            <Tooltip />
+            <Legend wrapperStyle={{ fontFamily: "Inter, sans-serif", fontSize: 12 }} />
+          </PieChart>
+        )}
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+function ProcessVisual({ steps }) {
+  return (
+    <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, marginBottom: 14, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8 }}>
+      {steps.map((s, i) => (
+        <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ background: COLORS.bg, border: `1px solid ${COLORS.line}`, borderRadius: 8, padding: "8px 12px", fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.text }}>
+            <b>{i + 1}.</b> {s}
+          </div>
+          {i < steps.length - 1 && <span style={{ color: COLORS.amberDark }}>→</span>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function WritingModule({ token, onBack, onXpChange }) {
   const [lessons, setLessons] = useState(null);
+  const [category, setCategory] = useState(null);
   const [selected, setSelected] = useState(null);
   const [text, setText] = useState("");
   const [feedback, setFeedback] = useState(null);
@@ -321,8 +472,23 @@ function WritingModule({ token, onBack, onXpChange }) {
   async function pickLesson(l) {
     setError("");
     setFeedback(null);
+    setText("");
+    setCategory(l);
     try {
       const full = await api(`/writing/lessons/${l.id}`, { token });
+      setSelected(full);
+    } catch (e) {
+      setError(e.message);
+    }
+  }
+
+  async function getAnotherTask() {
+    if (!category) return;
+    setError("");
+    setFeedback(null);
+    setText("");
+    try {
+      const full = await api(`/writing/lessons/${category.id}`, { token });
       setSelected(full);
     } catch (e) {
       setError(e.message);
@@ -333,7 +499,11 @@ function WritingModule({ token, onBack, onXpChange }) {
     setLoading(true);
     setError("");
     try {
-      const data = await api("/writing/check", { token, method: "POST", body: { lessonId: selected.id, text } });
+      const data = await api("/writing/check", {
+        token,
+        method: "POST",
+        body: { lessonId: selected.id, text, taskPrompt: selected.taskPrompt, chart: selected.chart, steps: selected.steps },
+      });
       setFeedback(data.feedback);
       onXpChange();
     } catch (e) {
@@ -345,8 +515,8 @@ function WritingModule({ token, onBack, onXpChange }) {
 
   return (
     <div style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
-      <BackButton onBack={selected ? () => { setSelected(null); setFeedback(null); setText(""); } : onBack} />
-      <div style={{ fontFamily: "Fraunces, serif", fontSize: 24, fontWeight: 600, color: COLORS.text, marginBottom: 16 }}>✍ Writing</div>
+      <BackButton onBack={selected ? () => { setSelected(null); setCategory(null); setFeedback(null); setText(""); } : onBack} />
+      <ModuleHeader moduleId="writing" icon="✍" title="Writing" />
       {error && <div style={{ color: COLORS.red, fontFamily: "Inter, sans-serif", fontSize: 14, marginBottom: 12 }}>{error}</div>}
 
       {!selected && lessons && (
@@ -371,6 +541,15 @@ function WritingModule({ token, onBack, onXpChange }) {
           <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text, marginBottom: 10, fontWeight: 600 }}>
             {selected.taskPrompt}
           </div>
+          {selected.chart && <ChartVisual chart={selected.chart} />}
+          {selected.steps && <ProcessVisual steps={selected.steps} />}
+          <button
+            type="button"
+            onClick={getAnotherTask}
+            style={{ background: "none", border: "none", color: COLORS.primary, fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600, cursor: "pointer", marginBottom: 10, padding: 0 }}
+          >
+            🔀 Boshqa vazifa
+          </button>
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -388,6 +567,11 @@ function WritingModule({ token, onBack, onXpChange }) {
           >
             {loading ? "AI tekshirmoqda..." : "Tekshirish uchun yuborish"}
           </button>
+          {loading && (
+            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft, marginTop: 8 }}>
+              Birinchi so'rov 30-50 soniya davom etishi mumkin (server uyg'onmoqda) — sahifani yopmang.
+            </div>
+          )}
         </div>
       )}
 
@@ -555,22 +739,41 @@ function SpeakingModule({ token, onBack, onXpChange }) {
   return (
     <div style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
       <BackButton onBack={topic ? () => { setTopic(null); setFeedback(null); } : onBack} />
-      <div style={{ fontFamily: "Fraunces, serif", fontSize: 24, fontWeight: 600, color: COLORS.text, marginBottom: 16 }}>
-        🗣 Speaking (Multilevel format)
-      </div>
+      <ModuleHeader moduleId="speaking" icon="🗣" title="Speaking (Multilevel format)" />
       {error && <div style={{ color: COLORS.red, fontFamily: "Inter, sans-serif", fontSize: 14, marginBottom: 12 }}>{error}</div>}
 
       {!topic && topics && (
-        <div style={{ display: "grid", gap: 10 }}>
-          {topics.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => pickTopic(t)}
-              style={{ textAlign: "left", background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 10, padding: "14px", cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text }}
-            >
-              {t.theme}
-            </button>
-          ))}
+        <div>
+          <button
+            type="button"
+            onClick={async () => {
+              setError("");
+              try {
+                const full = await api("/speaking/topics/random", { token });
+                setTopic(full);
+                setStage("part1");
+                setAnswers({ part1: "", part2: "", part3: "" });
+                setPronunciationNotes({});
+                setFeedback(null);
+              } catch (e) {
+                setError(e.message);
+              }
+            }}
+            style={{ width: "100%", textAlign: "center", background: COLORS.primary, color: "#fff", border: "none", borderRadius: 10, padding: "14px", cursor: "pointer", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 14, marginBottom: 14 }}
+          >
+            🔀 Tasodifiy mavzu bilan boshlash
+          </button>
+          <div style={{ display: "grid", gap: 10 }}>
+            {topics.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => pickTopic(t)}
+                style={{ textAlign: "left", background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 10, padding: "14px", cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text }}
+              >
+                {t.theme}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
@@ -578,7 +781,7 @@ function SpeakingModule({ token, onBack, onXpChange }) {
         <div>
           <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
             {["part1", "part2", "part3"].map((s) => (
-              <Badge key={s} tone={s === stage ? "teal" : "amber"}>{stageInfo[s].label}</Badge>
+              <Badge key={s} tone={s === stage ? "live" : "soon"}>{stageInfo[s].label}</Badge>
             ))}
           </div>
 
@@ -588,7 +791,7 @@ function SpeakingModule({ token, onBack, onXpChange }) {
             </ol>
           ) : (
             <div style={{ marginBottom: 14 }}>
-              <div style={{ fontFamily: "Fraunces, serif", fontSize: 16, fontWeight: 600, marginBottom: 8 }}>
+              <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 16, fontWeight: 600, marginBottom: 8 }}>
                 {topic.part2.cueCardTitle}
               </div>
               <ul style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text, paddingLeft: 20 }}>
@@ -623,6 +826,11 @@ function SpeakingModule({ token, onBack, onXpChange }) {
               {loading ? "AI baholamoqda..." : "Yakunlash va baholash"}
             </button>
           )}
+          {loading && (
+            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft, marginTop: 8 }}>
+              Birinchi so'rov 30-50 soniya davom etishi mumkin (server uyg'onmoqda) — sahifani yopmang.
+            </div>
+          )}
         </div>
       )}
 
@@ -640,7 +848,7 @@ function ComingSoonModule({ id, onBack }) {
   return (
     <div style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
       <BackButton onBack={onBack} />
-      <div style={{ fontFamily: "Fraunces, serif", fontSize: 24, fontWeight: 600, color: COLORS.text, marginBottom: 6 }}>
+      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 24, fontWeight: 600, color: COLORS.text, marginBottom: 6 }}>
         {m.icon} {m.name}
       </div>
       <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 14, padding: "40px 20px", textAlign: "center", fontFamily: "Inter, sans-serif", color: COLORS.textSoft, fontSize: 14 }}>
