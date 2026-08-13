@@ -317,6 +317,34 @@ function Dashboard({ onOpen, xp, streak, level }) {
   );
 }
 
+function ScoreCard({ feedback }) {
+  // AI javobidagi "BALL: ..." yoki "TAXMINIY BALL (Band): ..." qatorini ajratib,
+  // katta va yorqin ko'rinishda ko'rsatadi — o'quvchiga motivatsiya beradi.
+  const match = feedback.match(/^(BALL[^:]*|TAXMINIY BALL[^:]*):\s*(.+)$/m);
+  if (!match) return null;
+  const label = match[1].trim();
+  const value = match[2].trim();
+  return (
+    <div style={{ background: COLORS.primary, borderRadius: 14, padding: "18px 20px", marginBottom: 14, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div>
+        <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600, color: "#AEB8E0", letterSpacing: 0.3 }}>{label}</div>
+        <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 30, fontWeight: 700, color: "#FFFFFF" }}>{value}</div>
+      </div>
+      <div style={{ fontSize: 32 }}>🏆</div>
+    </div>
+  );
+}
+
+function FeedbackView({ feedback }) {
+  return (
+    <div>
+      <ScoreCard feedback={feedback} />
+      <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text, whiteSpace: "pre-wrap", lineHeight: 1.6 }}>
+        {feedback}
+      </div>
+    </div>
+  );
+}
 function BackButton({ onBack }) {
   return (
     <button onClick={onBack} style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.primary, background: "none", border: "none", cursor: "pointer", marginBottom: 16, padding: 0 }}>
@@ -575,11 +603,7 @@ function WritingModule({ token, onBack, onXpChange }) {
         </div>
       )}
 
-      {feedback && (
-        <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text, whiteSpace: "pre-wrap", lineHeight: 1.6 }}>
-          {feedback}
-        </div>
-      )}
+      {feedback && <FeedbackView feedback={feedback} />}
     </div>
   );
 }
@@ -834,11 +858,7 @@ function SpeakingModule({ token, onBack, onXpChange }) {
         </div>
       )}
 
-      {feedback && (
-        <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text, whiteSpace: "pre-wrap", lineHeight: 1.6 }}>
-          {feedback}
-        </div>
-      )}
+      {feedback && <FeedbackView feedback={feedback} />}
     </div>
   );
 }
