@@ -1,1 +1,218 @@
+.vs-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f8faff;
+}
 
+.vs-container h1 {
+  text-align: center;
+  color: #1a3c5e;
+  margin-bottom: 5px;
+  font-size: 2.5rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.vs-controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  padding: 12px 24px;
+  border: 2px solid #dce4ec;
+  border-radius: 30px;
+  width: 320px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.search-input:focus {
+  border-color: #2d8dcc;
+  outline: none;
+}
+
+.topic-filter {
+  padding: 12px 24px;
+  border: 2px solid #dce4ec;
+  border-radius: 30px;
+  font-size: 16px;
+  background: white;
+  min-width: 180px;
+  cursor: pointer;
+}
+
+.vs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 25px;
+}
+
+.vs-card {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-top: 5px solid #2d8dcc;
+}
+
+.vs-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.vs-card h2 {
+  color: #1a3c5e;
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #f0f5ff;
+  padding-bottom: 12px;
+}
+
+.vocab-section {
+  margin-bottom: 20px;
+}
+
+.vocab-section h3 {
+  color: #2d8dcc;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vocab-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vocab-section li {
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f5ff;
+  font-size: 0.95rem;
+}
+
+.collocation {
+  color: #1a3c5e;
+  font-weight: 600;
+}
+
+.meaning {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.speaking-section h3 {
+  color: #e67e22;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.question-btn {
+  background: #f0f7ff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.2s;
+  color: #1a3c5e;
+  width: 100%;
+  text-align: left;
+  font-weight: 500;
+}
+
+.question-btn:hover {
+  background: #e3efff;
+}
+
+.question-item {
+  margin-bottom: 10px;
+}
+
+.answer-box {
+  background: #fafff8;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 8px;
+  border-left: 4px solid #27ae60;
+}
+
+.answer-box p {
+  margin: 5px 0;
+  line-height: 1.6;
+}
+
+.useful-phrases {
+  margin-top: 10px;
+}
+
+.useful-phrases strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #27ae60;
+}
+
+.useful-phrases ul {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.useful-phrases li {
+  background: #e8f5e9;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #1a5e2a;
+}
+
+.vs-footer {
+  background: #1a3c5e;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  border-radius: 12px;
+}
+
+.vs-footer p {
+  margin: 4px 0;
+}
+
+/* Mobil telefonlar uchun */
+@media (max-width: 768px) {
+  .vs-grid {
+    grid-template-columns: 1fr;
+  }
+  .vs-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  .search-input,
+  .topic-filter {
+    width: 90%;
+  }
+  .vs-container h1 {
+    font-size: 1.8rem;
+  }
+}
