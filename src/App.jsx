@@ -3,7 +3,7 @@ import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
-import { VOCAB_TOPICS, VOCAB_WORDS } from "./vocabData";
+import { VOCAB_TOPICS, VOCAB_WORDS, IELTS_CONTENT } from "./vocabData";
 
 const FONTS = `
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
@@ -963,6 +963,116 @@ function VocabFlashcard({ word, flipped, onFlip }) {
   );
 }
 
+function renderBold(text) {
+  // "**so'z**" ko'rinishidagi qismlarni qalin qilib render qiladi.
+  const parts = text.split(/\*\*(.+?)\*\*/g);
+  return parts.map((part, i) =>
+    i % 2 === 1 ? (
+      <b key={i} style={{ color: MODULE_COLORS.vocabulary.dark }}>{part}</b>
+    ) : (
+      <span key={i}>{part}</span>
+    )
+  );
+}
+
+function IeltsPhraseGroup({ group }) {
+  return (
+    <div style={{ marginBottom: 22 }}>
+      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 14.5, color: COLORS.text, marginBottom: 10 }}>
+        {group.title}
+      </div>
+      <ol style={{ margin: 0, paddingLeft: 22, display: "flex", flexDirection: "column", gap: 8 }}>
+        {group.phrases.map((p, i) => (
+          <li key={i} style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.55, color: COLORS.text }}>
+            <b style={{ color: MODULE_COLORS.vocabulary.dark }}>{p.phrase}</b>
+            {" "}<span style={{ color: COLORS.textSoft }}>({p.translation})</span>
+            {" — "}<span style={{ fontStyle: "italic", color: COLORS.textSoft }}>{p.def}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function IeltsQA({ q, a }) {
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 13.5, color: COLORS.primary, marginBottom: 6 }}>
+        Examiner: {q}
+      </div>
+      <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.65, color: COLORS.text, fontStyle: "italic", paddingLeft: 14, borderLeft: `3px solid ${MODULE_COLORS.vocabulary.accent}` }}>
+        {renderBold(a)}
+      </div>
+    </div>
+  );
+}
+
+function IeltsContentView({ content }) {
+  if (!content) {
+    return (
+      <div style={{ textAlign: "center", padding: "40px 20px", color: COLORS.textSoft, fontFamily: "Inter, sans-serif", fontSize: 14 }}>
+        Bu mavzu uchun IELTS namunasi tayyorlanmoqda — tez orada qo'shiladi. 🛠️
+      </div>
+    );
+  }
+  return (
+    <div>
+      <div style={{ marginBottom: 26 }}>
+        <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 16, color: COLORS.text, marginBottom: 12 }}>
+          So'z birikmalari
+        </div>
+        {content.groups.map((g, i) => <IeltsPhraseGroup key={i} group={g} />)}
+      </div>
+
+      <div style={{ marginBottom: 26 }}>
+        <div style={{
+          fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13,
+          color: "#fff", background: MODULE_COLORS.vocabulary.dark, display: "inline-block",
+          padding: "4px 12px", borderRadius: 999, marginBottom: 12,
+        }}>
+          IELTS Speaking Part 1
+        </div>
+        {content.part1.map((qa, i) => <IeltsQA key={i} q={qa.q} a={qa.a} />)}
+      </div>
+
+      <div style={{ marginBottom: 26 }}>
+        <div style={{
+          fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13,
+          color: "#fff", background: MODULE_COLORS.vocabulary.dark, display: "inline-block",
+          padding: "4px 12px", borderRadius: 999, marginBottom: 12,
+        }}>
+          IELTS Speaking Part 2
+        </div>
+        <div style={{
+          background: MODULE_COLORS.vocabulary.bg, borderRadius: 12, padding: "14px 16px", marginBottom: 12,
+          fontFamily: "Inter, sans-serif", fontSize: 14,
+        }}>
+          <b style={{ color: MODULE_COLORS.vocabulary.dark }}>{content.part2.cue}</b>
+          <div style={{ color: COLORS.textSoft, marginTop: 6, fontSize: 13 }}>You should say:</div>
+          <ul style={{ margin: "4px 0 4px 18px", padding: 0, color: COLORS.textSoft, fontSize: 13 }}>
+            {content.part2.bullets.map((b, i) => <li key={i}>{b}</li>)}
+          </ul>
+          <div style={{ color: COLORS.textSoft, fontSize: 13 }}>{content.part2.closing}</div>
+        </div>
+        <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.7, color: COLORS.text, fontStyle: "italic", paddingLeft: 14, borderLeft: `3px solid ${MODULE_COLORS.vocabulary.accent}`, whiteSpace: "pre-line" }}>
+          {renderBold(content.part2.answer)}
+        </div>
+      </div>
+
+      <div>
+        <div style={{
+          fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13,
+          color: "#fff", background: MODULE_COLORS.vocabulary.dark, display: "inline-block",
+          padding: "4px 12px", borderRadius: 999, marginBottom: 12,
+        }}>
+          IELTS Speaking Part 3
+        </div>
+        {content.part3.map((qa, i) => <IeltsQA key={i} q={qa.q} a={qa.a} />)}
+      </div>
+    </div>
+  );
+}
+
 function VocabListView({ topicWords, progress, setProgress }) {
   const byLevel = LEVELS.map((lv) => ({ level: lv, words: topicWords.filter((w) => w.level === lv) })).filter((g) => g.words.length);
 
@@ -1044,7 +1154,7 @@ function VocabTopicPractice({ topic, progress, setProgress, onBack }) {
     <div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14, flexWrap: "wrap", gap: 10 }}>
         <div style={{ display: "flex", gap: 4, background: COLORS.bg, borderRadius: 10, padding: 4 }}>
-          {[{ id: "card", label: "🗂 Kartochka" }, { id: "list", label: "📖 Ro'yxat" }].map((v) => (
+          {[{ id: "card", label: "🗂 Kartochka" }, { id: "list", label: "📖 Ro'yxat" }, { id: "ielts", label: "📝 IELTS namuna" }].map((v) => (
             <button
               key={v.id}
               onClick={() => setView(v.id)}
@@ -1067,6 +1177,10 @@ function VocabTopicPractice({ topic, progress, setProgress, onBack }) {
 
       {view === "list" && (
         <VocabListView topicWords={topicWords} progress={progress} setProgress={setProgress} />
+      )}
+
+      {view === "ielts" && (
+        <IeltsContentView content={IELTS_CONTENT[topic.id]} />
       )}
 
       {view === "card" && (
