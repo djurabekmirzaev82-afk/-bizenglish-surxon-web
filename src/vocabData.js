@@ -1292,3 +1292,88 @@ export const VOCAB_WORDS = [
     }))
   ),
 ];
+
+// IELTS Speaking uchun boy kontent: so'z birikmalari guruhlari + Part 1/2/3 namuna javoblar.
+// Har bir mavzu uchun alohida to'ldiriladi (referens: ieltspodcast.com uslubi).
+// Javob matnlarida **so'z birikmasi** ko'rinishida belgilangan joylar qalin qilib chiqariladi.
+export const IELTS_CONTENT = {
+  work_careers: {
+    groups: [
+      {
+        title: "Ish boshlash va kundalik mehnat",
+        phrases: [
+          { phrase: "land a job", translation: "ishga joylashib olmoq", def: "to successfully get a job, often after effort" },
+          { phrase: "fresh out of university", translation: "universitetni endigina tugatgan", def: "having just graduated" },
+          { phrase: "climb the career ladder", translation: "martaba zinapoyasidan ko'tarilmoq", def: "to advance to higher positions over time" },
+          { phrase: "from scratch", translation: "noldan (boshlamoq)", def: "starting with nothing, from the very beginning" },
+          { phrase: "a steep learning curve", translation: "tez o'rganishni talab qiluvchi jarayon", def: "something that requires a lot of effort to learn quickly" },
+          { phrase: "get the hang of something", translation: "biror narsani o'rganib, qo'l ostiga olmoq", def: "to become familiar with how to do something" },
+          { phrase: "be thrown in at the deep end", translation: "tayyorgarliksiz murakkab vazifaga tashlanmoq", def: "to be given a difficult task with little preparation" },
+          { phrase: "pull your weight", translation: "o'z ulushingni qo'shmoq", def: "to do your fair share of work" },
+          { phrase: "meet a deadline", translation: "muddatga ulgurmoq", def: "to complete work by the required time" },
+          { phrase: "be swamped with work", translation: "ish bilan bo'g'ilib qolmoq", def: "to have too much work to do" },
+          { phrase: "burn the midnight oil", translation: "tunni tunga ulab ishlamoq", def: "to work late into the night" },
+          { phrase: "strike a work-life balance", translation: "ish va hayot muvozanatini topmoq", def: "to balance time between job and personal life" },
+          { phrase: "be under a lot of pressure", translation: "katta bosim ostida bo'lmoq", def: "to feel stressed due to demands at work" },
+          { phrase: "take something in your stride", translation: "vaziyatga sovuqqonlik bilan yondashmoq", def: "to deal with a difficulty calmly" },
+          { phrase: "hit the ground running", translation: "darhol samarali ishlashni boshlamoq", def: "to start a new job and immediately be productive" },
+        ],
+      },
+      {
+        title: "Martaba rivoji va ish o'zgarishi",
+        phrases: [
+          { phrase: "a stepping stone", translation: "keyingi bosqichga sakrash uchun asos", def: "something that helps you progress toward a goal" },
+          { phrase: "a dead-end job", translation: "istiqbolsiz ish", def: "a job with no opportunity for advancement" },
+          { phrase: "get a foot in the door", translation: "sohaga birinchi qadam qo'ymoq", def: "to get an initial opportunity in a field" },
+          { phrase: "be headhunted", translation: "maxsus qidirib topilib, taklif qilinmoq", def: "to be approached by a company because of your skills" },
+          { phrase: "hand in your notice", translation: "ishdan bo'shash haqida rasman xabar bermoq", def: "to formally tell your employer you are leaving" },
+          { phrase: "burn bridges", translation: "aloqalarni butunlay uzib qo'ymoq", def: "to damage a relationship in a way that prevents future opportunities" },
+          { phrase: "a career change", translation: "kasbni butunlay o'zgartirish", def: "moving to a completely different profession" },
+          { phrase: "go freelance", translation: "erkin (frilanser) ishga o'tmoq", def: "to become self-employed, working independently" },
+          { phrase: "job security", translation: "ish barqarorligi", def: "the likelihood of keeping your job long-term" },
+          { phrase: "be made redundant", translation: "shtat qisqartirilishi sababli ishdan bo'shatilmoq", def: "to lose your job because it's no longer needed" },
+          { phrase: "bounce back", translation: "tezda o'ziga kelmoq", def: "to recover quickly from a setback" },
+          { phrase: "network your way into", translation: "aloqalar orqali kirib bormoq", def: "to use contacts to gain access to opportunities" },
+          { phrase: "a golden handshake", translation: "ishdan bo'shatilganda beriladigan katta pul mukofoti", def: "a generous payment given when someone leaves a company" },
+          { phrase: "work your way up", translation: "mehnat bilan yuqoriga ko'tarilmoq", def: "to progress gradually to a higher position through effort" },
+          { phrase: "a career break", translation: "martabada tanaffus", def: "a period away from work, often for personal reasons" },
+        ],
+      },
+    ],
+    part1: [
+      {
+        q: "What do you do for a living?",
+        a: "I currently work as a marketing coordinator. I only **landed the job** a year ago, **fresh out of university**, so there was definitely **a steep learning curve** at first, but I've since **gotten the hang of** most of my responsibilities.",
+      },
+      {
+        q: "Do you enjoy your job?",
+        a: "For the most part, yes. It can get stressful when I'm **swamped with work** and have to **burn the midnight oil** to **meet a deadline**, but I try to **strike a work-life balance** so it doesn't affect me too much.",
+      },
+      {
+        q: "What are your plans for your career?",
+        a: "I'd like to gradually **climb the career ladder** within my company. I see my current role as **a stepping stone** toward a management position in the next few years.",
+      },
+    ],
+    part2: {
+      cue: "Describe a job you would like to do in the future.",
+      bullets: ["what the job is", "what qualifications or skills you would need", "how you would get this job"],
+      closing: "and explain why you would like to do this job.",
+      answer:
+        "A job I would love to do one day is **going freelance** as a graphic designer. Right now, I'm in an office role, but eventually I'd like to **work my way up** in terms of experience and then step out on my own.\n\nTo do this job well, I'd need strong design skills and, more importantly, the discipline to manage my own time, because when you're self-employed nobody is checking whether you **pull your weight** — you're fully responsible for your own success.\n\nI imagine the first year would involve **a steep learning curve**, since running a business is very different from being an employee. I might even need to **hit the ground running**, taking on several small projects at once just to build a reputation.\n\nI'd like to do this job because I value independence, and I think **a career change** like this, while risky, would ultimately let me **strike a** better **work-life balance** than my current nine-to-five position.",
+    },
+    part3: [
+      {
+        q: "Do you think job security is more important than salary?",
+        a: "I think it depends on the person's life stage. Someone with a family might prioritize **job security** over a higher salary, since **being made redundant** unexpectedly can be very disruptive. Younger workers, on the other hand, might be more willing to take risks for better pay.",
+      },
+      {
+        q: 'How has the concept of a "career for life" changed in recent years?',
+        a: "It's changed dramatically. In the past, people often stayed in one company for decades and slowly **worked their way up**. Nowadays, it's common to **go freelance**, take **a career break**, or make **a career change** entirely. I think this is partly due to how competitive the job market has become, and partly due to changing attitudes toward work-life balance.",
+      },
+      {
+        q: "Is it a good idea for employees to change jobs frequently?",
+        a: "There are pros and cons. On one hand, moving jobs can help someone **get a foot in the door** in a new industry or **network their way into** better opportunities. On the other hand, changing jobs too often might make an employer question your commitment, and there's always a risk you'll **burn bridges** with a previous employer if you leave under bad circumstances.",
+      },
+    ],
+  },
+};
