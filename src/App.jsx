@@ -3,7 +3,11 @@ import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
-import { VOCAB_TOPICS, VOCAB_WORDS, IELTS_TOPICS, IELTS_CONTENT } from "./vocabData";
+import {
+  VOCAB_TOPICS, VOCAB_WORDS,
+  IELTS_TOPICS, IELTS_WRITING_TOPICS,
+  IELTS_CONTENT, IELTS_WRITING_CONTENT
+} from "./vocabData";
 
 const FONTS = `
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
@@ -39,12 +43,12 @@ const MODULE_COLORS = {
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 const MODULES = [
-  { id: "speaking", icon: "🗣", name: "Speaking", desc: "AI ekzaminator bilan Part 1–3 amaliyoti", live: true },
-  { id: "writing", icon: "✍", name: "Writing", desc: "Task 1 va Task 2, AI tekshiruvi bilan", live: true },
+  { id: "speaking", icon: "🗣️", name: "Speaking", desc: "AI ekzaminator bilan Part 1–3 amaliyoti", live: true },
+  { id: "writing", icon: "✍️", name: "Writing", desc: "Task 1 va Task 2, AI tekshiruvi bilan", live: true },
   { id: "reading", icon: "📖", name: "Reading", desc: "5 xil qism, javob kalitlari bilan", live: false },
   { id: "listening", icon: "🎧", name: "Listening", desc: "6 xil qism, transkript va audio", live: false },
   { id: "business", icon: "💼", name: "Business English", desc: "Ish mavzulari: muzokaralar, taqdimotlar, email", live: true },
-  { id: "vocabulary", icon: "🗂", name: "Vocabulary & IELTS", desc: "20 biznes mavzusi (600 so'z) + 16 IELTS mavzusi", live: true },
+  { id: "vocabulary", icon: "🗂️", name: "Vocabulary & IELTS", desc: "20 biznes mavzusi + 18 IELTS Speaking + 16 IELTS Writing", live: true },
 ];
 
 async function api(path, { token, method = "GET", body, timeoutMs = 55000 } = {}) {
@@ -377,7 +381,7 @@ function FeedbackView({ feedback }) {
 
 function BackButton({ onBack }) {
   return (
-    <button onClick={onBack} style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.primary, background: "none", border: "none", cursor: "pointer", marginBottom: 16, padding: 0 }}>
+    <button onClick={onBack} style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.primary, background: "none", border: "none", cursor: "pointer", marginBottom: 16, padding: 0, fontWeight: 600 }}>
       ← Bosh sahifa
     </button>
   );
@@ -628,7 +632,7 @@ function WritingModule({ token, onBack, onXpChange }) {
   return (
     <div style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
       <BackButton onBack={selected ? () => { setSelected(null); setCategory(null); setFeedback(null); setText(""); } : onBack} />
-      <ModuleHeader moduleId="writing" icon="✍" title="Writing" />
+      <ModuleHeader moduleId="writing" icon="✍️" title="Writing" />
       {error && <div style={{ color: COLORS.red, fontFamily: "Inter, sans-serif", fontSize: 14, marginBottom: 12 }}>{error}</div>}
 
       {!selected && lessons && (
@@ -689,7 +693,6 @@ function useRecorder(token, onTranscribed) {
   const [recording, setRecording] = useState(false);
   const [busy, setBusy] = useState(false);
   const [recError, setRecError] = useState("");
-  const mediaRef = { current: null };
   const chunksRef = { current: [] };
 
   async function start() {
@@ -726,7 +729,6 @@ function useRecorder(token, onTranscribed) {
         }
       };
       recorder.start();
-      mediaRef.current = recorder;
       window.__activeRecorder = recorder;
       setRecording(true);
     } catch (e) {
@@ -884,7 +886,7 @@ function SpeakingModule({ token, onBack, onXpChange }) {
   return (
     <div style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
       <BackButton onBack={topic ? () => { setTopic(null); setFeedback(null); } : onBack} />
-      <ModuleHeader moduleId="speaking" icon="🗣" title="Speaking (IELTS / Multilevel format)" />
+      <ModuleHeader moduleId="speaking" icon="🗣️" title="Speaking (IELTS / Multilevel format)" />
       {error && <div style={{ color: COLORS.red, fontFamily: "Inter, sans-serif", fontSize: 14, marginBottom: 12 }}>{error}</div>}
 
       {!topic && topics && (
@@ -1106,7 +1108,7 @@ function VocabTopicPractice({ topic, progress, setProgress, onBack }) {
   );
 }
 
-function IeltsTopicDetail({ topic, onBack }) {
+function IeltsSpeakingTopicDetail({ topic, onBack }) {
   const content = IELTS_CONTENT[topic.id];
 
   const renderBold = (text) => {
@@ -1114,7 +1116,7 @@ function IeltsTopicDetail({ topic, onBack }) {
     const parts = text.split(/\*\*(.+?)\*\*/g);
     return parts.map((part, i) =>
       i % 2 === 1 ? (
-        <b key={i} style={{ color: MODULE_COLORS.vocabulary.dark, background: MODULE_COLORS.vocabulary.bg, padding: "0 4px", borderRadius: 4 }}>{part}</b>
+        <b key={i} style={{ color: MODULE_COLORS.speaking.dark, background: MODULE_COLORS.speaking.bg, padding: "0 4px", borderRadius: 4 }}>{part}</b>
       ) : (
         <span key={i}>{part}</span>
       )
@@ -1124,45 +1126,52 @@ function IeltsTopicDetail({ topic, onBack }) {
   return (
     <div>
       <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 22, marginBottom: 20 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <span style={{ fontSize: 28 }}>{topic.icon}</span>
-          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 20, fontWeight: 700, color: COLORS.primary }}>
-            {topic.name}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18, borderBottom: `1px solid ${COLORS.line}`, paddingBottom: 12 }}>
+          <span style={{ fontSize: 30 }}>{topic.icon}</span>
+          <div>
+            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 22, fontWeight: 700, color: COLORS.primary }}>
+              {topic.name}
+            </div>
+            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft }}>
+              IELTS Speaking Topics & Lexical Resource (Band 7.5–9.0)
+            </div>
           </div>
         </div>
 
-        {/* COLLOCATIONS */}
-        {content?.collocations && (
-          <div style={{ marginBottom: 24 }}>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
-              <span>📚</span> Foydali so'z birikmalari (Collocations)
+        {/* VOCABULARY SECTIONS (Categorized Lists) */}
+        {content?.vocabSections?.map((section, sidx) => (
+          <div key={sidx} style={{ marginBottom: 26 }}>
+            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
+              <span>📚</span> {section.title}
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 8 }}>
-              {content.collocations.map((c, i) => (
-                <div key={i} style={{ background: COLORS.bg, borderRadius: 10, padding: "10px 14px", borderLeft: `3px solid ${MODULE_COLORS.vocabulary.accent}` }}>
-                  <div>
-                    <span style={{ fontWeight: 700, color: MODULE_COLORS.vocabulary.dark }}>{c.phrase}</span>
-                    <span style={{ color: COLORS.textSoft, marginLeft: 6, fontSize: 12.5 }}>({c.translation})</span>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 10 }}>
+              {section.items.map((item, i) => (
+                <div key={i} style={{ background: COLORS.bg, borderRadius: 10, padding: "12px 14px", borderLeft: `3.5px solid ${MODULE_COLORS.speaking.accent}` }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 6 }}>
+                    <span style={{ fontWeight: 700, color: MODULE_COLORS.speaking.dark, fontSize: 14 }}>{item.phrase}</span>
+                    <span style={{ color: COLORS.textSoft, fontSize: 12.5 }}>— {item.translation}</span>
                   </div>
-                  <div style={{ color: COLORS.textSoft, fontSize: 12, marginTop: 3 }}>{c.def}</div>
+                  <div style={{ color: COLORS.textSoft, fontSize: 12, marginTop: 4, fontStyle: "italic" }}>
+                    Definition: {item.def}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
-        )}
+        ))}
 
         {/* PART 1 */}
         {content?.part1 && (
-          <div style={{ marginBottom: 24 }}>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 12, color: "#fff", background: MODULE_COLORS.vocabulary.dark, display: "inline-block", padding: "4px 12px", borderRadius: 999, marginBottom: 12 }}>
-              IELTS Speaking Part 1
+          <div style={{ marginBottom: 26 }}>
+            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13, color: "#fff", background: MODULE_COLORS.speaking.dark, display: "inline-block", padding: "5px 14px", borderRadius: 999, marginBottom: 14 }}>
+              IELTS Speaking Part 1 — Sample Questions & Answers
             </div>
             {content.part1.map((qa, i) => (
-              <div key={i} style={{ marginBottom: 14 }}>
-                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 13.5, color: COLORS.primary, marginBottom: 4 }}>
+              <div key={i} style={{ marginBottom: 16 }}>
+                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.primary, marginBottom: 4 }}>
                   Examiner: {qa.q}
                 </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13.5, lineHeight: 1.6, color: COLORS.text, fontStyle: "italic", paddingLeft: 12, borderLeft: `3px solid ${MODULE_COLORS.vocabulary.accent}` }}>
+                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.65, color: COLORS.text, fontStyle: "italic", paddingLeft: 14, borderLeft: `3px solid ${MODULE_COLORS.speaking.accent}` }}>
                   {renderBold(qa.a)}
                 </div>
               </div>
@@ -1170,37 +1179,41 @@ function IeltsTopicDetail({ topic, onBack }) {
           </div>
         )}
 
-        {/* PART 2 */}
-        {content?.part2 && (
-          <div style={{ marginBottom: 24 }}>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 12, color: "#fff", background: MODULE_COLORS.vocabulary.dark, display: "inline-block", padding: "4px 12px", borderRadius: 999, marginBottom: 12 }}>
-              IELTS Speaking Part 2
+        {/* PART 2 CUE CARDS */}
+        {content?.part2Cards && (
+          <div style={{ marginBottom: 26 }}>
+            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13, color: "#fff", background: MODULE_COLORS.speaking.dark, display: "inline-block", padding: "5px 14px", borderRadius: 999, marginBottom: 14 }}>
+              IELTS Speaking Part 2 — Cue Card Samples
             </div>
-            <div style={{ background: MODULE_COLORS.vocabulary.bg, borderRadius: 12, padding: "14px 16px", marginBottom: 12 }}>
-              <b style={{ color: MODULE_COLORS.vocabulary.dark }}>{content.part2.cue}</b>
-              <div style={{ color: COLORS.textSoft, marginTop: 6, fontSize: 13 }}>You should say:</div>
-              <ul style={{ margin: "4px 0 4px 18px", padding: 0, color: COLORS.textSoft, fontSize: 13 }}>
-                {content.part2.bullets.map((b, i) => <li key={i}>{b}</li>)}
-              </ul>
-            </div>
-            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13.5, lineHeight: 1.65, color: COLORS.text, fontStyle: "italic", paddingLeft: 12, borderLeft: `3px solid ${MODULE_COLORS.vocabulary.accent}` }}>
-              {renderBold(content.part2.answer)}
-            </div>
+            {content.part2Cards.map((card, cidx) => (
+              <div key={cidx} style={{ marginBottom: 20, background: COLORS.bg, borderRadius: 14, padding: 16, border: `1px solid ${COLORS.line}` }}>
+                <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 16, color: COLORS.primary, marginBottom: 8 }}>
+                  📝 {card.title}
+                </div>
+                <div style={{ color: COLORS.textSoft, fontSize: 13, fontWeight: 600 }}>You should say:</div>
+                <ul style={{ margin: "6px 0 12px 20px", padding: 0, color: COLORS.textSoft, fontSize: 13 }}>
+                  {card.bullets.map((b, bi) => <li key={bi} style={{ marginBottom: 2 }}>{b}</li>)}
+                </ul>
+                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.7, color: COLORS.text, fontStyle: "italic", paddingLeft: 14, borderLeft: `3.5px solid ${MODULE_COLORS.speaking.accent}`, whiteSpace: "pre-line" }}>
+                  {renderBold(card.answer)}
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
         {/* PART 3 */}
         {content?.part3 && (
           <div>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 12, color: "#fff", background: MODULE_COLORS.vocabulary.dark, display: "inline-block", padding: "4px 12px", borderRadius: 999, marginBottom: 12 }}>
-              IELTS Speaking Part 3
+            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13, color: "#fff", background: MODULE_COLORS.speaking.dark, display: "inline-block", padding: "5px 14px", borderRadius: 999, marginBottom: 14 }}>
+              IELTS Speaking Part 3 — Discussion Questions & Answers
             </div>
             {content.part3.map((qa, i) => (
-              <div key={i} style={{ marginBottom: 14 }}>
-                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 13.5, color: COLORS.primary, marginBottom: 4 }}>
+              <div key={i} style={{ marginBottom: 16 }}>
+                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.primary, marginBottom: 4 }}>
                   Examiner: {qa.q}
                 </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13.5, lineHeight: 1.6, color: COLORS.text, fontStyle: "italic", paddingLeft: 12, borderLeft: `3px solid ${MODULE_COLORS.vocabulary.accent}` }}>
+                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.65, color: COLORS.text, fontStyle: "italic", paddingLeft: 14, borderLeft: `3px solid ${MODULE_COLORS.speaking.accent}` }}>
                   {renderBold(qa.a)}
                 </div>
               </div>
@@ -1212,10 +1225,90 @@ function IeltsTopicDetail({ topic, onBack }) {
   );
 }
 
+function IeltsWritingTopicDetail({ topic, onBack }) {
+  const content = IELTS_WRITING_CONTENT[topic.id] || {
+    title: topic.name,
+    collocations: [
+      { term: "socioeconomic implications", def: "The social and economic consequences of a policy or trend." },
+      { term: "catalyze systemic reform", def: "Initiate fundamental and widespread changes." },
+      { term: "curb unsustainable practices", def: "Stop damaging or non-renewable activities." }
+    ],
+    modelParagraph: "Scholars argue that addressing these challenges necessitates proactive policy intervention. By catalyzing systemic reform and promoting equitable resource allocation, societies can achieve long-term prosperity.",
+    band8Phrases: [
+      "pave the way for comprehensive advancement",
+      "mitigate underlying socioeconomic disparities"
+    ]
+  };
+
+  return (
+    <div>
+      <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 22, marginBottom: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18, borderBottom: `1px solid ${COLORS.line}`, paddingBottom: 12 }}>
+          <span style={{ fontSize: 30 }}>{topic.icon}</span>
+          <div>
+            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 22, fontWeight: 700, color: MODULE_COLORS.writing.dark }}>
+              {content.title}
+            </div>
+            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft }}>
+              IELTS Writing Task 2 & Task 1 Academic Lexical Resource (Band 8+)
+            </div>
+          </div>
+        </div>
+
+        {/* COLLOCATIONS */}
+        <div style={{ marginBottom: 24 }}>
+          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
+            <span>📖</span> Academic Topic Collocations
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 10 }}>
+            {content.collocations.map((c, i) => (
+              <div key={i} style={{ background: COLORS.bg, borderRadius: 10, padding: "12px 14px", borderLeft: `3.5px solid ${MODULE_COLORS.writing.accent}` }}>
+                <div style={{ fontWeight: 700, color: MODULE_COLORS.writing.dark, fontSize: 14 }}>
+                  {c.term}
+                </div>
+                <div style={{ color: COLORS.textSoft, fontSize: 12.5, marginTop: 4 }}>
+                  {c.def}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* MODEL ESSAY PARAGRAPH */}
+        <div style={{ marginBottom: 24 }}>
+          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
+            <span>✍️</span> Band 8.5+ Model Essay Paragraph
+          </div>
+          <div style={{ background: MODULE_COLORS.writing.bg, borderRadius: 12, padding: "16px 18px", borderLeft: `4px solid ${MODULE_COLORS.writing.dark}`, fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.7, color: COLORS.text }}>
+            {content.modelParagraph}
+          </div>
+        </div>
+
+        {/* BAND 8+ KEY PHRASES */}
+        {content.band8Phrases && (
+          <div>
+            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
+              <span>✨</span> Essential Key Expressions for Essays
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {content.band8Phrases.map((phrase, pi) => (
+                <span key={pi} style={{ background: COLORS.bg, border: `1px solid ${COLORS.line}`, borderRadius: 8, padding: "6px 12px", fontFamily: "IBM Plex Mono, monospace", fontSize: 12.5, color: MODULE_COLORS.writing.dark, fontWeight: 600 }}>
+                  ✦ {phrase}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function VocabularyModule({ onBack }) {
-  const [tab, setTab] = useState("business"); // business | ielts
+  const [tab, setTab] = useState("business"); // business | ielts_speaking | ielts_writing
   const [activeBusinessTopic, setActiveBusinessTopic] = useState(null);
   const [activeIeltsTopic, setActiveIeltsTopic] = useState(null);
+  const [activeWritingTopic, setActiveWritingTopic] = useState(null);
   const [search, setSearch] = useState("");
   const [progress, setProgress] = useState(loadVocabProgress);
 
@@ -1226,37 +1319,46 @@ function VocabularyModule({ onBack }) {
     t.id.toLowerCase().includes(search.toLowerCase())
   );
 
+  const filteredWritingTopics = IELTS_WRITING_TOPICS.filter((t) =>
+    t.name.toLowerCase().includes(search.toLowerCase()) ||
+    t.id.toLowerCase().includes(search.toLowerCase())
+  );
+
   const currentTitle = activeBusinessTopic
     ? activeBusinessTopic.name
     : activeIeltsTopic
     ? activeIeltsTopic.name
+    : activeWritingTopic
+    ? activeWritingTopic.name
     : "Vocabulary & IELTS";
 
   const handleBackAction = () => {
     if (activeBusinessTopic) setActiveBusinessTopic(null);
     else if (activeIeltsTopic) setActiveIeltsTopic(null);
+    else if (activeWritingTopic) setActiveWritingTopic(null);
     else onBack();
   };
 
   return (
-    <div style={{ padding: 24, maxWidth: 780, margin: "0 auto" }}>
+    <div style={{ padding: 24, maxWidth: 820, margin: "0 auto" }}>
       <BackButton onBack={handleBackAction} />
-      <ModuleHeader moduleId="vocabulary" icon="🗂" title={currentTitle} />
+      <ModuleHeader moduleId="vocabulary" icon="🗂️" title={currentTitle} />
 
-      {!activeBusinessTopic && !activeIeltsTopic && (
+      {!activeBusinessTopic && !activeIeltsTopic && !activeWritingTopic && (
         <>
-          {/* TAB SELECTOR */}
-          <div style={{ display: "flex", gap: 10, marginBottom: 18, background: COLORS.surface, padding: 6, borderRadius: 12, border: `1px solid ${COLORS.line}` }}>
+          {/* THREE-TAB SELECTOR */}
+          <div style={{ display: "flex", gap: 8, marginBottom: 20, background: COLORS.surface, padding: 6, borderRadius: 12, border: `1px solid ${COLORS.line}`, flexWrap: "wrap" }}>
             <button
-              onClick={() => setTab("business")}
+              onClick={() => { setTab("business"); setSearch(""); }}
               style={{
                 flex: 1,
-                padding: "10px 0",
+                minWidth: 160,
+                padding: "11px 8px",
                 border: "none",
                 borderRadius: 8,
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 700,
-                fontSize: 13.5,
+                fontSize: 13,
                 cursor: "pointer",
                 background: tab === "business" ? COLORS.primary : "transparent",
                 color: tab === "business" ? "#fff" : COLORS.textSoft,
@@ -1266,22 +1368,42 @@ function VocabularyModule({ onBack }) {
               💼 Biznes Lug'at (600 so'z)
             </button>
             <button
-              onClick={() => setTab("ielts")}
+              onClick={() => { setTab("ielts_speaking"); setSearch(""); }}
               style={{
                 flex: 1,
-                padding: "10px 0",
+                minWidth: 160,
+                padding: "11px 8px",
                 border: "none",
                 borderRadius: 8,
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 700,
-                fontSize: 13.5,
+                fontSize: 13,
                 cursor: "pointer",
-                background: tab === "ielts" ? MODULE_COLORS.vocabulary.dark : "transparent",
-                color: tab === "ielts" ? "#fff" : COLORS.textSoft,
+                background: tab === "ielts_speaking" ? MODULE_COLORS.speaking.dark : "transparent",
+                color: tab === "ielts_speaking" ? "#fff" : COLORS.textSoft,
                 transition: "all 0.15s ease",
               }}
             >
-              🗣 IELTS Speaking & Topik Lug'at (16 mavzu)
+              🗣️ IELTS Speaking (18 mavzu)
+            </button>
+            <button
+              onClick={() => { setTab("ielts_writing"); setSearch(""); }}
+              style={{
+                flex: 1,
+                minWidth: 160,
+                padding: "11px 8px",
+                border: "none",
+                borderRadius: 8,
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 700,
+                fontSize: 13,
+                cursor: "pointer",
+                background: tab === "ielts_writing" ? MODULE_COLORS.writing.dark : "transparent",
+                color: tab === "ielts_writing" ? "#fff" : COLORS.textSoft,
+                transition: "all 0.15s ease",
+              }}
+            >
+              ✍️ IELTS Writing (16 mavzu)
             </button>
           </div>
 
@@ -1306,15 +1428,16 @@ function VocabularyModule({ onBack }) {
                         border: `1px solid ${COLORS.line}`,
                         borderLeft: `4px solid ${MODULE_COLORS.vocabulary.accent}`,
                         borderRadius: 14,
-                        padding: "14px 16px",
+                        padding: "16px",
                         cursor: "pointer",
                         display: "flex",
                         flexDirection: "column",
                         gap: 8,
+                        boxShadow: "0 2px 6px rgba(0,0,0,0.02)",
                       }}
                     >
                       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <div style={{ width: 34, height: 34, borderRadius: 9, background: MODULE_COLORS.vocabulary.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17 }}>
+                        <div style={{ width: 36, height: 36, borderRadius: 10, background: MODULE_COLORS.vocabulary.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
                           {t.icon}
                         </div>
                         <span style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: 11, fontWeight: 600, color: COLORS.textSoft }}>{topicWords.length} so'z</span>
@@ -1331,12 +1454,12 @@ function VocabularyModule({ onBack }) {
             </div>
           )}
 
-          {/* IELTS TAB */}
-          {tab === "ielts" && (
+          {/* IELTS SPEAKING TAB */}
+          {tab === "ielts_speaking" && (
             <div>
               <input
                 type="text"
-                placeholder="Mavzular bo'yicha qidirish (masalan: oila, texnologiya, sayohat)..."
+                placeholder="Speaking mavzulari bo'yicha qidirish (masalan: Friends, Technology, Travel)..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 style={{
@@ -1350,7 +1473,7 @@ function VocabularyModule({ onBack }) {
                   marginBottom: 16,
                 }}
               />
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
                 {filteredIeltsTopics.map((t) => (
                   <button
                     key={t.id}
@@ -1370,13 +1493,65 @@ function VocabularyModule({ onBack }) {
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <div style={{ width: 36, height: 36, borderRadius: 10, background: MODULE_COLORS.speaking.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
+                      <div style={{ width: 38, height: 38, borderRadius: 10, background: MODULE_COLORS.speaking.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
                         {t.icon}
                       </div>
-                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, color: MODULE_COLORS.speaking.dark }}>IELTS Band 7.5+</span>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, color: MODULE_COLORS.speaking.dark }}>Band 7.5–9.0</span>
                     </div>
                     <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 15, fontWeight: 700, color: COLORS.text }}>{t.name}</div>
                     <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft }}>Collocations + Part 1, 2, 3 Namunalar →</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* IELTS WRITING TAB */}
+          {tab === "ielts_writing" && (
+            <div>
+              <input
+                type="text"
+                placeholder="Writing mavzulari bo'yicha qidirish (masalan: Climate, Law, Education)..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                style={{
+                  width: "100%",
+                  boxSizing: "border-box",
+                  padding: "12px 14px",
+                  borderRadius: 12,
+                  border: `1.5px solid ${COLORS.line}`,
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: 14,
+                  marginBottom: 16,
+                }}
+              />
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
+                {filteredWritingTopics.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => setActiveWritingTopic(t)}
+                    style={{
+                      textAlign: "left",
+                      background: COLORS.surface,
+                      border: `1px solid ${COLORS.line}`,
+                      borderLeft: `4px solid ${MODULE_COLORS.writing.accent}`,
+                      borderRadius: 14,
+                      padding: "16px",
+                      cursor: "pointer",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 8,
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.02)",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ width: 38, height: 38, borderRadius: 10, background: MODULE_COLORS.writing.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
+                        {t.icon}
+                      </div>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, color: MODULE_COLORS.writing.dark }}>Task 1 & Task 2</span>
+                    </div>
+                    <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 15, fontWeight: 700, color: COLORS.text }}>{t.name}</div>
+                    <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft }}>Akademik leksika + Model insho parchalari →</div>
                   </button>
                 ))}
               </div>
@@ -1390,7 +1565,11 @@ function VocabularyModule({ onBack }) {
       )}
 
       {activeIeltsTopic && (
-        <IeltsTopicDetail topic={activeIeltsTopic} onBack={() => setActiveIeltsTopic(null)} />
+        <IeltsSpeakingTopicDetail topic={activeIeltsTopic} onBack={() => setActiveIeltsTopic(null)} />
+      )}
+
+      {activeWritingTopic && (
+        <IeltsWritingTopicDetail topic={activeWritingTopic} onBack={() => setActiveWritingTopic(null)} />
       )}
     </div>
   );
