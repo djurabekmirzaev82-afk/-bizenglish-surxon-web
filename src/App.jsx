@@ -1130,7 +1130,38 @@ function VocabularyModule({ onBack }) {
   const [activeTopic, setActiveTopic] = useState(null);
   const [progress, setProgress] = useState(loadVocabProgress);
 
-  const totalKnown = Object.values(progress).filter((v) => v === "known").length;
+  const businessTopics = VOCAB_TOPICS.filter((t) => t.category === "business");
+  const speakingTopics = VOCAB_TOPICS.filter((t) => t.category === "speaking");
+
+  const businessWords = VOCAB_WORDS.filter((w) => businessTopics.some((t) => t.id === w.topicId));
+  const speakingWords = VOCAB_WORDS.filter((w) => speakingTopics.some((t) => t.id === w.topicId));
+
+  const businessKnown = businessWords.filter((w) => progress[w.id] === "known").length;
+  const speakingKnown = speakingWords.filter((w) => progress[w.id] === "known").length;
+  const totalKnown = businessKnown + speakingKnown;
+
+  const businessPct = businessWords.length ? Math.round((businessKnown / businessWords.length) * 100) : 0;
+  const speakingUnlocked = businessPct >= 80; // Business bosqichining katta qismi o'zlashtirilganda ochiladi
+
+  function renderTopicGrid(topics) {
+    return (
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
+        {topics.map((t) => {
+          const topicWords = VOCAB_WORDS.filter((w) => w.topicId === t.id);
+          const known = topicWords.filter((w) => progress[w.id] === "known").length;
+          return (
+            <VocabTopicCard
+              key={t.id}
+              topic={t}
+              known={known}
+              total={topicWords.length}
+              onOpen={() => setActiveTopic(t)}
+            />
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <div style={{ padding: 24, maxWidth: 760, margin: "0 auto" }}>
@@ -1139,24 +1170,57 @@ function VocabularyModule({ onBack }) {
 
       {!activeTopic && (
         <>
-          <div style={{ background: MODULE_COLORS.vocabulary.bg, borderRadius: 14, padding: "14px 18px", marginBottom: 18, fontFamily: "Inter, sans-serif", fontSize: 13, color: MODULE_COLORS.vocabulary.dark }}>
-            20 ta biznes mavzusi, jami {VOCAB_WORDS.length} ta so'z (A1–C2). Jami bilgan so'zlaringiz: <b>{totalKnown}</b>
+          <div style={{ background: MODULE_COLORS.vocabulary.bg, borderRadius: 14, padding: "14px 18px", marginBottom: 22, fontFamily: "Inter, sans-serif", fontSize: 13, color: MODULE_COLORS.vocabulary.dark }}>
+            38 ta mavzu, jami {VOCAB_WORDS.length} ta so'z (A1–C2). Jami bilgan so'zlaringiz: <b>{totalKnown}</b>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
-            {VOCAB_TOPICS.map((t) => {
-              const topicWords = VOCAB_WORDS.filter((w) => w.topicId === t.id);
-              const known = topicWords.filter((w) => progress[w.id] === "known").length;
-              return (
-                <VocabTopicCard
-                  key={t.id}
-                  topic={t}
-                  known={known}
-                  total={topicWords.length}
-                  onOpen={() => setActiveTopic(t)}
-                />
-              );
-            })}
+
+          {/* 1-bosqich: Business */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+            <span style={{
+              fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 11,
+              color: "#fff", background: MODULE_COLORS.vocabulary.dark,
+              padding: "3px 9px", borderRadius: 999,
+            }}>
+              1-BOSQICH
+            </span>
+            <span style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text }}>
+              Biznes lug'ati
+            </span>
+            <span style={{ marginLeft: "auto", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, fontWeight: 600, color: COLORS.textSoft }}>
+              {businessPct}%
+            </span>
           </div>
+          <div style={{ marginBottom: 18 }}>{renderTopicGrid(businessTopics)}</div>
+
+          {/* 2-bosqich: Speaking (umumiy IELTS mavzulari) */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+            <span style={{
+              fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 11,
+              color: speakingUnlocked ? "#fff" : COLORS.textSoft,
+              background: speakingUnlocked ? MODULE_COLORS.vocabulary.dark : COLORS.line,
+              padding: "3px 9px", borderRadius: 999,
+            }}>
+              2-BOSQICH
+            </span>
+            <span style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: speakingUnlocked ? COLORS.text : COLORS.textSoft }}>
+              Speaking uchun umumiy mavzular
+            </span>
+          </div>
+
+          {!speakingUnlocked && (
+            <div style={{
+              background: COLORS.bg, border: `1.5px dashed ${COLORS.line}`, borderRadius: 14,
+              padding: "16px 18px", marginBottom: 12, display: "flex", alignItems: "center", gap: 12,
+            }}>
+              <span style={{ fontSize: 22 }}>🔒</span>
+              <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft, lineHeight: 1.5 }}>
+                Bu bosqich Biznes lug'atining <b>80%</b>ini o'zlashtirgach ochiladi.
+                Hozirgi darajangiz: <b>{businessPct}%</b>. Davom eting — daraja ko'tariladi!
+              </div>
+            </div>
+          )}
+
+          {speakingUnlocked && renderTopicGrid(speakingTopics)}
         </>
       )}
 
