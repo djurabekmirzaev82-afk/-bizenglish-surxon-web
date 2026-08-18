@@ -3,45 +3,26 @@
 // Mavzular Speaking bo'limidagi asosiy biznes mavzulariga mos tanlangan.
 
 export const VOCAB_TOPICS = [
-  { id: "job_interviews", icon: "🧑‍💼", name: "Ish suhbati", category: "business" },
-  { id: "meetings", icon: "🗓", name: "Yig'ilishlar", category: "business" },
-  { id: "negotiations", icon: "🤝", name: "Muzokaralar", category: "business" },
-  { id: "presentations", icon: "📊", name: "Taqdimotlar", category: "business" },
-  { id: "emails", icon: "📧", name: "Elektron yozishmalar", category: "business" },
-  { id: "marketing", icon: "📣", name: "Marketing", category: "business" },
-  { id: "sales", icon: "💰", name: "Sotuv", category: "business" },
-  { id: "finance", icon: "🏦", name: "Moliya", category: "business" },
-  { id: "hr", icon: "👥", name: "Kadrlar boshqaruvi", category: "business" },
-  { id: "management", icon: "🧭", name: "Boshqaruv va liderlik", category: "business" },
-  { id: "customer_service", icon: "🎧", name: "Mijozlarga xizmat", category: "business" },
-  { id: "business_travel", icon: "✈️", name: "Ish safarlari", category: "business" },
-  { id: "networking", icon: "🌐", name: "Aloqalar o'rnatish", category: "business" },
-  { id: "startups", icon: "🚀", name: "Startaplar", category: "business" },
-  { id: "logistics", icon: "📦", name: "Ta'minot va logistika", category: "business" },
-  { id: "technology", icon: "💻", name: "Texnologiya va IT", category: "business" },
-  { id: "project_management", icon: "📋", name: "Loyiha boshqaruvi", category: "business" },
-  { id: "legal", icon: "⚖️", name: "Huquq va shartnomalar", category: "business" },
-  { id: "strategy", icon: "♟", name: "Strategiya", category: "business" },
-  { id: "workplace_culture", icon: "🏢", name: "Ofis madaniyati", category: "business" },
-  // 2-bosqich: umumiy nutq (Speaking) mavzulari
-  { id: "friends_family", icon: "👨‍👩‍👧‍👦", name: "Do'stlar va oila", category: "speaking" },
-  { id: "food_nutrition", icon: "🍽", name: "Ovqat va oziqlanish", category: "speaking" },
-  { id: "travel_tourism", icon: "🧳", name: "Sayohat va turizm", category: "speaking" },
-  { id: "modern_technology", icon: "📱", name: "Zamonaviy texnologiya", category: "speaking" },
-  { id: "coronavirus", icon: "😷", name: "Koronavirus lug'ati", category: "speaking" },
-  { id: "pollution_environment", icon: "🌍", name: "Ifloslanish va atrof-muhit", category: "speaking" },
-  { id: "people_personalities", icon: "🎭", name: "Odamlar va xarakterlar", category: "speaking" },
-  { id: "fitness_health", icon: "💪", name: "Jismoniy tarbiya va salomatlik", category: "speaking" },
-  { id: "school_education", icon: "🏫", name: "Maktab va ta'lim", category: "speaking" },
-  { id: "work_careers", icon: "🧑‍💻", name: "Ish va martaba", category: "speaking" },
-  { id: "university_student_life", icon: "🎓", name: "Universitet va talabalik hayoti", category: "speaking" },
-  { id: "accommodation", icon: "🏠", name: "Turar joy", category: "speaking" },
-  { id: "books_film_art", icon: "🎨", name: "Kitoblar, filmlar va san'at", category: "speaking" },
-  { id: "climate_change", icon: "🌡", name: "Iqlim o'zgarishi", category: "speaking" },
-  { id: "working_from_home", icon: "🏡", name: "Uydan ishlash", category: "speaking" },
-  { id: "social_media", icon: "📲", name: "Ijtimoiy tarmoqlar", category: "speaking" },
-  { id: "advertising", icon: "📢", name: "Reklama", category: "speaking" },
-  { id: "fashion_shopping", icon: "👗", name: "Moda va xarid qilish", category: "speaking" },
+  { id: "job_interviews", icon: "ЁЯзСтАНЁЯТ╝", name: "Ish suhbati" },
+  { id: "meetings", icon: "ЁЯЧУ", name: "Yig'ilishlar" },
+  { id: "negotiations", icon: "ЁЯдЭ", name: "Muzokaralar" },
+  { id: "presentations", icon: "ЁЯУК", name: "Taqdimotlar" },
+  { id: "emails", icon: "ЁЯУз", name: "Elektron yozishmalar" },
+  { id: "marketing", icon: "ЁЯУг", name: "Marketing" },
+  { id: "sales", icon: "ЁЯТ░", name: "Sotuv" },
+  { id: "finance", icon: "ЁЯПж", name: "Moliya" },
+  { id: "hr", icon: "ЁЯСе", name: "Kadrlar boshqaruvi" },
+  { id: "management", icon: "ЁЯзн", name: "Boshqaruv va liderlik" },
+  { id: "customer_service", icon: "ЁЯОз", name: "Mijozlarga xizmat" },
+  { id: "business_travel", icon: "тЬИя╕П", name: "Ish safarlari" },
+  { id: "networking", icon: "ЁЯМР", name: "Aloqalar o'rnatish" },
+  { id: "startups", icon: "ЁЯЪА", name: "Startaplar" },
+  { id: "logistics", icon: "ЁЯУж", name: "Ta'minot va logistika" },
+  { id: "technology", icon: "ЁЯТ╗", name: "Texnologiya va IT" },
+  { id: "project_management", icon: "ЁЯУЛ", name: "Loyiha boshqaruvi" },
+  { id: "legal", icon: "тЪЦя╕П", name: "Huquq va shartnomalar" },
+  { id: "strategy", icon: "тЩЯ", name: "Strategiya" },
+  { id: "workplace_culture", icon: "ЁЯПв", name: "Ofis madaniyati" },
 ];
 
 // Har bir mavzu uchun: [level, term, uz, def, example]
@@ -688,977 +669,392 @@ const RAW = {
   ],
 };
 
-// 2-bosqich: umumiy nutq (IELTS Speaking uslubidagi) mavzular
-const RAW2 = {
-  friends_family: [
-    ["A1", "friend", "do'st", "A person you like and know well.", "She is my best friend."],
-    ["A1", "family", "oila", "A group of people related by blood or marriage.", "My family is very close."],
-    ["A1", "mother", "ona", "A female parent.", "My mother cooks every evening."],
-    ["A1", "brother", "aka/uka", "A male sibling.", "My brother lives in Tashkent."],
-    ["A1", "home", "uy", "The place where a person lives.", "I feel safe at home."],
-    ["A2", "neighbor", "qo'shni", "A person who lives near you.", "Our neighbor is very friendly."],
-    ["A2", "relative", "qarindosh", "A member of one's family.", "We have relatives in Samarkand."],
-    ["A2", "marriage", "turmush qurish", "The legal union of two people.", "Their marriage was a happy event."],
-    ["A2", "childhood", "bolalik", "The period of being a child.", "She had a happy childhood."],
-    ["A2", "grandparent", "buvi/bobo", "The parent of one's mother or father.", "My grandparent tells great stories."],
-    ["B1", "sibling", "aka-uka/opa-singil", "A brother or sister.", "I have two siblings."],
-    ["B1", "close friend", "yaqin do'st", "A friend one trusts deeply.", "She is my closest friend."],
-    ["B1", "in-laws", "qaynona-qaynota va oila a'zolari", "The family of one's spouse.", "We visit my in-laws every month."],
-    ["B1", "upbringing", "tarbiya", "The way a child is raised.", "His upbringing shaped his values."],
-    ["B1", "bond", "bog'lanish (his-hissiy)", "A close connection between people.", "They share a strong bond."],
-    ["B2", "extended family", "keng oila", "Family beyond parents and children, including relatives.", "Our extended family gathers every holiday."],
-    ["B2", "nuclear family", "yadro oila", "A family unit of parents and their children.", "They live as a nuclear family."],
-    ["B2", "estranged", "begonalashgan", "No longer close or in contact with a family member.", "He became estranged from his father."],
-    ["B2", "reunion", "qayta uchrashuv", "A gathering of family or friends after a separation.", "The family reunion was emotional."],
-    ["B2", "dependant", "qaramog'idagi shaxs", "A person who relies on another for support.", "She has three dependants."],
-    ["C1", "kinship", "qarindoshlik", "The state of being family or closely connected.", "Kinship ties remain strong in the village."],
-    ["C1", "filial duty", "farzandlik burchi", "A child's responsibility to care for their parents.", "He felt a strong filial duty to his mother."],
-    ["C1", "generational gap", "avlodlar farqi", "Differences in views between older and younger generations.", "The generational gap caused some misunderstandings."],
-    ["C1", "nurturing", "g'amxo'rlik qiluvchi", "Caring for and encouraging growth of someone.", "She had a nurturing relationship with her siblings."],
-    ["C1", "sibling rivalry", "aka-uka/opa-singil raqobati", "Competition between brothers and sisters.", "Sibling rivalry is common in large families."],
-    ["C2", "matriarch", "oila boshlig'i ayol", "A senior female leader of a family.", "The matriarch made all major family decisions."],
-    ["C2", "patriarch", "oila boshlig'i erkak", "A senior male leader of a family.", "The patriarch was respected by everyone."],
-    ["C2", "familial obligation", "oilaviy majburiyat", "A duty owed to one's family.", "Familial obligation kept her close to home."],
-    ["C2", "blood relative", "qon-qarindosh", "A relative connected by birth, not marriage.", "He is a blood relative on my mother's side."],
-    ["C2", "estrangement", "begonalashuv", "A state of being emotionally distant from family.", "Years of estrangement ended with a phone call."],
-  ],
-  food_nutrition: [
-    ["A1", "food", "ovqat", "Substances eaten to give the body energy.", "This food is delicious."],
-    ["A1", "eat", "yemoq", "To put food in the mouth and swallow it.", "We eat dinner at seven."],
-    ["A1", "drink", "ichmoq", "To swallow a liquid.", "Please drink some water."],
-    ["A1", "fruit", "meva", "The sweet part of a plant eaten as food.", "I like fresh fruit."],
-    ["A1", "vegetable", "sabzavot", "A plant eaten as food, usually savory.", "Carrots are a healthy vegetable."],
-    ["A2", "recipe", "retsept (taom)", "Instructions for preparing a dish.", "She followed the recipe carefully."],
-    ["A2", "diet", "parhez/ovqatlanish", "The food a person usually eats.", "He follows a strict diet."],
-    ["A2", "snack", "yengil taom", "A small amount of food eaten between meals.", "I had a snack in the afternoon."],
-    ["A2", "meal", "ovqatlanish (taom)", "Food eaten at a particular time, like breakfast.", "Lunch is my favorite meal."],
-    ["A2", "taste", "ta'm", "The flavor of food.", "This soup has a great taste."],
-    ["B1", "nutritious", "to'yimli", "Containing substances the body needs to be healthy.", "Fish is a nutritious food."],
-    ["B1", "balanced diet", "muvozanatli ovqatlanish", "A diet with the right amounts of different foods.", "A balanced diet keeps you healthy."],
-    ["B1", "ingredient", "tarkibiy qism", "A part of a mixture in a recipe.", "Flour is the main ingredient."],
-    ["B1", "portion", "qism (ovqat)", "The amount of food served to one person.", "The portion size was quite large."],
-    ["B1", "junk food", "foydasiz ovqat", "Food that is unhealthy but tasty.", "He eats too much junk food."],
-    ["B2", "processed food", "qayta ishlangan ovqat", "Food altered from its natural state before eating.", "Processed food often contains added sugar."],
-    ["B2", "calorie intake", "kaloriya iste'moli", "The number of calories a person eats daily.", "She monitors her daily calorie intake."],
-    ["B2", "dietary requirement", "ovqatlanish talabi", "Specific food needs of a person.", "The restaurant caters to different dietary requirements."],
-    ["B2", "food additive", "ovqat qo'shimchasi", "A substance added to food to preserve or flavor it.", "Some food additives can cause allergies."],
-    ["B2", "organic", "organik (ekologik toza)", "Produced without artificial chemicals.", "They only buy organic vegetables."],
-    ["C1", "nutrient-dense", "yuqori foydali moddali", "Food rich in nutrients relative to its calories.", "Leafy greens are nutrient-dense foods."],
-    ["C1", "malnutrition", "oziq-ovqat yetishmovchiligi", "A lack of proper nutrition.", "Malnutrition remains a problem in some regions."],
-    ["C1", "food security", "oziq-ovqat xavfsizligi", "Reliable access to sufficient affordable food.", "The policy aims to improve food security."],
-    ["C1", "culinary tradition", "oshpazlik an'anasi", "A cultural practice around food and cooking.", "Uzbek plov is part of a rich culinary tradition."],
-    ["C1", "dietary supplement", "oziqaviy qo'shimcha", "A product taken to add nutrients to one's diet.", "She takes a vitamin dietary supplement daily."],
-    ["C2", "gastronomy", "gastronomiya", "The art and science of good eating.", "The city is famous for its gastronomy."],
-    ["C2", "food sustainability", "oziq-ovqat barqarorligi", "Producing food in ways that protect the environment.", "Food sustainability is a growing global concern."],
-    ["C2", "epicurean", "nafis taomlarga ishqiboz", "Devoted to fine food and pleasure.", "He has epicurean tastes in dining."],
-    ["C2", "nutrient deficiency", "oziq modda yetishmovchiligi", "A lack of a specific essential nutrient.", "Iron nutrient deficiency causes fatigue."],
-    ["C2", "artisanal", "hunarmandchilik usulida tayyorlangan", "Made in a traditional, skilled, non-industrial way.", "They sell artisanal bread at the market."],
-  ],
-  travel_tourism: [
-    ["A1", "travel", "sayohat qilmoq", "To go from one place to another.", "I love to travel."],
-    ["A1", "trip", "safar", "A journey to a place and back.", "We had a great trip."],
-    ["A1", "tourist", "sayyoh", "A person who travels for pleasure.", "Many tourists visit Samarkand."],
-    ["A1", "map", "xarita", "A drawing showing the layout of a place.", "Use the map to find the hotel."],
-    ["A1", "ticket", "chipta", "A document allowing travel or entry.", "I bought a train ticket."],
-    ["A2", "destination", "manzil (sayohat)", "The place someone is traveling to.", "Bali is a popular destination."],
-    ["A2", "sightseeing", "diqqatga sazovor joylarni ko'rish", "Visiting interesting places as a tourist.", "We spent the day sightseeing."],
-    ["A2", "souvenir", "esdalik sovg'a", "An item bought to remember a trip.", "She bought a souvenir from the market."],
-    ["A2", "guide", "gid", "A person who shows tourists around.", "Our guide spoke three languages."],
-    ["A2", "journey", "sayohat/yo'l", "An act of traveling from one place to another.", "It was a long journey."],
-    ["B1", "itinerary", "sayohat rejasi", "A planned route or schedule for a trip.", "Our itinerary includes three cities."],
-    ["B1", "backpacking", "ryukzak bilan sayohat qilish", "Traveling cheaply with a backpack.", "They went backpacking through Europe."],
-    ["B1", "accommodation", "turar joy (sayohatda)", "A place to stay while traveling.", "We booked accommodation near the beach."],
-    ["B1", "excursion", "ekskursiya", "A short trip for pleasure or education.", "The excursion to the mountains was amazing."],
-    ["B1", "landmark", "diqqatga sazovor joy", "A notable or well-known place.", "The tower is a famous landmark."],
-    ["B2", "package tour", "tayyor sayohat paketi", "A pre-arranged trip including transport and hotels.", "They chose a package tour to Turkey."],
-    ["B2", "off the beaten path", "kam boriladigan joy", "A place not commonly visited by tourists.", "We found a beautiful spot off the beaten path."],
-    ["B2", "cultural immersion", "madaniyatga singib ketish", "Deeply experiencing a foreign culture.", "Living with a host family gave real cultural immersion."],
-    ["B2", "budget travel", "tejamkor sayohat", "Traveling while spending as little money as possible.", "Budget travel let them visit ten countries."],
-    ["B2", "wanderlust", "sayohatga bo'lgan kuchli ishtiyoq", "A strong desire to travel.", "Her wanderlust took her across three continents."],
-    ["C1", "sustainable tourism", "barqaror turizm", "Tourism that minimizes negative environmental impact.", "The island promotes sustainable tourism."],
-    ["C1", "tourist trap", "sayyohlarni aldash joyi", "A place that overcharges visitors.", "Avoid this restaurant, it's a tourist trap."],
-    ["C1", "ecotourism", "ekoturizm", "Tourism focused on nature and conservation.", "Ecotourism supports local wildlife protection."],
-    ["C1", "overtourism", "haddan tashqari turizm", "Excessive tourism causing harm to a destination.", "Overtourism has damaged the historic old town."],
-    ["C1", "travel restrictions", "sayohat cheklovlari", "Official limits placed on travel.", "Travel restrictions were lifted last year."],
-    ["C2", "cultural heritage preservation", "madaniy meros muhofazasi", "Protecting historical and cultural sites for the future.", "Cultural heritage preservation is a national priority."],
-    ["C2", "carbon footprint", "uglerod izi", "The amount of carbon emissions caused by an activity.", "Flying increases your carbon footprint significantly."],
-    ["C2", "mass tourism", "ommaviy turizm", "Tourism involving very large numbers of visitors.", "Mass tourism has strained the local infrastructure."],
-    ["C2", "visa waiver", "vizasiz kirish imkoniyati", "An agreement allowing travel without a visa.", "The visa waiver made travel much easier."],
-    ["C2", "expatriate", "chet elda yashovchi", "A person living outside their native country.", "Many expatriates work in Dubai."],
-  ],
-  modern_technology: [
-    ["A1", "phone", "telefon", "A device used to make calls.", "My phone is new."],
-    ["A1", "computer", "kompyuter", "An electronic device for processing data.", "I use a computer at work."],
-    ["A1", "internet", "internet", "A global network connecting computers.", "The internet is very fast today."],
-    ["A1", "app", "ilova", "A software program for a device.", "This app helps me study."],
-    ["A1", "screen", "ekran", "The flat surface that displays images.", "The screen is very bright."],
-    ["A2", "gadget", "gadjet", "A small useful electronic device.", "He loves buying new gadgets."],
-    ["A2", "device", "qurilma", "An electronic tool or machine.", "Charge your device overnight."],
-    ["A2", "download", "yuklab olmoq", "To copy data from the internet to a device.", "I downloaded the file quickly."],
-    ["A2", "upload", "yuklamoq (internetga)", "To send data from a device to the internet.", "She uploaded the photos."],
-    ["A2", "wireless", "simsiz", "Working without wires or cables.", "We have wireless internet at home."],
-    ["B1", "smartphone", "smartfon", "A mobile phone with advanced computing features.", "Almost everyone has a smartphone now."],
-    ["B1", "social media", "ijtimoiy tarmoqlar", "Websites and apps for sharing content and connecting.", "She spends hours on social media."],
-    ["B1", "online shopping", "onlayn xarid", "Buying goods over the internet.", "Online shopping saves a lot of time."],
-    ["B1", "virtual", "virtual", "Existing in a digital form, not physically.", "They had a virtual meeting."],
-    ["B1", "technology addiction", "texnologiyaga qaramlik", "Excessive, hard-to-control use of technology.", "Technology addiction affects many teenagers."],
-    ["B2", "artificial intelligence", "sun'iy intellekt", "Technology enabling machines to mimic human intelligence.", "Artificial intelligence powers many modern apps."],
-    ["B2", "digital detox", "raqamli dam olish", "A period of avoiding electronic devices.", "She went on a digital detox last weekend."],
-    ["B2", "screen time", "ekran vaqti", "Time spent using a screen device.", "Parents limit their children's screen time."],
-    ["B2", "cybersecurity", "kiberxavfsizlik", "Protection of computer systems from digital attacks.", "Cybersecurity is essential for businesses."],
-    ["B2", "automation", "avtomatlashtirish", "Using technology to perform tasks automatically.", "Automation has changed many industries."],
-    ["C1", "technological advancement", "texnologik taraqqiyot", "Progress in the development of technology.", "Technological advancement is happening rapidly."],
-    ["C1", "digital divide", "raqamli tafovut", "The gap between those with and without technology access.", "The digital divide affects rural communities."],
-    ["C1", "data privacy", "ma'lumotlar maxfiyligi", "The protection of personal information online.", "Data privacy laws are becoming stricter."],
-    ["C1", "disruptive technology", "buzg'unchi texnologiya", "Technology that dramatically changes an industry.", "Streaming was a disruptive technology for TV."],
-    ["C1", "algorithm", "algoritm", "A set of rules a computer follows to solve a task.", "The app's algorithm suggests new videos."],
-    ["C2", "technological singularity", "texnologik singulyarlik", "A hypothetical point where AI surpasses human intelligence.", "Some scientists debate the idea of technological singularity."],
-    ["C2", "surveillance capitalism", "kuzatuv kapitalizmi", "Profiting from the collection of personal data.", "Critics warn about surveillance capitalism online."],
-    ["C2", "digital footprint", "raqamli iz", "The trail of data a person leaves online.", "Everything you post adds to your digital footprint."],
-    ["C2", "biometric technology", "biometrik texnologiya", "Technology identifying people by physical traits.", "Airports increasingly use biometric technology."],
-    ["C2", "obsolescence", "eskirish (texnologik)", "The state of becoming outdated or no longer used.", "Planned obsolescence forces people to buy new devices."],
-  ],
-  coronavirus: [
-    ["A1", "virus", "virus", "A tiny organism that can cause disease.", "The virus spreads quickly."],
-    ["A1", "mask", "niqob", "A covering worn over the face for protection.", "Please wear a mask."],
-    ["A1", "hospital", "kasalxona", "A place where sick people are treated.", "He was taken to the hospital."],
-    ["A1", "sick", "kasal", "Not feeling well; ill.", "She feels sick today."],
-    ["A1", "doctor", "shifokor", "A person trained to treat illness.", "The doctor examined the patient."],
-    ["A2", "quarantine", "karantin", "Isolation to prevent the spread of disease.", "They stayed in quarantine for two weeks."],
-    ["A2", "symptom", "belgi (kasallik)", "A sign that shows a person is ill.", "Fever is a common symptom."],
-    ["A2", "vaccine", "vaksina", "A substance given to prevent disease.", "She received the vaccine last week."],
-    ["A2", "infection", "yuqumli kasallik", "The invasion of the body by harmful organisms.", "The infection spread fast."],
-    ["A2", "outbreak", "kasallik tarqalishi", "A sudden occurrence of a disease.", "There was an outbreak in the city."],
-    ["B1", "pandemic", "pandemiya", "A disease outbreak spreading across countries.", "The pandemic affected the whole world."],
-    ["B1", "lockdown", "qamal/cheklov", "A restriction on movement to control an outbreak.", "The lockdown lasted three months."],
-    ["B1", "self-isolation", "o'zini izolyatsiya qilish", "Staying away from others to prevent spreading illness.", "He went into self-isolation after the test."],
-    ["B1", "contagious", "yuqumli", "Able to spread from person to person.", "The disease is highly contagious."],
-    ["B1", "immune system", "immunitet tizimi", "The body's defense against disease.", "A strong immune system helps fight illness."],
-    ["B2", "social distancing", "ijtimoiy masofa saqlash", "Keeping physical distance to prevent disease spread.", "Social distancing was required in public places."],
-    ["B2", "herd immunity", "ommaviy immunitet", "Resistance to disease when most of a population is immune.", "Herd immunity reduces the spread of illness."],
-    ["B2", "contact tracing", "aloqalarni kuzatish", "Identifying people exposed to an infected person.", "Contact tracing helped control the outbreak."],
-    ["B2", "frontline worker", "old qatordagi xodim", "A worker directly dealing with a crisis, like medical staff.", "Frontline workers faced huge risks."],
-    ["B2", "epidemic", "epidemiya", "A widespread occurrence of disease in a community.", "The city declared an epidemic."],
-    ["C1", "mutation", "mutatsiya", "A change in the genetic structure of a virus.", "A new mutation of the virus was found."],
-    ["C1", "containment measures", "cheklov choralari", "Actions taken to stop the spread of disease.", "Containment measures slowed the outbreak."],
-    ["C1", "vaccine hesitancy", "vaksinaga ishonchsizlik", "Reluctance to be vaccinated.", "Vaccine hesitancy delayed herd immunity."],
-    ["C1", "public health crisis", "sog'liqni saqlash inqirozi", "A situation threatening the health of a population.", "The event triggered a public health crisis."],
-    ["C1", "mortality rate", "o'lim ko'rsatkichi", "The proportion of deaths in a population.", "The mortality rate dropped after treatment improved."],
-    ["C2", "pathogen transmission", "patogen tarqalishi", "The way a disease-causing organism spreads.", "Researchers studied pathogen transmission closely."],
-    ["C2", "epidemiological data", "epidemiologik ma'lumotlar", "Statistical data about the spread of disease.", "Epidemiological data guided the government's response."],
-    ["C2", "zoonotic disease", "zoonoz kasallik", "A disease transmitted from animals to humans.", "The virus was believed to be a zoonotic disease."],
-    ["C2", "global health emergency", "global sog'liqni saqlash favqulodda holati", "An internationally declared serious health threat.", "The WHO declared a global health emergency."],
-    ["C2", "vaccine equity", "vaksina tengligi", "Fair access to vaccines across all populations.", "Vaccine equity remains a global challenge."],
-  ],
-  pollution_environment: [
-    ["A1", "pollution", "ifloslanish", "Harmful substances damaging the environment.", "Air pollution is a big problem."],
-    ["A1", "air", "havo", "The mixture of gases we breathe.", "The air here is clean."],
-    ["A1", "water", "suv", "A clear liquid needed for life.", "We must save water."],
-    ["A1", "tree", "daraxt", "A tall plant with a trunk and branches.", "They planted a new tree."],
-    ["A1", "clean", "toza", "Free from dirt or pollution.", "Keep the park clean."],
-    ["A2", "rubbish", "chiqindi", "Waste material thrown away.", "Don't throw rubbish on the street."],
-    ["A2", "recycle", "qayta ishlamoq", "To process waste for reuse.", "We recycle plastic bottles."],
-    ["A2", "factory", "fabrika", "A building where goods are manufactured.", "The factory produces a lot of smoke."],
-    ["A2", "smoke", "tutun", "Gas and particles released by burning.", "Smoke filled the sky."],
-    ["A2", "waste", "chiqindi/isrof", "Unwanted material or unused resources.", "Reduce food waste at home."],
-    ["B1", "environment", "atrof-muhit", "The natural world around us.", "We must protect the environment."],
-    ["B1", "greenhouse gas", "issiqxona gazi", "A gas that traps heat in the atmosphere.", "Carbon dioxide is a greenhouse gas."],
-    ["B1", "deforestation", "o'rmonlarni kesish", "The clearing of forests for other uses.", "Deforestation harms wildlife habitats."],
-    ["B1", "renewable energy", "qayta tiklanadigan energiya", "Energy from sources that don't run out, like sunlight.", "Solar power is a form of renewable energy."],
-    ["B1", "ecosystem", "ekotizim", "A community of living things and their environment.", "The lake is a fragile ecosystem."],
-    ["B2", "carbon emissions", "uglerod chiqindilari", "The release of carbon dioxide into the air.", "Cars are a major source of carbon emissions."],
-    ["B2", "air quality", "havo sifati", "The condition of the air, especially cleanliness.", "Air quality worsens in winter."],
-    ["B2", "sustainable development", "barqaror rivojlanish", "Growth that meets needs without harming the future.", "The city focuses on sustainable development."],
-    ["B2", "single-use plastic", "bir martalik plastik", "Plastic items used once and thrown away.", "Many countries are banning single-use plastic."],
-    ["B2", "conservation", "muhofaza qilish", "The protection of nature and natural resources.", "Conservation efforts saved the species."],
-    ["C1", "biodiversity loss", "biologik xilma-xillikning yo'qolishi", "The decline in variety of living species.", "Biodiversity loss threatens global ecosystems."],
-    ["C1", "environmental degradation", "atrof-muhitning buzilishi", "The deterioration of the natural environment.", "Environmental degradation affects millions of people."],
-    ["C1", "carbon footprint", "uglerod izi", "The total greenhouse gas emissions caused by a person or activity.", "Flying increases your carbon footprint."],
-    ["C1", "fossil fuel dependency", "fossil yoqilg'iga qaramlik", "Reliance on coal, oil, and gas for energy.", "Reducing fossil fuel dependency is a global goal."],
-    ["C1", "ecological balance", "ekologik muvozanat", "A stable relationship between living things and environment.", "Overfishing disrupted the ecological balance."],
-    ["C2", "anthropogenic impact", "insonning ta'siri (tabiatga)", "Environmental change caused by human activity.", "Anthropogenic impact is the leading cause of climate change."],
-    ["C2", "environmental sustainability", "ekologik barqarorlik", "Meeting needs without depleting natural resources long-term.", "Environmental sustainability guides their business decisions."],
-    ["C2", "resource depletion", "resurslarning tugashi", "The using up of natural resources faster than replaced.", "Resource depletion threatens future generations."],
-    ["C2", "ecological resilience", "ekologik chidamlilik", "An ecosystem's ability to recover from disturbance.", "Coral reefs show low ecological resilience to warming."],
-    ["C2", "greenhouse effect", "issiqxona effekti", "The warming of Earth due to trapped gases.", "The greenhouse effect is intensifying due to emissions."],
-  ],
-  people_personalities: [
-    ["A1", "kind", "mehribon", "Caring and generous toward others.", "She is very kind."],
-    ["A1", "friendly", "do'stona", "Pleasant and welcoming.", "He is friendly to everyone."],
-    ["A1", "happy", "baxtli", "Feeling joy or pleasure.", "The children look happy."],
-    ["A1", "shy", "uyatchan", "Nervous around other people.", "He is shy at first."],
-    ["A1", "funny", "kulgili", "Causing amusement.", "My friend is very funny."],
-    ["A2", "honest", "halol", "Telling the truth, not lying.", "She is an honest person."],
-    ["A2", "generous", "saxiy", "Willing to give freely.", "He is generous with his time."],
-    ["A2", "patient", "sabrli", "Able to wait calmly.", "The teacher is very patient."],
-    ["A2", "confident", "o'ziga ishongan", "Sure of oneself.", "She spoke with confidence."],
-    ["A2", "polite", "odobli", "Having good manners.", "He was polite to the guests."],
-    ["B1", "outgoing", "ochiq ko'ngil", "Sociable and enjoys meeting people.", "She has an outgoing personality."],
-    ["B1", "ambitious", "shijoatli", "Having a strong desire to succeed.", "He is very ambitious at work."],
-    ["B1", "easy-going", "yumshoq xarakterli", "Relaxed and not easily upset.", "My roommate is easy-going."],
-    ["B1", "stubborn", "qaysar", "Unwilling to change one's mind.", "He is stubborn about his opinions."],
-    ["B1", "reliable", "ishonchli", "Consistently good and can be trusted.", "She is a reliable colleague."],
-    ["B2", "introverted", "introvert", "Preferring quiet, solitary activities.", "He is quite introverted at parties."],
-    ["B2", "extroverted", "ekstravert", "Outgoing and socially confident.", "She is extroverted and loves meeting people."],
-    ["B2", "empathetic", "hamdard", "Able to understand others' feelings.", "A good leader is empathetic."],
-    ["B2", "arrogant", "manman", "Having an exaggerated sense of importance.", "His arrogant attitude annoyed his coworkers."],
-    ["B2", "resilient", "chidamli (ruhan)", "Able to recover quickly from difficulties.", "She remained resilient after the setback."],
-    ["C1", "meticulous", "juda ehtiyotkor/aniq", "Showing great attention to detail.", "He is meticulous in his work."],
-    ["C1", "unassuming", "kamtarin", "Not seeking attention; modest.", "Despite his success, he stayed unassuming."],
-    ["C1", "tenacious", "qat'iyatli", "Persistent in pursuing a goal.", "Her tenacious attitude helped her succeed."],
-    ["C1", "self-effacing", "o'zini kamsituvchi (kamtarona)", "Modest and reluctant to draw attention to oneself.", "He gave a self-effacing speech."],
-    ["C1", "temperamental", "kayfiyati o'zgaruvchan", "Having frequent, unpredictable mood changes.", "The artist was known to be temperamental."],
-    ["C2", "idiosyncratic", "o'ziga xos (odat)", "Peculiar or individual in a distinctive way.", "His idiosyncratic style set him apart."],
-    ["C2", "magnanimous", "olijanob", "Generous and forgiving toward others.", "She was magnanimous in victory."],
-    ["C2", "obstinate", "o'jar", "Stubbornly refusing to change one's views.", "He remained obstinate despite the evidence."],
-    ["C2", "gregarious", "davrada bo'lishni yoqtiruvchi", "Fond of company; sociable.", "He is gregarious and loves parties."],
-    ["C2", "inscrutable", "sirli, tushunib bo'lmaydigan", "Impossible to understand or interpret.", "Her inscrutable expression gave nothing away."],
-  ],
-  fitness_health: [
-    ["A1", "exercise", "mashq qilish", "Physical activity to stay fit.", "I exercise every morning."],
-    ["A1", "run", "yugurmoq", "To move quickly on foot.", "He likes to run in the park."],
-    ["A1", "gym", "sport zali", "A place with equipment for exercise.", "She goes to the gym daily."],
-    ["A1", "healthy", "sog'lom", "In good physical condition.", "Eating fruit is healthy."],
-    ["A1", "sport", "sport", "A physical activity involving skill or effort.", "Football is a popular sport."],
-    ["A2", "workout", "mashq (jismoniy)", "A session of physical exercise.", "She had a great workout today."],
-    ["A2", "muscle", "mushak", "Body tissue that produces movement.", "Lifting weights builds muscle."],
-    ["A2", "diet", "parhez", "The food a person regularly eats.", "He is on a strict diet."],
-    ["A2", "jog", "yengil yugurish", "To run at a slow, steady pace.", "I jog every weekend."],
-    ["A2", "fit", "jismonan bardam", "In good physical shape.", "She stays fit by swimming."],
-    ["B1", "physical fitness", "jismoniy tayyorgarlik", "The condition of being physically healthy and strong.", "Regular exercise improves physical fitness."],
-    ["B1", "stamina", "chidamlilik (jismoniy)", "The ability to sustain physical effort.", "Marathon runners need great stamina."],
-    ["B1", "cardio", "yurak-qon tomir mashqi", "Exercise that raises heart rate, like running.", "Cardio helps improve heart health."],
-    ["B1", "injury", "shikastlanish", "Physical harm or damage to the body.", "He suffered an injury during the match."],
-    ["B1", "well-being", "farovonlik (sog'liq)", "The state of being healthy and comfortable.", "Sleep is important for well-being."],
-    ["B2", "sedentary lifestyle", "harakatsiz turmush tarzi", "A lifestyle involving little physical activity.", "A sedentary lifestyle increases health risks."],
-    ["B2", "endurance", "chidamlilik (uzoq muddatli)", "The ability to endure prolonged physical effort.", "Cyclists build endurance over months of training."],
-    ["B2", "mental health", "ruhiy salomatlik", "A person's psychological and emotional well-being.", "Exercise also supports good mental health."],
-    ["B2", "chronic illness", "surunkali kasallik", "A long-lasting health condition.", "Diabetes is a common chronic illness."],
-    ["B2", "rehabilitation", "reabilitatsiya", "The process of restoring health after injury or illness.", "He underwent rehabilitation after surgery."],
-    ["C1", "holistic wellness", "yaxlit farovonlik", "Overall well-being covering mind, body, and lifestyle.", "The program promotes holistic wellness."],
-    ["C1", "physical resilience", "jismoniy chidamlilik", "The body's ability to recover from stress or illness.", "Good nutrition builds physical resilience."],
-    ["C1", "overexertion", "haddan ortiq zo'riqish", "Excessive physical effort that can cause harm.", "Overexertion during training caused his injury."],
-    ["C1", "preventive healthcare", "profilaktik tibbiy yordam", "Medical care aimed at preventing illness.", "Preventive healthcare reduces long-term costs."],
-    ["C1", "metabolic rate", "modda almashinuv tezligi", "The rate at which the body uses energy.", "Exercise can increase your metabolic rate."],
-    ["C2", "psychosomatic", "psixosomatik", "Relating to physical symptoms caused by mental factors.", "Stress can trigger psychosomatic symptoms."],
-    ["C2", "physiological adaptation", "fiziologik moslashuv", "The body's adjustment to physical demands over time.", "Athletes undergo physiological adaptation through training."],
-    ["C2", "health disparity", "sog'liqni saqlashdagi tengsizlik", "Unequal access to healthcare across populations.", "Health disparity remains a global challenge."],
-    ["C2", "longevity", "uzoq umr ko'rish", "Long life or long duration.", "A healthy diet contributes to longevity."],
-    ["C2", "biomechanics", "biomexanika", "The study of movement in living organisms.", "Biomechanics helps improve athletic performance."],
-  ],
-  school_education: [
-    ["A1", "school", "maktab", "A place where children are educated.", "I go to school every day."],
-    ["A1", "teacher", "o'qituvchi", "A person who teaches students.", "My teacher is very kind."],
-    ["A1", "student", "o'quvchi/talaba", "A person who is studying.", "She is a good student."],
-    ["A1", "book", "kitob", "A written or printed work.", "I read a book every week."],
-    ["A1", "class", "sinf/dars", "A group of students taught together.", "Our class starts at nine."],
-    ["A2", "homework", "uy vazifasi", "Work given by a teacher to do at home.", "I finished my homework."],
-    ["A2", "exam", "imtihon", "A formal test of knowledge.", "The exam was difficult."],
-    ["A2", "subject", "fan (o'quv)", "An area of study, like math or history.", "Math is my favorite subject."],
-    ["A2", "lesson", "dars", "A period of teaching on a topic.", "Today's lesson was about grammar."],
-    ["A2", "grade", "baho", "A mark given for schoolwork.", "She got a good grade on the test."],
-    ["B1", "curriculum", "o'quv dasturi", "The subjects taught in a school.", "The school updated its curriculum."],
-    ["B1", "discipline", "intizom", "Training to follow rules or a code of behavior.", "Discipline is important in the classroom."],
-    ["B1", "tuition", "o'qish to'lovi", "The fee paid for education.", "Tuition costs have increased this year."],
-    ["B1", "scholarship", "stipendiya", "Financial aid given for education.", "She won a scholarship to study abroad."],
-    ["B1", "literacy", "savodxonlik", "The ability to read and write.", "The program improves literacy rates."],
-    ["B2", "rote learning", "yodlab olish orqali o'qish", "Learning by memorization without understanding.", "Rote learning doesn't always build real understanding."],
-    ["B2", "academic pressure", "o'quv bosimi", "Stress related to school performance.", "Students face a lot of academic pressure."],
-    ["B2", "extracurricular activity", "darsdan tashqari faoliyat", "An activity outside the regular curriculum.", "He joined an extracurricular activity, chess club."],
-    ["B2", "standardized test", "standartlashtirilgan test", "A test administered the same way to all students.", "The standardized test measures reading skills."],
-    ["B2", "critical thinking", "tanqidiy fikrlash", "The objective analysis of facts to form a judgment.", "Schools should teach critical thinking."],
-    ["C1", "pedagogy", "pedagogika", "The method and practice of teaching.", "Modern pedagogy focuses on student engagement."],
-    ["C1", "educational attainment", "ta'lim darajasi", "The highest level of education a person has completed.", "Educational attainment affects future income."],
-    ["C1", "formative assessment", "shakllantiruvchi baholash", "Ongoing assessment to guide learning during a course.", "Teachers use formative assessment to track progress."],
-    ["C1", "academic rigor", "ilmiy talabchanlik", "High standards of intellectual challenge in education.", "The program is known for its academic rigor."],
-    ["C1", "holistic education", "yaxlit ta'lim", "Education that develops the whole person, not just academics.", "The school promotes holistic education."],
-    ["C2", "meritocratic system", "meritokratik tizim", "A system where success is based on ability.", "University admission follows a meritocratic system."],
-    ["C2", "epistemology", "bilish nazariyasi", "The study of the nature of knowledge.", "Epistemology examines how we come to know things."],
-    ["C2", "andragogy", "kattalar ta'limi nazariyasi", "The method and practice of teaching adults.", "Andragogy differs from traditional child education."],
-    ["C2", "educational disparity", "ta'limdagi tengsizlik", "Unequal access to quality education.", "Educational disparity persists between regions."],
-    ["C2", "curriculum reform", "o'quv dasturi islohoti", "Changes made to improve an education program.", "The ministry proposed major curriculum reform."],
-  ],
-  work_careers: [
-    ["A1", "job", "ish", "Work done to earn money.", "She has a new job."],
-    ["A1", "work", "ishlamoq", "To perform tasks for a living.", "He works in an office."],
-    ["A1", "boss", "boshliq", "A person in charge at work.", "My boss is friendly."],
-    ["A1", "salary", "maosh", "Regular payment for work.", "Her salary was raised."],
-    ["A1", "office", "ofis", "A place of work, usually with desks.", "The office is downtown."],
-    ["A2", "career", "martaba", "A person's course of professional life.", "She has a career in medicine."],
-    ["A2", "colleague", "hamkasb", "A person one works with.", "My colleague helped with the report."],
-    ["A2", "promotion", "lavozim ko'tarilishi", "Advancement to a higher position.", "He got a promotion last month."],
-    ["A2", "interview", "suhbat (ishga)", "A formal meeting to assess a job candidate.", "The interview went well."],
-    ["A2", "apply", "ariza bermoq", "To formally request a job.", "I applied for the position."],
-    ["B1", "profession", "kasb", "A paid occupation requiring training.", "Teaching is a respected profession."],
-    ["B1", "workload", "ish yuki", "The amount of work assigned.", "His workload increased this quarter."],
-    ["B1", "job satisfaction", "ishdan qoniqish", "The feeling of contentment with one's job.", "Job satisfaction improves productivity."],
-    ["B1", "work experience", "ish tajribasi", "Practical knowledge gained from working.", "She has five years of work experience."],
-    ["B1", "resign", "iste'foga chiqmoq", "To formally leave a job.", "He decided to resign from his post."],
-    ["B2", "career progression", "martaba rivoji", "The advancement of one's career over time.", "The company supports career progression."],
-    ["B2", "work-life balance", "ish va hayot muvozanati", "A healthy balance between job and personal life.", "Remote work improved his work-life balance."],
-    ["B2", "job security", "ish barqarorligi", "The likelihood of keeping one's job.", "Government jobs often offer more job security."],
-    ["B2", "professional development", "kasbiy rivojlanish", "Activities to improve one's job skills.", "The company invests in professional development."],
-    ["B2", "burnout", "his-tuyg'u charchashi (ishdan)", "Extreme exhaustion caused by prolonged stress at work.", "Overworking led to serious burnout."],
-    ["C1", "career trajectory", "martaba yo'nalishi", "The path a person's career takes over time.", "Her career trajectory has been impressive."],
-    ["C1", "occupational hazard", "kasbiy xavf", "A risk associated with a particular job.", "Back pain is an occupational hazard for drivers."],
-    ["C1", "glass ceiling", "shisha shift (yashirin to'siq)", "An invisible barrier preventing advancement, especially for women.", "She broke through the glass ceiling to become CEO."],
-    ["C1", "vocational training", "kasb-hunar ta'limi", "Training for a specific trade or occupation.", "Vocational training prepares students for skilled jobs."],
-    ["C1", "job market", "mehnat bozori", "The availability of jobs in an economy.", "The job market is competitive this year."],
-    ["C2", "career stagnation", "martabadagi turg'unlik", "A lack of growth or progress in one's career.", "He felt career stagnation after years in the same role."],
-    ["C2", "professional autonomy", "kasbiy mustaqillik", "The freedom to make decisions in one's work.", "Doctors value professional autonomy in treatment decisions."],
-    ["C2", "labor market flexibility", "mehnat bozori moslashuvchanligi", "The ease of hiring, firing, and moving between jobs.", "Labor market flexibility affects unemployment rates."],
-    ["C2", "career pivot", "martaba yo'nalishini o'zgartirish", "A significant change in one's professional direction.", "She made a career pivot into tech."],
-    ["C2", "meritocracy", "meritokratiya (ish joyida)", "Advancement based on ability rather than status.", "The firm prides itself on being a meritocracy."],
-  ],
-  university_student_life: [
-    ["A1", "university", "universitet", "An institution for higher education.", "She studies at a university."],
-    ["A1", "class", "dars/sinf", "A course or lesson.", "My class starts at ten."],
-    ["A1", "study", "o'qimoq", "To spend time learning.", "I study every evening."],
-    ["A1", "campus", "kampus", "The grounds of a university.", "The campus is very large."],
-    ["A1", "exam", "imtihon", "A formal academic test.", "The exam is next week."],
-    ["A2", "lecture", "ma'ruza", "A talk given to teach a subject.", "The lecture was interesting."],
-    ["A2", "dormitory", "yotoqxona", "A building for student housing.", "He lives in a dormitory."],
-    ["A2", "tuition fee", "o'qish to'lovi", "Money paid for education.", "Tuition fees rose this year."],
-    ["A2", "degree", "diplom/daraja", "A qualification from a university.", "She earned a degree in economics."],
-    ["A2", "classmate", "sinfdosh", "A fellow student in the same class.", "My classmate helped me study."],
-    ["B1", "undergraduate", "bakalavr talabasi", "A student studying for a first degree.", "He is an undergraduate student."],
-    ["B1", "seminar", "seminar", "A small class for discussion.", "The seminar covered ancient history."],
-    ["B1", "thesis", "diplom ishi", "A long piece of research written for a degree.", "She is writing her thesis."],
-    ["B1", "scholarship", "stipendiya", "Financial aid for study.", "He received a full scholarship."],
-    ["B1", "semester", "semestr", "Half of an academic year.", "The semester ends in June."],
-    ["B2", "postgraduate", "magistratura talabasi", "A student studying beyond a first degree.", "She is a postgraduate researcher."],
-    ["B2", "academic workload", "o'quv yuki", "The amount of study work assigned.", "The academic workload increased this term."],
-    ["B2", "student loan", "talabalik krediti", "Money borrowed to pay for education.", "He is still paying off his student loan."],
-    ["B2", "campus life", "kampus hayoti", "The social and academic experience at university.", "She enjoys campus life."],
-    ["B2", "dissertation", "dissertatsiya", "A long academic paper on original research.", "His dissertation took two years to complete."],
-    ["C1", "academic rigor", "ilmiy talabchanlik", "High intellectual standards in study.", "The program is known for academic rigor."],
-    ["C1", "peer review", "hamkasblar tomonidan taqriz", "Evaluation of academic work by others in the field.", "The paper went through peer review."],
-    ["C1", "research methodology", "tadqiqot metodologiyasi", "The systematic approach used in research.", "Her research methodology was well documented."],
-    ["C1", "tenure", "lavozim barqarorligi (professor)", "A permanent academic position.", "He was granted tenure after ten years."],
-    ["C1", "interdisciplinary study", "fanlararo tadqiqot", "Study combining multiple academic fields.", "The course promotes interdisciplinary study."],
-    ["C2", "academia", "ilmiy jamiyat", "The academic community and environment.", "She has spent her whole career in academia."],
-    ["C2", "scholarly discourse", "ilmiy muhokama", "Formal academic discussion and debate.", "The journal fosters scholarly discourse."],
-    ["C2", "doctoral candidacy", "doktorlik nomzodligi", "The status of pursuing a doctoral degree.", "He achieved doctoral candidacy last year."],
-    ["C2", "epistemological inquiry", "bilish nazariyasiga oid tadqiqot", "Investigation into the nature of knowledge.", "Her thesis involved epistemological inquiry."],
-    ["C2", "institutional accreditation", "muassasa akkreditatsiyasi", "Official recognition of an institution's quality standards.", "The university maintains full institutional accreditation."],
-  ],
-  accommodation: [
-    ["A1", "house", "uy", "A building where people live.", "This is our new house."],
-    ["A1", "room", "xona", "A part of a building enclosed by walls.", "My room is upstairs."],
-    ["A1", "rent", "ijaraga olmoq/ijaraga berish", "To pay to use property owned by someone else.", "We rent a flat downtown."],
-    ["A1", "key", "kalit", "A tool used to open a lock.", "I lost my house key."],
-    ["A1", "flat", "kvartira", "A set of rooms for living, on one floor.", "They live in a small flat."],
-    ["A2", "apartment", "kvartira (AmE)", "A set of rooms for living, part of a larger building.", "The apartment has two bedrooms."],
-    ["A2", "landlord", "uy egasi (ijara)", "A person who rents property to others.", "The landlord fixed the heater."],
-    ["A2", "tenant", "ijarachi", "A person who rents a property.", "The tenant pays rent monthly."],
-    ["A2", "furniture", "mebel", "Movable objects used in a room, like beds and tables.", "They bought new furniture."],
-    ["A2", "neighborhood", "mahalla", "A district or area within a town.", "It's a quiet neighborhood."],
-    ["B1", "lease", "ijara shartnomasi", "A legal agreement to rent property.", "They signed a one-year lease."],
-    ["B1", "deposit", "garov puli", "Money paid in advance as security.", "The deposit covers any damage."],
-    ["B1", "utility bill", "kommunal xizmat to'lovi", "A bill for services like water and electricity.", "The utility bill arrived yesterday."],
-    ["B1", "roommate", "xonadosh", "A person one shares living space with.", "My roommate is very tidy."],
-    ["B1", "eviction", "chiqarib yuborish (uy-joydan)", "Being legally forced to leave a rented property.", "The eviction process took months."],
-    ["B2", "property market", "ko'chmas mulk bozori", "The buying and selling of real estate.", "The property market is booming this year."],
-    ["B2", "mortgage", "ipoteka", "A loan used to buy property.", "They took out a mortgage for their house."],
-    ["B2", "real estate", "ko'chmas mulk", "Property consisting of land and buildings.", "He works in real estate."],
-    ["B2", "housing shortage", "uy-joy tanqisligi", "A lack of available homes.", "The city faces a severe housing shortage."],
-    ["B2", "gentrification", "elita mahallaga aylantirish", "The renovation of a district that raises prices and displaces residents.", "Gentrification changed the whole neighborhood."],
-    ["C1", "leasehold", "ijaraga asoslangan mulk huquqi", "Ownership of property for a fixed period under a lease.", "The apartment is sold as a leasehold."],
-    ["C1", "housing affordability", "uy-joy narxining qulayligi", "The extent to which housing costs are manageable.", "Housing affordability is a major political issue."],
-    ["C1", "urban sprawl", "shahar chegaralarining kengayishi", "The uncontrolled expansion of urban areas.", "Urban sprawl has increased traffic congestion."],
-    ["C1", "tenancy agreement", "ijara kelishuvi", "A formal contract between landlord and tenant.", "Read the tenancy agreement carefully."],
-    ["C1", "subletting", "qayta ijaraga berish", "Renting out a property one is already renting.", "Subletting requires the landlord's permission."],
-    ["C2", "housing precarity", "uy-joy beqarorligi", "Insecurity or instability in housing situations.", "Housing precarity affects low-income families most."],
-    ["C2", "zoning regulation", "hududiy rejalashtirish qoidalari", "Rules governing land use in different areas.", "Zoning regulation restricts commercial buildings here."],
-    ["C2", "property speculation", "ko'chmas mulk spekulyatsiyasi", "Buying property to profit from future price increases.", "Property speculation drove prices up sharply."],
-    ["C2", "co-living arrangement", "birgalikda yashash tizimi", "A housing model where residents share spaces and amenities.", "Co-living arrangements are popular among young professionals."],
-    ["C2", "urban densification", "shaharning zichlashuvi", "Increasing the population density of urban areas.", "Urban densification helps reduce sprawl."],
-  ],
-  books_film_art: [
-    ["A1", "book", "kitob", "A written or printed work.", "I'm reading a good book."],
-    ["A1", "movie", "kino", "A motion picture; film.", "We watched a movie last night."],
-    ["A1", "read", "o'qimoq", "To look at and understand written words.", "She reads every day."],
-    ["A1", "watch", "tomosha qilmoq", "To look at something attentively.", "Let's watch a film."],
-    ["A1", "story", "hikoya", "An account of events, real or imagined.", "He told a funny story."],
-    ["A2", "novel", "roman", "A long fictional prose narrative.", "She wrote her first novel."],
-    ["A2", "actor", "aktyor", "A person who performs in films or plays.", "He is a famous actor."],
-    ["A2", "director", "rejissyor", "A person who directs a film or play.", "The director won an award."],
-    ["A2", "painting", "rasm (san'at)", "A picture made with paint.", "The painting hangs in the museum."],
-    ["A2", "museum", "muzey", "A building displaying objects of interest.", "We visited the art museum."],
-    ["B1", "plot", "syujet", "The main events of a story.", "The plot was very exciting."],
-    ["B1", "genre", "janr", "A category of art defined by style or content.", "Science fiction is her favorite genre."],
-    ["B1", "character", "personaj", "A person in a story, film, or play.", "The main character is very brave."],
-    ["B1", "review", "taqriz", "A critical assessment of a book or film.", "The review praised the acting."],
-    ["B1", "exhibition", "ko'rgazma", "A public display of art or objects.", "The art exhibition opens tomorrow."],
-    ["B2", "narrative technique", "hikoya qilish uslubi", "The methods used to tell a story.", "The author used an unusual narrative technique."],
-    ["B2", "cinematography", "operatorlik san'ati", "The art of camera work in filmmaking.", "The film's cinematography was stunning."],
-    ["B2", "literary device", "adabiy vosita", "A technique used by writers to convey meaning, like metaphor.", "The poem uses several literary devices."],
-    ["B2", "abstract art", "abstrakt san'at", "Art that does not represent real objects accurately.", "Abstract art can be difficult to interpret."],
-    ["B2", "adaptation", "moslashtirilgan asar (film/kitob)", "A version of a work changed for a new medium.", "The film is an adaptation of the novel."],
-    ["C1", "avant-garde", "avangard", "Experimental and innovative, ahead of its time.", "The gallery showcases avant-garde artists."],
-    ["C1", "symbolism", "ramziylik", "The use of symbols to represent ideas.", "The novel is rich in symbolism."],
-    ["C1", "critical acclaim", "tanqidchilar e'tirofi", "Praise given by critics.", "The film received widespread critical acclaim."],
-    ["C1", "thematic depth", "mavzuiy chuqurlik", "The richness and complexity of a work's themes.", "The play is admired for its thematic depth."],
-    ["C1", "aesthetic sensibility", "estetik didi", "A refined appreciation of beauty and art.", "Her aesthetic sensibility shines through her work."],
-    ["C2", "postmodernism", "postmodernizm", "An artistic movement questioning traditional narrative structures.", "The novel is a classic example of postmodernism."],
-    ["C2", "auteur theory", "avtor nazariyasi (kino)", "The idea that a director is the primary creative force of a film.", "Auteur theory elevates the director's personal vision."],
-    ["C2", "literary canon", "adabiy kanon", "The body of works considered most important in a culture.", "The novel entered the literary canon."],
-    ["C2", "iconography", "ikonografiya", "The visual symbolism used in a work of art.", "The painting's iconography reflects religious themes."],
-    ["C2", "artistic zeitgeist", "davr san'at ruhi", "The defining spirit or mood of art in an era.", "The exhibit captured the artistic zeitgeist of the decade."],
-  ],
-  climate_change: [
-    ["A1", "hot", "issiq", "Having a high temperature.", "It's very hot today."],
-    ["A1", "cold", "sovuq", "Having a low temperature.", "The winter is cold."],
-    ["A1", "weather", "ob-havo", "The condition of the atmosphere at a place and time.", "The weather is nice today."],
-    ["A1", "rain", "yomg'ir", "Water falling from clouds.", "It might rain tomorrow."],
-    ["A1", "sun", "quyosh", "The star that gives light and heat to Earth.", "The sun is shining brightly."],
-    ["A2", "climate", "iqlim", "The general weather conditions of a region over time.", "The climate here is dry."],
-    ["A2", "temperature", "harorat", "The degree of heat or cold.", "Temperature rose sharply today."],
-    ["A2", "storm", "bo'ron", "A violent weather disturbance.", "A storm hit the coast."],
-    ["A2", "drought", "qurg'oqchilik", "A long period without rain.", "The region suffered a severe drought."],
-    ["A2", "flood", "sel", "An overflow of water onto land.", "The flood damaged many homes."],
-    ["B1", "global warming", "global isish", "The rise in Earth's average temperature over time.", "Global warming affects weather patterns."],
-    ["B1", "greenhouse effect", "issiqxona effekti", "The trapping of heat by gases in the atmosphere.", "The greenhouse effect keeps Earth warm."],
-    ["B1", "extreme weather", "keskin ob-havo", "Unusually severe weather events.", "Extreme weather is becoming more common."],
-    ["B1", "carbon dioxide", "uglerod dioksidi", "A gas released by burning fuels and breathing.", "Cars release carbon dioxide into the air."],
-    ["B1", "melting ice", "muzning erishi", "Ice turning to water due to warming.", "Melting ice raises sea levels."],
-    ["B2", "climate crisis", "iqlim inqirozi", "The severe and urgent problem of climate change.", "World leaders discussed the climate crisis."],
-    ["B2", "sea level rise", "dengiz sathining ko'tarilishi", "The increase in ocean water levels.", "Sea level rise threatens coastal cities."],
-    ["B2", "carbon neutral", "uglerodga neytral", "Having a net zero carbon footprint.", "The company aims to be carbon neutral by 2030."],
-    ["B2", "climate policy", "iqlim siyosati", "Government rules addressing climate change.", "The new climate policy sets emission targets."],
-    ["B2", "renewable energy", "qayta tiklanadigan energiya", "Energy from sources that naturally replenish, like wind.", "Renewable energy use is growing fast."],
-    ["C1", "climate resilience", "iqlimga chidamlilik", "The ability to withstand and recover from climate impacts.", "The city invested in climate resilience projects."],
-    ["C1", "decarbonization", "uglerodsizlashtirish", "Reducing carbon emissions in an economy.", "Decarbonization is key to fighting climate change."],
-    ["C1", "climate mitigation", "iqlim ta'sirini yumshatish", "Actions to reduce the causes of climate change.", "Climate mitigation efforts include renewable energy adoption."],
-    ["C1", "tipping point", "keskin burilish nuqtasi", "A critical threshold causing large, often irreversible change.", "Scientists warn of a climate tipping point."],
-    ["C1", "carbon sequestration", "uglerodni ushlab qolish", "The capture and storage of carbon dioxide.", "Forests play a key role in carbon sequestration."],
-    ["C2", "anthropogenic climate change", "inson keltirib chiqargan iqlim o'zgarishi", "Climate change caused by human activity.", "Anthropogenic climate change is driven mainly by fossil fuels."],
-    ["C2", "climate justice", "iqlim adolati", "Fair treatment of all people in addressing climate change.", "Climate justice highlights the impact on poorer nations."],
-    ["C2", "planetary boundary", "sayyoraviy chegara", "A limit within which humanity can safely operate.", "Scientists identified several planetary boundaries at risk."],
-    ["C2", "geoengineering", "geoinjiniring", "Large-scale intervention in Earth's systems to counter warming.", "Geoengineering remains a controversial climate solution."],
-    ["C2", "carbon offsetting", "uglerodni kompensatsiya qilish", "Compensating for emissions by funding equivalent reductions elsewhere.", "The airline offers carbon offsetting for flights."],
-  ],
-  working_from_home: [
-    ["A1", "home", "uy", "The place where a person lives.", "I work from home."],
-    ["A1", "work", "ishlamoq", "To do a job or task.", "She works every day."],
-    ["A1", "computer", "kompyuter", "An electronic device for processing data.", "I use my computer for work."],
-    ["A1", "desk", "stol", "A piece of furniture for working at.", "My desk is near the window."],
-    ["A1", "internet", "internet", "A global network connecting computers.", "The internet connection is fast."],
-    ["A2", "remote", "masofaviy", "Not in the same physical location.", "He has a remote job."],
-    ["A2", "schedule", "jadval", "A plan for when work will be done.", "My work schedule is flexible."],
-    ["A2", "meeting", "yig'ilish", "A gathering to discuss work.", "We have a meeting at noon."],
-    ["A2", "online", "onlayn", "Connected to the internet.", "The training is online."],
-    ["A2", "laptop", "noutbuk", "A portable computer.", "I bring my laptop everywhere."],
-    ["B1", "remote work", "masofaviy ish", "Working from a location outside the traditional office.", "Remote work became common recently."],
-    ["B1", "work schedule", "ish jadvali", "The planned hours and days of work.", "Her work schedule changed this month."],
-    ["B1", "video call", "video qo'ng'iroq", "A call with live video between people.", "We had a video call with the team."],
-    ["B1", "home office", "uy ofisi", "A workspace set up at home.", "He set up a home office."],
-    ["B1", "productivity", "unumdorlik", "The effectiveness of work output.", "Working from home increased her productivity."],
-    ["B2", "work-life integration", "ish va hayotni uyg'unlashtirish", "Blending work and personal life smoothly.", "Remote work allows better work-life integration."],
-    ["B2", "digital nomad", "raqamli ko'chmanchi", "A person who works remotely while traveling.", "She became a digital nomad after quitting her office job."],
-    ["B2", "hybrid work", "gibrid ish", "A mix of remote and in-office work.", "The company adopted a hybrid work model."],
-    ["B2", "virtual meeting", "virtual yig'ilish", "A meeting held online rather than in person.", "The virtual meeting lasted an hour."],
-    ["B2", "self-discipline", "o'z-o'zini nazorat qilish", "The ability to control one's behavior and stay focused.", "Remote work requires strong self-discipline."],
-    ["C1", "telecommuting", "masofadan ishlash", "Working remotely using telecommunications technology.", "Telecommuting reduces commuting time."],
-    ["C1", "workplace flexibility", "ish joyi moslashuvchanligi", "The ability to adjust when and where work happens.", "Workplace flexibility improves employee satisfaction."],
-    ["C1", "asynchronous work", "vaqt jihatidan mos kelmaydigan ish", "Work not requiring everyone online at the same time.", "Asynchronous work suits global remote teams."],
-    ["C1", "digital collaboration", "raqamli hamkorlik", "Working together using online tools.", "Digital collaboration tools improved team communication."],
-    ["C1", "remote onboarding", "masofaviy moslashtirish (yangi xodim)", "Integrating a new employee without being in-person.", "Remote onboarding requires clear documentation."],
-    ["C2", "distributed workforce", "tarqoq ish kuchi", "Employees working from various locations worldwide.", "The company manages a fully distributed workforce."],
-    ["C2", "work-from-anywhere policy", "istalgan joydan ishlash siyosati", "A company rule allowing employees to work from any location.", "Their work-from-anywhere policy attracted top talent."],
-    ["C2", "virtual presenteeism", "virtual mavjudlik ko'rsatish bosimi", "Feeling pressured to appear constantly online while working remotely.", "Virtual presenteeism can lead to burnout."],
-    ["C2", "decentralized team", "markazlashmagan jamoa", "A team without a single central office location.", "They built a decentralized team across five countries."],
-    ["C2", "autonomy paradox", "mustaqillik paradoksi", "The tension between freedom and structure in remote work.", "The autonomy paradox challenges many remote managers."],
-  ],
-  social_media: [
-    ["A1", "phone", "telefon", "A device used for calling and apps.", "I use my phone a lot."],
-    ["A1", "post", "post qilmoq", "To share content online.", "She posted a new photo."],
-    ["A1", "photo", "rasm", "A picture taken with a camera.", "He shared a nice photo."],
-    ["A1", "like", "layk (yoqtirish)", "To show approval of a post online.", "I liked your post."],
-    ["A1", "share", "ulashmoq", "To send content to others online.", "Please share this video."],
-    ["A2", "profile", "profil", "A personal page on a social platform.", "Update your profile picture."],
-    ["A2", "follower", "obunachi", "A person who follows someone's account.", "She has many followers."],
-    ["A2", "comment", "izoh", "A written reaction to a post.", "He left a kind comment."],
-    ["A2", "message", "xabar", "A short piece of communication sent online.", "I sent her a message."],
-    ["A2", "upload", "yuklash", "To put content onto the internet.", "He uploaded a new video."],
-    ["B1", "social network", "ijtimoiy tarmoq", "An online platform connecting people.", "Instagram is a popular social network."],
-    ["B1", "influencer", "influenser", "A person with the power to affect others' opinions online.", "The influencer promoted the product."],
-    ["B1", "hashtag", "xeshteg", "A word or phrase preceded by # used to categorize posts.", "The hashtag went viral."],
-    ["B1", "viral", "viral (tez tarqaladigan)", "Spreading quickly online.", "The video went viral overnight."],
-    ["B1", "notification", "bildirishnoma", "An alert sent by an app or website.", "I got a notification about your comment."],
-    ["B2", "online presence", "onlayn mavjudlik", "How a person or brand appears on the internet.", "Businesses build their online presence carefully."],
-    ["B2", "digital footprint", "raqamli iz", "The trail of data left by online activity.", "Be mindful of your digital footprint."],
-    ["B2", "echo chamber", "aks-sado kamerasi", "An environment where one only hears similar opinions.", "Social media can create an echo chamber."],
-    ["B2", "cyberbullying", "kiberzo'ravonlik", "Bullying that takes place online.", "Cyberbullying is a serious problem among teens."],
-    ["B2", "algorithmic feed", "algoritmik lenta", "Content shown based on an algorithm's predictions.", "The algorithmic feed shows what you engage with most."],
-    ["C1", "social media addiction", "ijtimoiy tarmoqqa qaramlik", "Excessive, hard-to-control use of social platforms.", "Social media addiction affects sleep and focus."],
-    ["C1", "online validation", "onlayn tasdiqlanish ehtiyoji", "Seeking approval through likes and comments.", "She craved online validation from her posts."],
-    ["C1", "filter bubble", "filtr pufakchasi", "A state of isolation from differing viewpoints online.", "Personalized feeds create a filter bubble."],
-    ["C1", "digital activism", "raqamli faollik", "Using online platforms to promote social or political causes.", "Digital activism helped raise awareness quickly."],
-    ["C1", "content curation", "kontent tanlash/tartiblash", "Selecting and organizing content for an audience.", "Her content curation attracted a loyal following."],
-    ["C2", "attention economy", "e'tibor iqtisodiyoti", "An economy where attention is treated as a scarce resource.", "Social media thrives on the attention economy."],
-    ["C2", "algorithmic bias", "algoritmik noaniqlik", "Unfair outcomes caused by flawed algorithm design.", "Algorithmic bias can affect what content users see."],
-    ["C2", "digital narcissism", "raqamli o'zsevarlik", "Excessive self-focus encouraged by social media use.", "Critics link digital narcissism to constant selfies."],
-    ["C2", "platform monopolization", "platforma monopoliyasi", "A single platform dominating the market.", "Platform monopolization raises concerns about competition."],
-    ["C2", "disinformation", "dezinformatsiya", "False information spread deliberately to deceive.", "Disinformation spreads rapidly on social media."],
-  ],
-  advertising: [
-    ["A1", "ad", "reklama", "A short form of advertisement.", "I saw an ad online."],
-    ["A1", "brand", "brend", "The name or identity of a product.", "This is a famous brand."],
-    ["A1", "poster", "plakat", "A large printed picture used for advertising.", "The poster is on the wall."],
-    ["A1", "TV", "televizor", "A device for watching broadcast programs.", "We saw the ad on TV."],
-    ["A1", "sell", "sotmoq", "To exchange goods for money.", "They sell many products."],
-    ["A2", "commercial", "reklama roligi", "A paid advertisement, especially on TV.", "The commercial was very funny."],
-    ["A2", "slogan", "shior", "A short memorable advertising phrase.", "The company's slogan is catchy."],
-    ["A2", "logo", "logotip", "A symbol representing a brand.", "The logo is on every product."],
-    ["A2", "discount", "chegirma", "A reduction in price.", "The ad offered a big discount."],
-    ["A2", "promote", "targ'ib qilmoq", "To help sell something through advertising.", "They promote the app on social media."],
-    ["B1", "advertisement", "reklama e'loni", "A public notice promoting a product or service.", "The advertisement appeared in the magazine."],
-    ["B1", "marketing campaign", "marketing kampaniyasi", "A planned series of promotional activities.", "The marketing campaign was very successful."],
-    ["B1", "target audience", "maqsadli auditoriya", "The specific group an ad is aimed at.", "Their target audience is young adults."],
-    ["B1", "sponsorship", "homiylik", "Financial support given in exchange for promotion.", "The team gained sponsorship from a bank."],
-    ["B1", "billboard", "billbord", "A large outdoor advertising board.", "There's a huge billboard on the highway."],
-    ["B2", "brand awareness", "brend tanilganligi", "How familiar the public is with a brand.", "The campaign boosted brand awareness."],
-    ["B2", "subliminal messaging", "yashirin ta'sir usuli", "Hidden messages meant to influence subconsciously.", "Critics debated the use of subliminal messaging."],
-    ["B2", "product placement", "mahsulotni joylashtirish", "Featuring a product within media content for promotion.", "The soda brand used product placement in the film."],
-    ["B2", "consumer behavior", "iste'molchi xatti-harakati", "How people make purchasing decisions.", "Advertisers study consumer behavior closely."],
-    ["B2", "viral marketing", "viral marketing", "Marketing that spreads quickly through sharing.", "The viral marketing campaign reached millions."],
-    ["C1", "persuasive advertising", "ishontiruvchi reklama", "Advertising designed to convince people to buy.", "Persuasive advertising relies on emotional appeal."],
-    ["C1", "brand loyalty", "brendga sodiqlik", "A consumer's continued preference for a brand.", "Strong brand loyalty leads to repeat customers."],
-    ["C1", "market saturation", "bozor to'yinganligi", "The point where an ad message reaches maximum audience.", "Market saturation reduced the ad's effectiveness."],
-    ["C1", "native advertising", "tabiiy reklama", "Advertising that matches the form of the platform it's on.", "Native advertising blends in with news content."],
-    ["C1", "ad fatigue", "reklamadan charchash", "Reduced response to ads seen too often.", "Ad fatigue lowered the campaign's engagement."],
-    ["C2", "psychographic targeting", "psixografik moʻljallash", "Targeting ads based on personality and values.", "Psychographic targeting improved ad relevance."],
-    ["C2", "advertising ethics", "reklama etikasi", "Moral principles guiding advertising practices.", "Advertising ethics prohibit misleading claims."],
-    ["C2", "greenwashing", "yashil niqoblash", "Falsely presenting a product as environmentally friendly.", "The company was accused of greenwashing."],
-    ["C2", "consumer manipulation", "iste'molchini manipulyatsiya qilish", "Using deceptive tactics to influence buying decisions.", "Regulators cracked down on consumer manipulation."],
-    ["C2", "media saturation", "media to'yinganligi", "An environment overloaded with advertising messages.", "Media saturation makes it hard for ads to stand out."],
-  ],
-  fashion_shopping: [
-    ["A1", "clothes", "kiyim", "Items worn to cover the body.", "I bought new clothes."],
-    ["A1", "shop", "do'kon", "A place where goods are sold.", "The shop is open until nine."],
-    ["A1", "buy", "sotib olmoq", "To obtain something by paying money.", "I want to buy shoes."],
-    ["A1", "wear", "kiymoq", "To have clothing on the body.", "She wears a blue dress."],
-    ["A1", "shoes", "poyabzal", "Footwear worn on the feet.", "These shoes are comfortable."],
-    ["A2", "fashion", "moda", "The popular style of clothing at a time.", "She follows the latest fashion."],
-    ["A2", "sale", "chegirma savdosi", "A period when goods are sold at reduced prices.", "There's a big sale this weekend."],
-    ["A2", "fitting room", "kiyib ko'rish xonasi", "A room for trying on clothes before buying.", "She tried the dress in the fitting room."],
-    ["A2", "size", "o'lcham", "The measurement of clothing.", "What size do you wear?"],
-    ["A2", "trend", "trend", "A general direction in which fashion is developing.", "Bright colors are a trend this year."],
-    ["B1", "outfit", "kiyim to'plami", "A set of clothes worn together.", "She wore a stylish outfit."],
-    ["B1", "boutique", "butik", "A small shop selling fashionable clothes.", "They shopped at a boutique downtown."],
-    ["B1", "bargain", "arzon narxdagi xarid", "A good deal, cheaper than usual.", "She found a great bargain at the mall."],
-    ["B1", "fashion trend", "moda tendensiyasi", "A popular style at a given time.", "Vintage clothing is a fashion trend now."],
-    ["B1", "online shopping", "onlayn xarid", "Buying goods over the internet.", "Online shopping is very convenient."],
-    ["B2", "fast fashion", "tezkor moda", "Cheap, mass-produced clothing following current trends.", "Fast fashion has a big environmental impact."],
-    ["B2", "consumerism", "iste'molchilik", "A focus on buying goods and services.", "Consumerism drives much of the fashion industry."],
-    ["B2", "retail therapy", "xarid orqali dam olish", "Shopping to improve one's mood.", "She went shopping as a form of retail therapy."],
-    ["B2", "sustainable fashion", "barqaror moda", "Clothing produced in an environmentally responsible way.", "Sustainable fashion is gaining popularity."],
-    ["B2", "impulse buying", "spontan xarid", "Making unplanned purchases on a whim.", "Impulse buying often leads to regret."],
-    ["C1", "conspicuous consumption", "ko'zga tashlanadigan iste'mol", "Buying expensive items to display wealth.", "Conspicuous consumption is common among the wealthy."],
-    ["C1", "fashion industry", "moda sanoati", "The business sector focused on clothing design and sales.", "The fashion industry employs millions worldwide."],
-    ["C1", "ethical consumerism", "axloqiy iste'molchilik", "Buying products made in socially responsible ways.", "Ethical consumerism is influencing brand choices."],
-    ["C1", "brand identity", "brend o'ziga xosligi", "The distinct image and values of a brand.", "The company built a strong brand identity."],
-    ["C1", "retail disruption", "chakana savdo o'zgarishi", "Major change in how retail businesses operate.", "Online shopping caused significant retail disruption."],
-    ["C2", "haute couture", "yuqori moda", "High-end, custom-made fashion design.", "The designer showcased haute couture at the show."],
-    ["C2", "sartorial elegance", "kiyinishdagi nafosat", "Refined and stylish taste in clothing.", "He is known for his sartorial elegance."],
-    ["C2", "fashion zeitgeist", "davr moda ruhi", "The defining fashion spirit of an era.", "The exhibit captured the fashion zeitgeist of the 90s."],
-    ["C2", "overconsumption", "haddan tashqari iste'mol", "Consuming more than necessary or sustainable.", "Overconsumption of clothing harms the environment."],
-    ["C2", "planned obsolescence", "rejalashtirilgan eskirish", "Designing products to become outdated quickly.", "Planned obsolescence encourages constant repurchasing."],
-  ],
-};
+export const VOCAB_WORDS = Object.entries(RAW).flatMap(([topicId, rows]) =>
+  rows.map(([level, term, translation, def, example], i) => ({
+    id: `${topicId}-${i + 1}`,
+    topicId,
+    level,
+    term,
+    translation,
+    def,
+    example,
+  }))
+);
 
-export const VOCAB_WORDS = [
-  ...Object.entries(RAW).flatMap(([topicId, rows]) =>
-    rows.map(([level, term, translation, def, example], i) => ({
-      id: `${topicId}-${i + 1}`,
-      topicId,
-      level,
-      term,
-      translation,
-      def,
-      example,
-    }))
-  ),
-  ...Object.entries(RAW2).flatMap(([topicId, rows]) =>
-    rows.map(([level, term, translation, def, example], i) => ({
-      id: `${topicId}-${i + 1}`,
-      topicId,
-      level,
-      term,
-      translation,
-      def,
-      example,
-    }))
-  ),
+
+export const IELTS_TOPICS = [
+  { id: "friends_family", icon: "👨‍👩‍👧‍👦", name: "Do'stlar va oila" },
+  { id: "food_nutrition", icon: "🍽", name: "Ovqat va oziqlanish" },
+  { id: "travel_tourism", icon: "🧳", name: "Sayohat va turizm" },
+  { id: "modern_technology", icon: "📱", name: "Zamonaviy texnologiya" },
+  { id: "coronavirus", icon: "😷", name: "Sog'liqni saqlash" },
+  { id: "pollution_environment", icon: "🌍", name: "Atrof-muhit va tabiat" },
+  { id: "people_personalities", icon: "🎭", name: "Odamlar va xarakterlar" },
+  { id: "fitness_health", icon: "💪", name: "Jismoniy tarbiya va salomatlik" },
+  { id: "school_education", icon: "🏫", name: "Maktab va ta'lim" },
+  { id: "work_careers", icon: "🧑‍💻", name: "Ish va martaba" },
+  { id: "accommodation", icon: "🏠", name: "Turar joy" },
+  { id: "books_film_art", icon: "🎨", name: "Kitoblar, filmlar va san'at" },
+  { id: "climate_change", icon: "🌡", name: "Iqlim o'zgarishi" },
+  { id: "social_media", icon: "📲", name: "Ijtimoiy tarmoqlar" },
+  { id: "advertising", icon: "📢", name: "Reklama" },
+  { id: "fashion_shopping", icon: "👗", name: "Moda va xarid qilish" },
 ];
 
-// IELTS Speaking uchun boy kontent: so'z birikmalari guruhlari + Part 1/2/3 namuna javoblar.
-// Har bir mavzu uchun alohida to'ldiriladi (referens: ieltspodcast.com uslubi).
-// Javob matnlarida **so'z birikmasi** ko'rinishida belgilangan joylar qalin qilib chiqariladi.
 export const IELTS_CONTENT = {
   friends_family: {
-    groups: [
-      {
-        title: "Do'stlik va aloqani saqlash",
-        phrases: [
-          { phrase: "keep in touch with", translation: "aloqani saqlab turmoq", def: "to remain in contact with someone" },
-          { phrase: "lose touch with", translation: "aloqani uzib qo'ymoq", def: "to stop being in contact with someone" },
-          { phrase: "get back in touch", translation: "qayta aloqaga chiqmoq", def: "to contact someone again after a gap" },
-          { phrase: "have a lot in common", translation: "ko'p umumiylikka ega bo'lmoq", def: "to share similar interests or views" },
-          { phrase: "hit it off", translation: "darhol chiqishib ketmoq", def: "to like each other immediately" },
-          { phrase: "go our separate ways", translation: "har xil yo'llarga ketmoq", def: "to take different paths in life" },
-          { phrase: "catch up", translation: "gaplashib, yangiliklarni bilishmoq", def: "to share news after not seeing each other for a while" },
-          { phrase: "a lifelong friend", translation: "umr bo'yi do'st", def: "a friend one has had for most of one's life" },
-          { phrase: "nurture a friendship", translation: "do'stlikni asrab-avaylamoq", def: "to look after and develop a friendship over time" },
-          { phrase: "stand the test of time", translation: "vaqt sinovidan o'tmoq", def: "to last a long time despite challenges" },
-        ],
-      },
-      {
-        title: "Oila a'zolari va munosabatlar",
-        phrases: [
-          { phrase: "close-knit family", translation: "hamjihat oila", def: "a family with strong, close relationships" },
-          { phrase: "extended family", translation: "keng oila", def: "relatives beyond parents and children, like aunts and cousins" },
-          { phrase: "immediate family", translation: "yaqin oila", def: "one's spouse, parents, and children" },
-          { phrase: "distant relative", translation: "uzoq qarindosh", def: "a relative who is not closely connected" },
-          { phrase: "a shoulder to cry on", translation: "tayanch bo'ladigan inson", def: "someone who offers comfort during hard times" },
-          { phrase: "a relationship of trust", translation: "ishonchga asoslangan munosabat", def: "a connection built on mutual confidence" },
-          { phrase: "get to know one another", translation: "bir-birini yaqindan bilib olish", def: "to learn about each other over time" },
-          { phrase: "dear to my heart", translation: "yuragimga aziz", def: "someone or something one cares about deeply" },
-          { phrase: "arrange a get-together", translation: "uchrashuv tashkil qilmoq", def: "to plan a meeting or gathering" },
-          { phrase: "share a common background", translation: "umumiy kelib chiqishga ega bo'lmoq", def: "to have a similar cultural or family heritage" },
-        ],
-      },
+    collocations: [
+      { phrase: "bad at keeping in touch with", translation: "aloqada bo'lishni yaxshi bilmaslik", def: "not good at maintaining contact with someone" },
+      { phrase: "get back in touch", translation: "qayta aloqaga chiqmoq", def: "contact someone again" },
+      { phrase: "have a lot in common", translation: "ko'p umumiy jihatlarga ega bo'lmoq", def: "share the same interests" },
+      { phrase: "hit it off", translation: "bir-biriga darhol yoqmoq", def: "to like each other straight away" },
+      { phrase: "a shoulder to cry on", translation: "yig'lab dardini aytish uchun yelka", def: "someone to sympathize with you" },
+      { phrase: "close-knit family", translation: "hamjihat, ahil oila", def: "a close family with common interests" },
+      { phrase: "extended family", translation: "katta oila (qarindoshlar)", def: "uncles, aunts and cousins form part of the extended family" },
+      { phrase: "nurture our friendships", translation: "do'stlikni mustahkamlash", def: "looking after our relationships with friends" },
+      { phrase: "stand the test of time", translation: "vaqt sinovidan o'tmoq", def: "to last a long time" },
+      { phrase: "lose touch with", translation: "aloqani uzmoq", def: "to lose contact with someone" }
     ],
     part1: [
-      {
-        q: "Do you come from a large family?",
-        a: "Not especially. My **immediate family** is quite small, but I have a fairly **extended family** with several aunts, uncles, and cousins. We're a **close-knit family** though, so we try to **keep in touch with** one another regularly, even if we don't all live in the same city.",
-      },
-      {
-        q: "Do you often see your friends from childhood?",
-        a: "Not as often as I'd like, to be honest. We've **gone our separate ways** in terms of careers and cities, so we've partly **lost touch with** each other. But whenever we do manage to **catch up**, it feels like no time has passed at all, which I think shows we still **have a lot in common**.",
-      },
-      {
-        q: "Is family important in your culture?",
-        a: "Extremely important. We're taught from a young age to **nurture** our **friendships** with relatives and to treat family gatherings as a priority. Even **distant relatives** are welcomed warmly, and we make a real effort to **arrange a get-together** for birthdays and holidays.",
-      },
+      { q: "Do you come from a large family?", a: "My immediate family is not very big, but I have a large **extended family** that includes many uncles, aunts, and cousins. We are a **close-knit family**, and we make sure to **keep in touch with** one another regularly." },
+      { q: "When was the last time you had a family function?", a: "Our extended family got together last year to celebrate my grandfather's eightieth birthday. He is very dear to my heart." },
+      { q: "Would you take a friend on a family holiday?", a: "I have! My parents believe that we should **nurture our friendships**, so they encouraged me to bring my closest friend along on our last seaside trip." }
     ],
     part2: {
-      cue: "Describe a close friend from your past that you are still in contact with.",
-      bullets: ["who this person is", "how you met", "what you enjoy doing together"],
-      closing: "and explain why your friendship has lasted.",
-      answer:
-        "I'd like to talk about a friend I've known since primary school, someone I could easily call **a lifelong friend**. We met on our very first day of class and, for some reason, **hit it off** almost immediately — we were both a little shy, and that shared nervousness somehow brought us together.\n\nOver the years, even though we studied at different universities and now live in different cities, we've made a real effort to **keep in touch with** each other. We message often, and whenever one of us visits the other's city, we always try to **arrange a get-together**, even if it's just a quick coffee.\n\nWhat I value most is that we **share a common background** — the same hometown, similar family values, and a lot of inside jokes from school. Because of that, she's **dear to my heart** in a way that newer friends simply aren't yet.\n\nI think our friendship has managed to **stand the test of time** because we never stopped making the effort. Friendships don't survive by accident; you have to actively **nurture** them, and I think we both understood that from early on.",
+      cue: "Describe your best friend.",
+      bullets: ["who the person is", "how and where you met", "what you like doing together", "explain why this friendship is important to you"],
+      answer: "My best friend and I got to know each other when we were still very young, living in neighbouring houses. We had a **lot in common**, so we soon **hit it off**. As we have grown older, we moved to different cities, but our bond has **stood the test of time**. Whenever I face difficulties, she is always **a shoulder to cry on**."
     },
     part3: [
-      {
-        q: "Do you think technology has made it easier to maintain friendships?",
-        a: "In some ways, definitely. It's much easier to **keep in touch with** people abroad than it used to be — a quick message can bridge huge distances. That said, I think there's a risk that people rely too heavily on messaging and forget to actually **arrange a get-together** in person, which I still believe is more meaningful.",
-      },
-      {
-        q: "Why do you think some childhood friendships fade over time while others last?",
-        a: "I think it often comes down to effort and shared values. Friends who **have a lot in common**, whether that's interests, humor, or life goals, tend to find it easier to **nurture** the relationship even as life gets busier. Friendships that fade are often ones where both people quietly stop trying, and eventually they simply **lose touch with** one another.",
-      },
-      {
-        q: "Is it important for children to have a close relationship with their extended family?",
-        a: "I believe so, yes. Growing up in a **close-knit family** that includes grandparents, aunts, and cousins gives children a wider support network and a stronger sense of identity. Even if some relatives are considered **distant relatives** geographically, maintaining that connection teaches children the value of **a relationship of trust** beyond just their parents.",
-      },
-    ],
+      { q: "Do you think professional colleagues should be friends outside of work?", a: "I think it is important to have a good working relationship. However, while colleagues should extend the hand of friendship to newcomers, excessive personal involvement can sometimes complicate workplace decisions." },
+      { q: "How is social media changing modern friendships?", a: "Social media makes it much easier to **get back in touch** with childhood friends and stay connected with **extended family** across the globe, though digital interaction cannot fully replace face-to-face quality time." }
+    ]
   },
+
   food_nutrition: {
-    groups: [
-      {
-        title: "Ovqatlanish odatlari va ta'm",
-        phrases: [
-          { phrase: "a fussy eater", translation: "tanlab ovqatlanadigan odam", def: "someone who dislikes many types of food" },
-          { phrase: "eat like a horse", translation: "juda ko'p ovqatlanmoq", def: "to eat a very large amount" },
-          { phrase: "have a sweet tooth", translation: "shirinlikka ishqiboz bo'lmoq", def: "to particularly enjoy sweet food" },
-          { phrase: "a balanced diet", translation: "muvozanatli ovqatlanish", def: "a diet containing the right proportion of different foods" },
-          { phrase: "junk food", translation: "foydasiz ovqat", def: "food that is unhealthy but often tasty and convenient" },
-          { phrase: "a slap-up meal", translation: "hashamatli ziyofat taomi", def: "a large, indulgent meal, often for a special occasion" },
-          { phrase: "calm the hunger pangs", translation: "ochlik hissini bosmoq", def: "to reduce the discomfort of hunger" },
-          { phrase: "a home-cooked meal", translation: "uyda pishirilgan taom", def: "a meal prepared at home rather than bought" },
-          { phrase: "cut down on something", translation: "iste'molni kamaytirmoq", def: "to reduce the amount of something one consumes" },
-          { phrase: "dying of hunger", translation: "juda och qolgan", def: "extremely hungry (informal exaggeration)" },
-        ],
-      },
-      {
-        title: "Restoranlar va ovqat tayyorlash",
-        phrases: [
-          { phrase: "fine dining", translation: "nafis restoran taomlari", def: "high-quality food served in a formal setting" },
-          { phrase: "a doggy bag", translation: "qolgan ovqatni uyga olib ketish paketi", def: "a bag used to take leftover restaurant food home" },
-          { phrase: "mouth-watering", translation: "og'iz suvini keltiradigan", def: "extremely appetizing" },
-          { phrase: "savour the food", translation: "ovqat ta'midan bahramand bo'lmoq", def: "to enjoy food slowly and fully" },
-          { phrase: "a ready meal", translation: "tayyor taom", def: "a pre-cooked meal that only needs heating" },
-          { phrase: "food preparation", translation: "ovqat tayyorlash jarayoni", def: "the process of getting food ready to eat" },
-          { phrase: "a family recipe", translation: "oilaviy retsept", def: "a dish passed down within a family" },
-          { phrase: "eat out", translation: "tashqarida ovqatlanmoq", def: "to have a meal at a restaurant rather than at home" },
-          { phrase: "wine and dine someone", translation: "kimnidir hashamatli mehmon qilmoq", def: "to entertain someone with fine food and drink" },
-          { phrase: "an acquired taste", translation: "asta-sekin yoqib qoladigan ta'm", def: "something that people usually learn to enjoy over time" },
-        ],
-      },
+    collocations: [
+      { phrase: "a balanced diet", translation: "muvozanatli ovqatlanish", def: "a diet with the right amounts of different foods" },
+      { phrase: "nutritious food", translation: "to'yimli va foydali ovqat", def: "food containing substances the body needs" },
+      { phrase: "home-cooked meal", translation: "uy taomi", def: "a meal prepared at home rather than bought" },
+      { phrase: "packed with vitamins", translation: "vitaminlarga boy", def: "containing a high amount of vitamins" },
+      { phrase: "daily consumption", translation: "kundalik iste'mol", def: "the amount eaten every day" },
+      { phrase: "processed food", translation: "qayta ishlangan oziq-ovqat", def: "food altered from its natural state" },
+      { phrase: "junk food", translation: "zararli tezkor taom", def: "food that is unhealthy but tasty" },
+      { phrase: "dietary requirement", translation: "parhez / ovqatlanish talabi", def: "specific food needs of a person" },
+      { phrase: "organic produce", translation: "organik tabiiy mahsulot", def: "food grown without artificial chemicals" },
+      { phrase: "food security", translation: "oziq-ovqat xavfsizligi", def: "reliable access to sufficient affordable food" }
     ],
     part1: [
-      {
-        q: "What kind of food do you like?",
-        a: "I wouldn't say I'm **a fussy eater** at all — I enjoy trying most cuisines. That said, I definitely **have a sweet tooth**, so if there's a dessert on the menu, I'll almost always order it. My flatmate jokes that I can **eat like a horse** when it comes to anything chocolate-based.",
-      },
-      {
-        q: "Do you prefer to cook at home or eat out?",
-        a: "I'd say it's a mix, but I try to prioritize **a home-cooked meal** during the week, both for health and for cost reasons. On weekends, though, I like to **eat out**, especially somewhere offering **fine dining**, just to treat myself after a busy week.",
-      },
-      {
-        q: "Do you think you eat a healthy diet?",
-        a: "For the most part, yes, though I'm trying to **cut down on** processed snacks. I generally aim for **a balanced diet** with plenty of vegetables, but I'll admit that **junk food** still sneaks in more often than I'd like to admit.",
-      },
+      { q: "What kind of food do you like to eat?", a: "I really enjoy fresh **home-cooked meals**, especially dishes that are **packed with vitamins** and seasonal vegetables. I try to maintain **a balanced diet** throughout the week." },
+      { q: "Is fast food popular in your country?", a: "Yes, fast food and **processed food** have become increasingly popular among younger people because of their busy schedules, though many are now turning back to **nutritious food**." }
     ],
     part2: {
-      cue: "Describe your favourite meal.",
-      bullets: ["what the meal is", "when you usually eat it", "who prepares it"],
-      closing: "and explain why it is your favourite.",
-      answer:
-        "My favourite meal is actually a fairly simple one — a traditional dish my grandmother makes, based on **a family recipe** that's been passed down for at least three generations. It's not something you'd find in **fine dining** restaurants; it's humble, home-style cooking, but to me, no restaurant meal can compare.\n\nWe usually have it on Sundays, when the whole family gets together. My grandmother insists on doing all the **food preparation** herself, even though she's offered help every time — she says the secret ingredient is patience, which always makes us laugh.\n\nWhat I love most is watching everyone **savour the food** slowly, rather than rushing through it the way we often do during the week. It's honestly the kind of **mouth-watering** meal that makes you want to **eat like a horse**, even if you're not particularly hungry beforehand.\n\nIt's my favourite not just because of the taste, but because it represents family, tradition, and the rare moments when we all sit down together without rushing off to **calm the hunger pangs** with a quick snack instead.",
+      cue: "Describe a memorable meal you enjoyed.",
+      bullets: ["where you had it", "who you ate with", "what you ate", "why it was so memorable"],
+      answer: "Last summer, my family gathered for a traditional **home-cooked meal** during the harvest festival. We prepared fresh salads made with **organic produce** from our garden and roasted meat with aromatic herbs. It wasn't just about eating **nutritious food**; it was the warmth of being together that made it unforgettable."
     },
     part3: [
-      {
-        q: "Do you think people's eating habits have changed in recent decades?",
-        a: "Definitely. I think reliance on **junk food** and **ready meals** has increased significantly, mainly due to busier lifestyles. Fewer people seem to prioritize **a home-cooked meal**, which is a shame, because I believe cooking from scratch generally supports **a balanced diet** much more effectively.",
-      },
-      {
-        q: "Why do you think fast food is so popular despite its health risks?",
-        a: "I think convenience is the main driver — when people are exhausted after work, **junk food** offers an easy way to **calm the hunger pangs** without the effort of **food preparation**. There's also the psychological factor: many people genuinely **have a sweet tooth** or crave salty, processed flavors that fast food is specifically designed to satisfy.",
-      },
-      {
-        q: "Should governments do more to promote healthy eating?",
-        a: "I believe so. While individuals are ultimately responsible for their own choices, governments could make **a balanced diet** more accessible and affordable, which isn't always the case currently. Education also matters — teaching children early on to **cut down on** sugar and processed food could have a lasting impact on public health.",
-      },
-    ],
+      { q: "How can governments encourage healthier eating habits?", a: "Governments can introduce subsidies on fresh fruits and vegetables while imposing taxes on sugary drinks and **junk food**. School curriculums should also educate children on the importance of **a balanced diet**." },
+      { q: "Why is food security a major global challenge today?", a: "Climate change and supply chain disruptions severely impact agricultural output. Ensuring reliable **food security** requires sustainable farming practices and equitable distribution worldwide." }
+    ]
   },
+
+  travel_tourism: {
+    collocations: [
+      { phrase: "off the beaten track", translation: "kam o'rganilgan, noan'anaviy yo'nalish", def: "away from frequented places" },
+      { phrase: "exotic destination", translation: "ekzotik, ajoyib manzil", def: "unusual and exciting place to visit" },
+      { phrase: "travelling light", translation: "kam yuk bilan sayohat qilish", def: "traveling with minimal luggage" },
+      { phrase: "magnificent landscapes", translation: "maftunkor manzaralar", def: "stunning and breathtaking natural scenery" },
+      { phrase: "cultural immersion", translation: "madaniyatga to'liq sho'ng'ish", def: "deeply engaging with local culture and traditions" },
+      { phrase: "tourist trap", translation: "sayyohlarni chuv tushiruvchi qimmat joy", def: "a place that attracts tourists and charges high prices" },
+      { phrase: "broaden one's horizons", translation: "dunyoqarashni kengaytirmoq", def: "expand knowledge and experience" },
+      { phrase: "breathtaking views", translation: "ko'z qamashtiruvchi ko'rinish", def: "extremely beautiful views" }
+    ],
+    part1: [
+      { q: "Do you like traveling to new places?", a: "Yes, absolutely! I believe traveling helps **broaden one's horizons** and allows you to experience unique cultures first-hand." },
+      { q: "Do you prefer traveling alone or in a group?", a: "I prefer **travelling light** with a small group of close friends, which allows us to explore destinations **off the beaten track** without feeling restricted." }
+    ],
+    part2: {
+      cue: "Describe a memorable journey or trip you took.",
+      bullets: ["where you went", "how you traveled there", "what you saw and did", "explain why this trip was memorable"],
+      answer: "Two years ago, I visited the ancient city of Samarkand and the mountain valleys of Boysun. The experience offered true **cultural immersion**. Seeing the historic monuments and **breathtaking views** of the ridges was mesmerizing. We deliberately avoided typical **tourist traps** to taste authentic local cuisine."
+    },
+    part3: [
+      { q: "What are the positive and negative impacts of tourism?", a: "Tourism generates vital revenue and job opportunities for local communities. However, mass tourism can cause environmental degradation, rising living costs, and the commercialization of heritage sites." }
+    ]
+  },
+
+  modern_technology: {
+    collocations: [
+      { phrase: "state-of-the-art", translation: "eng zamonaviy, so'nggi rusumdagi", def: "incorporating the newest ideas and technology" },
+      { phrase: "cutting-edge technology", translation: "ilg'or, peshqadam texnologiya", def: "the most advanced stage of a technology" },
+      { phrase: "user-friendly interface", translation: "qulay interfeys", def: "easy for people to understand and use" },
+      { phrase: "artificial intelligence", translation: "sun'iy intellekt", def: "simulation of human intelligence by machines" },
+      { phrase: "digital native", translation: "raqamli asrda tug'ilgan avlod", def: "a person who grew up in the digital age" },
+      { phrase: "automate repetitive tasks", translation: "takroriy ishlarni avtomatlashtirish", def: "use machines to perform routine work" },
+      { phrase: "technological leap", translation: "texnologik sakrash / keskin rivojlanish", def: "a major breakthrough in technology" }
+    ],
+    part1: [
+      { q: "What technological gadget do you use most often?", a: "I use my smartphone daily. It features **cutting-edge technology** that allows me to manage my work, studies, and communications seamlessly." },
+      { q: "How has technology changed education?", a: "It has democratized learning. With online platforms and **user-friendly interfaces**, anyone can access top-tier lectures from anywhere in the world." }
+    ],
+    part2: {
+      cue: "Describe an electronic device or app that you find indispensable.",
+      bullets: ["what it is", "how often you use it", "what features it has", "why it is so essential in your life"],
+      answer: "An app I rely on every single day is my project management and AI productivity tool. Powered by **artificial intelligence**, it helps me **automate repetitive tasks**, organize my schedule, and synthesize research notes. Its **state-of-the-art** algorithm saves me hours every week."
+    },
+    part3: [
+      { q: "Will artificial intelligence eliminate human jobs?", a: "AI will undoubtedly replace routine and manual clerical tasks, but it also creates demand for high-level problem solvers, creative directors, and ethical reviewers." }
+    ]
+  },
+
+  coronavirus: {
+    collocations: [
+      { phrase: "public health crisis", translation: "sog'liqni saqlash inqirozi", def: "a widespread disease threatening public health" },
+      { phrase: "social distancing", translation: "ijtimoiy masofa saqlash", def: "keeping physical distance to prevent infection" },
+      { phrase: "containment measures", translation: "tarqalishni cheklovchi choralar", def: "actions taken to stop disease spread" },
+      { phrase: "frontline workers", translation: "jonbozlik ko'rsatgan xodimlar / shifokorlar", def: "healthcare and essential workers" },
+      { phrase: "vaccine rollout", translation: "vaktsinatsiya jarayoni", def: "the distribution of vaccines to the population" },
+      { phrase: "remote working shift", translation: "masofaviy ishga o'tish", def: "transition to working from home" }
+    ],
+    part1: [
+      { q: "How did pandemic restrictions change your routine?", a: "It accelerated the **remote working shift**. We adopted **social distancing** and relied on digital platforms for daily communication." }
+    ],
+    part2: {
+      cue: "Describe a period when you had to adapt to sudden changes.",
+      bullets: ["when this occurred", "what changes you made", "how you coped", "what you learned"],
+      answer: "During the global **public health crisis**, our entire academic schedule shifted online. Strict **containment measures** required staying home. I learned self-discipline, mastered digital tools, and developed profound respect for our **frontline workers**."
+    },
+    part3: [
+      { q: "How should nations prepare for future health emergencies?", a: "Governments must invest robustly in biomedical research, maintain adequate medical reserves, and establish swift crisis response protocols." }
+    ]
+  },
+
+  pollution_environment: {
+    collocations: [
+      { phrase: "carbon footprint", translation: "uglerod izi", def: "the total greenhouse gas emissions produced by an entity" },
+      { phrase: "renewable energy", translation: "qayta tiklanadigan energiya", def: "energy collected from renewable resources" },
+      { phrase: "sustainable development", translation: "barqaror rivojlanish", def: "economic growth that preserves nature" },
+      { phrase: "fossil fuel dependency", translation: "qazilma yoqilg'iga qaramlik", def: "excessive reliance on coal, oil, and gas" },
+      { phrase: "single-use plastics", translation: "bir martalik plastiklar", def: "plastics used once and discarded" },
+      { phrase: "biodiversity loss", translation: "biologik xilma-xillikning qisqarishi", def: "the extinction of plant and animal species" }
+    ],
+    part1: [
+      { q: "What do you do personally to protect the environment?", a: "I minimize my **carbon footprint** by taking public transit, avoiding **single-use plastics**, and turning off appliances when not in use." }
+    ],
+    part2: {
+      cue: "Describe an environmental concern in your region.",
+      bullets: ["what the issue is", "what causes it", "how it affects citizens", "what solutions are needed"],
+      answer: "Air pollution caused by vehicle emissions and industrial plants is a prominent issue. Transitioning to **renewable energy** and implementing strict emissions limits are vital steps toward **sustainable development**."
+    },
+    part3: [
+      { q: "Who should take prime responsibility for environmental protection?", a: "It requires international cooperation. Policymakers must enforce green regulations, industries must curb waste, and citizens must cultivate eco-conscious lifestyle habits." }
+    ]
+  },
+
+  people_personalities: {
+    collocations: [
+      { phrase: "outgoing personality", translation: "kirishimli, ochiqko'ngil fe'l-atvor", def: "sociable, friendly, and lively" },
+      { phrase: "empathetic listener", translation: "hamdard tinglovchi", def: "able to genuinely understand feelings" },
+      { phrase: "good sense of humour", translation: "hazil tuyg'usiga ega bo'lish", def: "the ability to perceive humor and make others laugh" },
+      { phrase: "tenacious spirit", translation: "qat'iyatli, irodali ruh", def: "persistent and refusing to give up" },
+      { phrase: "reliable and trustworthy", translation: "ishonchli va so'zida turuvchi", def: "dependable in word and deed" },
+      { phrase: "meticulous attention to detail", translation: "mayda detallargacha e'tibor", def: "very precise and thorough" }
+    ],
+    part1: [
+      { q: "How would you describe your personality?", a: "I consider myself an **outgoing personality** who values teamwork. I always strive to be an **empathetic listener** when friends need advice." }
+    ],
+    part2: {
+      cue: "Describe a person who has strongly influenced your life.",
+      bullets: ["who they are", "how you know them", "what personal traits they have", "why they influenced you"],
+      answer: "My mentor at university has had a monumental impact on me. She possessed a **tenacious spirit** and **meticulous attention to detail**, combined with a **good sense of humour** that inspired everyone to excel."
+    },
+    part3: [
+      { q: "Are leaders born or made through experience?", a: "While natural charisma helps, authentic leadership is forged through challenges, emotional intelligence, and continuous self-reflection." }
+    ]
+  },
+
+  fitness_health: {
+    collocations: [
+      { phrase: "physical fitness", translation: "jismoniy tayyorgarlik", def: "general state of health and well-being" },
+      { phrase: "regular cardiovascular exercise", translation: "muntazam yurak-qon tomir mashqlari", def: "consistent cardio workouts" },
+      { phrase: "sedentary lifestyle", translation: "kamharakat turmush tarzi", def: "a lifestyle with little or no physical activity" },
+      { phrase: "mental well-being", translation: "ruhiy osoyishtalik / salomatlik", def: "state of psychological wellness" },
+      { phrase: "preventive healthcare", translation: "profilaktik tibbiyot", def: "measures taken for disease prevention" },
+      { phrase: "build endurance", translation: "chidamlilikni oshirmoq", def: "increase physical stamina" }
+    ],
+    part1: [
+      { q: "How often do you exercise?", a: "I engage in **regular cardiovascular exercise** three times a week, including jogging and swimming, to maintain my **physical fitness**." }
+    ],
+    part2: {
+      cue: "Describe a healthy habit you recently adopted.",
+      bullets: ["what the habit is", "when you started it", "how you maintain it", "what positive changes you noticed"],
+      answer: "To combat a **sedentary lifestyle**, I started walking 10,000 steps each day and doing morning calisthenics. This routine boosted my stamina and noticeably enhanced my **mental well-being**."
+    },
+    part3: [
+      { q: "Why is preventive healthcare more effective than cure?", a: "Preventive measures like balanced nutrition and exercise mitigate chronic diseases early, saving substantial public healthcare expenditure." }
+    ]
+  },
+
+  school_education: {
+    collocations: [
+      { phrase: "academic excellence", translation: "akademik a'lochilik", def: "outstanding performance in studies" },
+      { phrase: "critical thinking skills", translation: "tanqidiy fikrlash ko'nikmalari", def: "ability to analyze information objectively" },
+      { phrase: "rote memorization", translation: "quruq yodlash / tushunmasdan yod olish", def: "memorization based on repetition" },
+      { phrase: "extracurricular activities", translation: "darsdan tashqari mashg'ulotlar", def: "activities pursued outside normal classes" },
+      { phrase: "holistic education", translation: "har tomonlama barkamol ta'lim", def: "education that develops the whole person" }
+    ],
+    part1: [
+      { q: "What was your favorite subject at school?", a: "I loved literature and history because they fostered **critical thinking skills** rather than relying merely on **rote memorization**." }
+    ],
+    part2: {
+      cue: "Describe a teacher who made a lasting impression on you.",
+      bullets: ["who the teacher was", "what subject they taught", "what teaching methods they used", "why you remember them"],
+      answer: "My high school mathematics teacher transformed a difficult subject into an enjoyable discovery process. Rather than pushing **rote memorization**, he encouraged debate, problem-solving, and **extracurricular activities** like math Olympiads."
+    },
+    part3: [
+      { q: "Should education systems prioritize STEM subjects over humanities?", a: "A modern economy needs technical innovators, but humanities cultivate ethics and empathy. A **holistic education** balances both domains." }
+    ]
+  },
+
   work_careers: {
-    groups: [
-      {
-        title: "Ish boshlash va kundalik mehnat",
-        phrases: [
-          { phrase: "land a job", translation: "ishga joylashib olmoq", def: "to successfully get a job, often after effort" },
-          { phrase: "fresh out of university", translation: "universitetni endigina tugatgan", def: "having just graduated" },
-          { phrase: "climb the career ladder", translation: "martaba zinapoyasidan ko'tarilmoq", def: "to advance to higher positions over time" },
-          { phrase: "from scratch", translation: "noldan (boshlamoq)", def: "starting with nothing, from the very beginning" },
-          { phrase: "a steep learning curve", translation: "tez o'rganishni talab qiluvchi jarayon", def: "something that requires a lot of effort to learn quickly" },
-          { phrase: "get the hang of something", translation: "biror narsani o'rganib, qo'l ostiga olmoq", def: "to become familiar with how to do something" },
-          { phrase: "be thrown in at the deep end", translation: "tayyorgarliksiz murakkab vazifaga tashlanmoq", def: "to be given a difficult task with little preparation" },
-          { phrase: "pull your weight", translation: "o'z ulushingni qo'shmoq", def: "to do your fair share of work" },
-          { phrase: "meet a deadline", translation: "muddatga ulgurmoq", def: "to complete work by the required time" },
-          { phrase: "be swamped with work", translation: "ish bilan bo'g'ilib qolmoq", def: "to have too much work to do" },
-          { phrase: "burn the midnight oil", translation: "tunni tunga ulab ishlamoq", def: "to work late into the night" },
-          { phrase: "strike a work-life balance", translation: "ish va hayot muvozanatini topmoq", def: "to balance time between job and personal life" },
-          { phrase: "be under a lot of pressure", translation: "katta bosim ostida bo'lmoq", def: "to feel stressed due to demands at work" },
-          { phrase: "take something in your stride", translation: "vaziyatga sovuqqonlik bilan yondashmoq", def: "to deal with a difficulty calmly" },
-          { phrase: "hit the ground running", translation: "darhol samarali ishlashni boshlamoq", def: "to start a new job and immediately be productive" },
-        ],
-      },
-      {
-        title: "Martaba rivoji va ish o'zgarishi",
-        phrases: [
-          { phrase: "a stepping stone", translation: "keyingi bosqichga sakrash uchun asos", def: "something that helps you progress toward a goal" },
-          { phrase: "a dead-end job", translation: "istiqbolsiz ish", def: "a job with no opportunity for advancement" },
-          { phrase: "get a foot in the door", translation: "sohaga birinchi qadam qo'ymoq", def: "to get an initial opportunity in a field" },
-          { phrase: "be headhunted", translation: "maxsus qidirib topilib, taklif qilinmoq", def: "to be approached by a company because of your skills" },
-          { phrase: "hand in your notice", translation: "ishdan bo'shash haqida rasman xabar bermoq", def: "to formally tell your employer you are leaving" },
-          { phrase: "burn bridges", translation: "aloqalarni butunlay uzib qo'ymoq", def: "to damage a relationship in a way that prevents future opportunities" },
-          { phrase: "a career change", translation: "kasbni butunlay o'zgartirish", def: "moving to a completely different profession" },
-          { phrase: "go freelance", translation: "erkin (frilanser) ishga o'tmoq", def: "to become self-employed, working independently" },
-          { phrase: "job security", translation: "ish barqarorligi", def: "the likelihood of keeping your job long-term" },
-          { phrase: "be made redundant", translation: "shtat qisqartirilishi sababli ishdan bo'shatilmoq", def: "to lose your job because it's no longer needed" },
-          { phrase: "bounce back", translation: "tezda o'ziga kelmoq", def: "to recover quickly from a setback" },
-          { phrase: "network your way into", translation: "aloqalar orqali kirib bormoq", def: "to use contacts to gain access to opportunities" },
-          { phrase: "a golden handshake", translation: "ishdan bo'shatilganda beriladigan katta pul mukofoti", def: "a generous payment given when someone leaves a company" },
-          { phrase: "work your way up", translation: "mehnat bilan yuqoriga ko'tarilmoq", def: "to progress gradually to a higher position through effort" },
-          { phrase: "a career break", translation: "martabada tanaffus", def: "a period away from work, often for personal reasons" },
-        ],
-      },
+    collocations: [
+      { phrase: "work-life balance", translation: "ish va shaxsiy hayot balansi", def: "equilibrium between career and lifestyle" },
+      { phrase: "career advancement", translation: "karyera yuksalishi / o'sishi", def: "promotion and upward mobility in a job" },
+      { phrase: "job satisfaction", translation: "kasbdan qoniqish", def: "fulfillment derived from one's employment" },
+      { phrase: "flexible working arrangements", translation: "moslashuvchan ish tartibi", def: "adjustable hours or remote work" },
+      { phrase: "competitive salary package", translation: "raqobatbardosh maosh to'plami", def: "attractive pay and perks" }
     ],
     part1: [
-      {
-        q: "What do you do for a living?",
-        a: "I currently work as a marketing coordinator. I only **landed the job** a year ago, **fresh out of university**, so there was definitely **a steep learning curve** at first, but I've since **gotten the hang of** most of my responsibilities.",
-      },
-      {
-        q: "Do you enjoy your job?",
-        a: "For the most part, yes. It can get stressful when I'm **swamped with work** and have to **burn the midnight oil** to **meet a deadline**, but I try to **strike a work-life balance** so it doesn't affect me too much.",
-      },
-      {
-        q: "What are your plans for your career?",
-        a: "I'd like to gradually **climb the career ladder** within my company. I see my current role as **a stepping stone** toward a management position in the next few years.",
-      },
+      { q: "What do you look for most in an ideal job?", a: "For me, **job satisfaction** and a healthy **work-life balance** take precedence over sheer salary." }
     ],
     part2: {
-      cue: "Describe a job you would like to do in the future.",
-      bullets: ["what the job is", "what qualifications or skills you would need", "how you would get this job"],
-      closing: "and explain why you would like to do this job.",
-      answer:
-        "A job I would love to do one day is **going freelance** as a graphic designer. Right now, I'm in an office role, but eventually I'd like to **work my way up** in terms of experience and then step out on my own.\n\nTo do this job well, I'd need strong design skills and, more importantly, the discipline to manage my own time, because when you're self-employed nobody is checking whether you **pull your weight** — you're fully responsible for your own success.\n\nI imagine the first year would involve **a steep learning curve**, since running a business is very different from being an employee. I might even need to **hit the ground running**, taking on several small projects at once just to build a reputation.\n\nI'd like to do this job because I value independence, and I think **a career change** like this, while risky, would ultimately let me **strike a** better **work-life balance** than my current nine-to-five position.",
+      cue: "Describe your dream job or career ambition.",
+      bullets: ["what the job entails", "what skills are required", "why you aspire to this role", "how you plan to achieve it"],
+      answer: "My career goal is to lead international business expansion projects. This requires bilingual communication, strategic acumen, and leadership. Companies that offer **flexible working arrangements** and clear pathways for **career advancement** are where I see myself thriving."
     },
     part3: [
-      {
-        q: "Do you think job security is more important than salary?",
-        a: "I think it depends on the person's life stage. Someone with a family might prioritize **job security** over a higher salary, since **being made redundant** unexpectedly can be very disruptive. Younger workers, on the other hand, might be more willing to take risks for better pay.",
-      },
-      {
-        q: 'How has the concept of a "career for life" changed in recent years?',
-        a: "It's changed dramatically. In the past, people often stayed in one company for decades and slowly **worked their way up**. Nowadays, it's common to **go freelance**, take **a career break**, or make **a career change** entirely. I think this is partly due to how competitive the job market has become, and partly due to changing attitudes toward work-life balance.",
-      },
-      {
-        q: "Is it a good idea for employees to change jobs frequently?",
-        a: "There are pros and cons. On one hand, moving jobs can help someone **get a foot in the door** in a new industry or **network their way into** better opportunities. On the other hand, changing jobs too often might make an employer question your commitment, and there's always a risk you'll **burn bridges** with a previous employer if you leave under bad circumstances.",
-      },
-    ],
+      { q: "How is the modern workplace evolving?", a: "Automation and remote tools have rewritten traditional 9-to-5 schedules, placing greater value on autonomy, deliverables, and employee well-being." }
+    ]
   },
-};
 
-// IELTS Writing uchun akademik lug'at: atamalar + kollokatsiyalar + namuna paragraf.
-// Har bir kollokatsiya ORIGINAL misol jumla bilan beriladi (referens saytdan ko'chirilmagan).
-export const WRITING_TOPICS = [
-  { id: "w_climate_change", icon: "🌡", name: "Iqlim o'zgarishi" },
-  { id: "w_environment", icon: "🌍", name: "Atrof-muhit" },
-  { id: "w_sport", icon: "🏅", name: "Sport" },
-  { id: "w_employment", icon: "💼", name: "Bandlik" },
-  { id: "w_education", icon: "🎓", name: "Ta'lim" },
-  { id: "w_crime", icon: "🚨", name: "Jinoyatchilik" },
-];
+  accommodation: {
+    collocations: [
+      { phrase: "residential neighborhood", translation: "tinch aholi yashash mavzesi", def: "an area designated primarily for housing" },
+      { phrase: "spacious layout", translation: "keng va qulay reja", def: "an open, uncrowded interior design" },
+      { phrase: "fully furnished apartment", translation: "to'liq jihozlangan xonadon", def: "a home equipped with all necessary furniture" },
+      { phrase: "proximity to public transit", translation: "jamoat transportiga yaqinlik", def: "closeness to buses and metros" }
+    ],
+    part1: [
+      { q: "Do you live in a house or an apartment?", a: "I live in a **spacious layout** apartment located in a quiet **residential neighborhood** with excellent **proximity to public transit**." }
+    ],
+    part2: {
+      cue: "Describe your ideal living space.",
+      bullets: ["where it would be located", "how it would look inside", "what special amenities it would have", "why it suits you"],
+      answer: "My dream home is an eco-friendly house situated near a green park. It would feature large windows for natural daylight, energy-saving systems, and a dedicated library workspace."
+    },
+    part3: [
+      { q: "Why are housing prices soaring in major cities worldwide?", a: "Urbanization, population influx, and speculation drive demand while urban land availability remains strictly finite." }
+    ]
+  },
 
-export const WRITING_CONTENT = {
-  w_climate_change: {
-    terms: [
-      { term: "climate change", translation: "iqlim o'zgarishi", def: "long-term shifts in global weather patterns" },
-      { term: "global warming", translation: "global isish", def: "the rise in Earth's average temperature over time" },
-      { term: "greenhouse effect", translation: "issiqxona effekti", def: "the trapping of heat by gases in the atmosphere" },
-      { term: "fossil fuels", translation: "fossil yoqilg'ilar", def: "coal, oil, and gas used as energy sources" },
-      { term: "carbon emissions", translation: "uglerod chiqindilari", def: "the release of carbon dioxide into the atmosphere" },
-      { term: "natural disaster", translation: "tabiiy ofat", def: "a severe natural event, e.g. flood or drought" },
-      { term: "renewable energy", translation: "qayta tiklanadigan energiya", def: "energy from sources that don't run out, like wind or sun" },
-      { term: "resource depletion", translation: "resurslarning tugashi", def: "the exhaustion of natural resources" },
-    ],
+  books_film_art: {
     collocations: [
-      { phrase: "tackle climate change", example: "Governments must **tackle climate change** through coordinated policy, not isolated efforts." },
-      { phrase: "a pressing problem", example: "Rising sea levels have become **a pressing problem** for many coastal nations." },
-      { phrase: "a moral responsibility", example: "Some argue that wealthier nations bear **a moral responsibility** to reduce emissions faster." },
-      { phrase: "reduce one's carbon footprint", example: "Simple lifestyle changes can help individuals **reduce their carbon footprint** significantly." },
-      { phrase: "green policies", example: "Voters increasingly expect politicians to introduce **green policies**." },
-      { phrase: "sustainable practices", example: "Businesses are gradually adopting **sustainable practices** to lower their environmental impact." },
-      { phrase: "devastating consequences", example: "Unchecked emissions could lead to **devastating consequences** for future generations." },
+      { phrase: "thought-provoking masterpiece", translation: "chuqur fikrga undovchi durdona asar", def: "work of art that stimulates intellectual reflection" },
+      { phrase: "gripping plot", translation: "qiziqarli va tarang syujet", def: "an exciting storyline that holds attention" },
+      { phrase: "cinematic masterpiece", translation: "kinematografik durdona", def: "an outstanding film" },
+      { phrase: "artistic expression", translation: "badiiy ifoda", def: "the manifestation of artistic creativity" }
     ],
-    sampleParagraph:
-      "It cannot be disputed that the world is currently facing an environmental crisis. According to recent studies, unless action is taken to **tackle climate change**, the **devastating consequences** of global warming will only intensify. While governments clearly hold **a moral responsibility** to introduce **green policies**, individuals can also contribute meaningfully by making an effort to **reduce their carbon footprint** in their daily lives. Ultimately, addressing this **pressing problem** will require a combination of institutional reform and personal accountability.",
+    part1: [
+      { q: "Do you enjoy reading books or watching movies?", a: "I love both! A captivating book with a **gripping plot** sparks imagination, while a **cinematic masterpiece** delivers stunning visual storytelling." }
+    ],
+    part2: {
+      cue: "Describe a book or movie that left a strong impression on you.",
+      bullets: ["what it was", "what the theme was", "what characters you liked", "why it resonated with you"],
+      answer: "I recently read a historical novel that was a true **thought-provoking masterpiece**. It explored perseverance through adversity, illustrating the strength of the human spirit."
+    },
+    part3: [
+      { q: "Should art and cultural institutions receive public funding?", a: "Yes, museums and theaters preserve cultural identity, inspire innovation, and enrich the spiritual life of society." }
+    ]
   },
-  w_environment: {
-    terms: [
-      { term: "pollution", translation: "ifloslanish", def: "the introduction of harmful substances into the environment" },
-      { term: "deforestation", translation: "o'rmonlarni kesish", def: "the clearing of forests, usually for other land use" },
-      { term: "biodiversity", translation: "biologik xilma-xillik", def: "the variety of life in a particular habitat" },
-      { term: "ecosystem", translation: "ekotizim", def: "a community of living things and their environment" },
-      { term: "endangered species", translation: "yo'q bo'lib ketish arafasidagi tur", def: "a species at risk of extinction" },
-      { term: "conservation", translation: "muhofaza qilish", def: "the protection of nature and natural resources" },
-      { term: "waste management", translation: "chiqindilarni boshqarish", def: "the collection and disposal of waste materials" },
-      { term: "recycling", translation: "qayta ishlash", def: "processing waste materials for reuse" },
-    ],
+
+  climate_change: {
     collocations: [
-      { phrase: "environmental degradation", example: "Rapid industrialization has led to severe **environmental degradation** in the region." },
-      { phrase: "raise public awareness", example: "Campaigns aim to **raise public awareness** about the dangers of plastic pollution." },
-      { phrase: "protect natural habitats", example: "Stricter regulations are needed to **protect natural habitats** from encroaching development." },
-      { phrase: "an ecological imbalance", example: "Overfishing has created **an ecological imbalance** in several coastal waters." },
-      { phrase: "curb harmful emissions", example: "New legislation seeks to **curb harmful emissions** from heavy industry." },
-      { phrase: "strike a balance", example: "Policymakers must **strike a balance** between economic growth and environmental protection." },
+      { phrase: "global warming", translation: "global isish", def: "gradual increase in Earth's temperature" },
+      { phrase: "extreme weather events", translation: "ekstremal ob-havo hodisalari", def: "severe droughts, floods, or storms" },
+      { phrase: "carbon neutrality", translation: "nol uglerod balansiga erishish", def: "net-zero carbon dioxide emissions" },
+      { phrase: "glacier retreat", translation: "muzliklarning erib chekinishi", def: "the melting and shrinking of glaciers" }
     ],
-    sampleParagraph:
-      "Rapid industrial growth in many developing nations has contributed to widespread **environmental degradation**, from polluted rivers to shrinking forests. Experts argue that governments must act swiftly to **protect natural habitats** before further damage occurs. Equally important is the need to **raise public awareness**, since lasting change ultimately depends on how ordinary citizens behave, not only on government policy. As with most environmental debates, the real challenge lies in learning to **strike a balance** between development and preservation.",
+    part1: [
+      { q: "Have you noticed changes in weather patterns in your region?", a: "Yes, summers have become markedly hotter and winters more unpredictable, which points directly to **global warming**." }
+    ],
+    part2: {
+      cue: "Describe an action that individuals can take to combat climate change.",
+      bullets: ["what the action is", "how easy or hard it is to do", "what impact it creates", "why widespread adoption is needed"],
+      answer: "One impactful action is adopting energy-efficient appliances and shifting toward solar energy. Striving toward individual **carbon neutrality** creates collective momentum for green policies."
+    },
+    part3: [
+      { q: "Can international climate accords achieve their stated targets?", a: "They can if developed and emerging economies enforce binding commitments and facilitate green technology transfer." }
+    ]
   },
-  w_sport: {
-    terms: [
-      { term: "competitive sport", translation: "musobaqaviy sport", def: "sport involving direct competition between individuals or teams" },
-      { term: "physical fitness", translation: "jismoniy tayyorgarlik", def: "the condition of being physically healthy and strong" },
-      { term: "performance-enhancing drugs", translation: "natijani oshiruvchi dorilar", def: "substances used illegally to improve athletic performance" },
-      { term: "sports facilities", translation: "sport inshootlari", def: "buildings and equipment used for sports" },
-      { term: "sedentary lifestyle", translation: "harakatsiz turmush tarzi", def: "a lifestyle with little physical activity" },
-      { term: "team spirit", translation: "jamoaviy ruh", def: "a feeling of cooperation among team members" },
-      { term: "sponsorship", translation: "homiylik", def: "financial support given in exchange for promotion" },
-      { term: "athletic performance", translation: "sportchi ko'rsatkichi", def: "how well an athlete performs physically" },
-    ],
+
+  social_media: {
     collocations: [
-      { phrase: "gain a competitive edge", example: "Some athletes resort to banned substances simply to **gain a competitive edge**." },
-      { phrase: "financial incentives", example: "Critics argue that **financial incentives** in professional sport have grown excessive." },
-      { phrase: "promote physical activity", example: "Schools play a key role in helping to **promote physical activity** among children." },
-      { phrase: "combat a sedentary lifestyle", example: "Community sports programs can help **combat a sedentary lifestyle** in urban areas." },
-      { phrase: "foster team spirit", example: "Group sports are often praised for how effectively they **foster team spirit**." },
-      { phrase: "invest in sports facilities", example: "Local governments are being urged to **invest in sports facilities** rather than elite competitions." },
+      { phrase: "digital footprint", translation: "raqamli iz", def: "the information left behind by online activity" },
+      { phrase: "virtual community", translation: "onlayn hamjamiyat", def: "a group communicating online" },
+      { phrase: "information overload", translation: "ma'lumotlar ko'pligidan toliqish", def: "exposure to excessive amounts of data" },
+      { phrase: "viral content", translation: "tez tarqaluvchi ommabop kontent", def: "material circulating rapidly on the web" }
     ],
-    sampleParagraph:
-      "There is little doubt that participation in competitive sport can **foster team spirit** and encourage discipline from an early age. At the same time, concerns remain about the pressure placed on young athletes to **gain a competitive edge**, sometimes through questionable means. Rather than focusing solely on **financial incentives** for elite performers, many argue that governments should **invest in sports facilities** at the community level, since this would do far more to **promote physical activity** among the general population.",
+    part1: [
+      { q: "How much time do you spend on social networks?", a: "I spend about an hour each day following professional updates, but I set boundaries to avoid **information overload**." }
+    ],
+    part2: {
+      cue: "Describe an online community or platform you enjoy being part of.",
+      bullets: ["what platform it is", "what topics are discussed", "how members interact", "why you find it valuable"],
+      answer: "I belong to an international language exchange **virtual community**. Members share learning strategies, conduct mock interviews, and provide mutual constructive feedback."
+    },
+    part3: [
+      { q: "How does social media affect teenage mental health?", a: "Constant comparison and unrealistic benchmarks can breed anxiety, requiring proactive digital literacy and parental guidance." }
+    ]
   },
-  w_employment: {
-    terms: [
-      { term: "job market", translation: "mehnat bozori", def: "the availability of jobs in an economy" },
-      { term: "unemployment", translation: "ishsizlik", def: "the state of not having a paid job" },
-      { term: "job security", translation: "ish barqarorligi", def: "the likelihood of keeping one's job long-term" },
-      { term: "vocational training", translation: "kasb-hunar ta'limi", def: "training for a specific trade or occupation" },
-      { term: "highly skilled workers", translation: "yuqori malakali ishchilar", def: "workers with advanced expertise in a field" },
-      { term: "job satisfaction", translation: "ishdan qoniqish", def: "the feeling of contentment with one's job" },
-      { term: "work-life balance", translation: "ish va hayot muvozanati", def: "a healthy balance between job and personal life" },
-      { term: "labor market flexibility", translation: "mehnat bozori moslashuvchanligi", def: "ease of hiring, firing, and changing jobs" },
-    ],
+
+  advertising: {
     collocations: [
-      { phrase: "enter the job market", example: "Many graduates struggle to **enter the job market** without prior experience." },
-      { phrase: "boost employment opportunities", example: "Investment in small businesses can help **boost employment opportunities** locally." },
-      { phrase: "an unfair advantage", example: "Unpaid internships can give wealthier candidates **an unfair advantage**." },
-      { phrase: "climb the career ladder", example: "Employees who show initiative often **climb the career ladder** faster." },
-      { phrase: "a skills gap", example: "Employers frequently complain about **a skills gap** among recent graduates." },
-      { phrase: "job insecurity", example: "Automation has increased **job insecurity** in several manufacturing sectors." },
+      { phrase: "targeted advertising", translation: "aniq auditoriyaga mo'ljallangan reklama", def: "ads directed at specific consumer segments" },
+      { phrase: "brand loyalty", translation: "brendga sodiqlik", def: "tendency of consumers to buy a specific brand" },
+      { phrase: "persuasive marketing", translation: "ishontiruvchi marketing", def: "techniques designed to convince buyers" },
+      { phrase: "celebrity endorsement", translation: "mashhurlar tavsiyasi orqali reklama", def: "famous persons promoting products" }
     ],
-    sampleParagraph:
-      "As competition to **enter the job market** intensifies, many graduates find themselves at a disadvantage without practical experience, creating what employers often describe as **a skills gap**. Some argue that governments should do more to **boost employment opportunities** through vocational training rather than encouraging everyone toward university degrees. Meanwhile, rising **job insecurity** caused by automation means that even employees who successfully **climb the career ladder** can no longer take long-term stability for granted.",
+    part1: [
+      { q: "Do advertisements influence what you buy?", a: "Sometimes, especially when **targeted advertising** introduces me to a useful tool or high-quality book that aligns with my needs." }
+    ],
+    part2: {
+      cue: "Describe a memorable advertisement you have seen.",
+      bullets: ["what product it was for", "where you saw it", "what happened in the ad", "why it caught your attention"],
+      answer: "I recall an inspiring sports campaign emphasizing resilience. Rather than just selling footwear, it told the story of an athlete overcoming hurdles, establishing genuine emotional resonance and **brand loyalty**."
+    },
+    part3: [
+      { q: "Should advertisements targeted at young children be regulated?", a: "Yes, children lack cognitive defense against **persuasive marketing**, so regulations on sugary snacks and aggressive toy ads are essential." }
+    ]
   },
-  w_education: {
-    terms: [
-      { term: "curriculum", translation: "o'quv dasturi", def: "the subjects taught in a school or course" },
-      { term: "literacy", translation: "savodxonlik", def: "the ability to read and write" },
-      { term: "tuition fees", translation: "o'qish to'lovi", def: "fees charged for instruction, especially at university" },
-      { term: "rote learning", translation: "yodlab olish orqali o'qish", def: "learning through repetition rather than understanding" },
-      { term: "critical thinking", translation: "tanqidiy fikrlash", def: "objective analysis to form a reasoned judgment" },
-      { term: "extracurricular activities", translation: "darsdan tashqari faoliyat", def: "activities outside the regular curriculum" },
-      { term: "academic pressure", translation: "o'quv bosimi", def: "stress related to school or exam performance" },
-      { term: "distance learning", translation: "masofaviy ta'lim", def: "studying remotely rather than in person" },
-    ],
+
+  fashion_shopping: {
     collocations: [
-      { phrase: "foster critical thinking", example: "Modern curricula increasingly aim to **foster critical thinking** rather than mere memorization." },
-      { phrase: "academic achievement", example: "Studies suggest that parental involvement strongly influences **academic achievement**." },
-      { phrase: "a well-rounded education", example: "Extracurricular activities contribute to what many consider **a well-rounded education**." },
-      { phrase: "widen access to education", example: "Scholarships have helped **widen access to education** for low-income students." },
-      { phrase: "an outdated curriculum", example: "Critics argue that many schools still rely on **an outdated curriculum**." },
-      { phrase: "alleviate academic pressure", example: "Reducing the number of standardized tests could help **alleviate academic pressure** on students." },
+      { phrase: "fast fashion", translation: "tezkor va arzon moda", def: "cheap, trendy clothing produced rapidly" },
+      { phrase: "sustainable fashion", translation: "ekologik va barqaror moda", def: "clothing manufactured in an eco-friendly manner" },
+      { phrase: "impulse buying", translation: "o'ylamasdan qilingan xarid", def: "purchasing things without prior planning" },
+      { phrase: "timeless style", translation: "eskirmaydigan klassik uslub", def: "fashion that remains elegant over decades" }
     ],
-    sampleParagraph:
-      "It is often argued that modern schooling relies too heavily on rote memorization instead of aiming to **foster critical thinking**. Reforming what many consider **an outdated curriculum** could go a long way toward improving **academic achievement**, particularly if paired with efforts to **widen access to education** for disadvantaged students. At the same time, policymakers must be careful not to overwhelm students further, since doing so would only **alleviate academic pressure** in theory rather than in practice.",
-  },
-  w_crime: {
-    terms: [
-      { term: "juvenile crime", translation: "voyaga yetmaganlar jinoyatchiligi", def: "crime committed by young people" },
-      { term: "rehabilitation", translation: "reabilitatsiya", def: "the process of restoring an offender to a productive life" },
-      { term: "deterrent", translation: "to'sqinlik qiluvchi omil", def: "something that discourages an action through fear of consequence" },
-      { term: "reoffend", translation: "qayta jinoyat sodir etmoq", def: "to commit another crime after being punished" },
-      { term: "law enforcement", translation: "huquq-tartibot organlari", def: "the police and related agencies that enforce laws" },
-      { term: "custodial sentence", translation: "ozodlikdan mahrum qilish jazosi", def: "a punishment involving imprisonment" },
-      { term: "white-collar crime", translation: "amaldorlik jinoyati", def: "financially motivated, non-violent crime by professionals" },
-      { term: "surveillance", translation: "kuzatuv", def: "close monitoring, especially for security purposes" },
+    part1: [
+      { q: "What is your personal philosophy regarding clothing?", a: "I prefer a **timeless style** made with durable fabrics over chasing temporary trends, which also supports **sustainable fashion**." }
     ],
-    collocations: [
-      { phrase: "a root cause of crime", example: "Poverty is frequently cited as **a root cause of crime** in urban areas." },
-      { phrase: "act as a deterrent", example: "Harsher sentences are believed by some to **act as a deterrent**." },
-      { phrase: "reduce reoffending rates", example: "Vocational programs in prison have been shown to **reduce reoffending rates**." },
-      { phrase: "invest in law enforcement", example: "Some cities have chosen to **invest in law enforcement** rather than social programs." },
-      { phrase: "rehabilitate offenders", example: "Many experts argue that prisons should focus more on how to **rehabilitate offenders**." },
-      { phrase: "a controversial issue", example: "The use of the death penalty remains **a controversial issue** worldwide." },
-    ],
-    sampleParagraph:
-      "Poverty and lack of opportunity are widely regarded as **a root cause of crime**, particularly among young offenders. While tougher legislation is often introduced to **act as a deterrent**, evidence suggests that efforts to **rehabilitate offenders** are far more effective at helping to **reduce reoffending rates** in the long run. Whether governments should **invest in law enforcement** or in social programs designed to prevent crime before it happens remains **a controversial issue** among policymakers.",
-  },
+    part2: {
+      cue: "Describe an item of clothing you really enjoy wearing.",
+      bullets: ["what it is", "where you obtained it", "how often you wear it", "why it is special to you"],
+      answer: "My favourite piece is a classic wool overcoat gifted by my parents for my university graduation. It embodies **timeless style**, offers great warmth, and avoids the disposable ethos of **fast fashion**."
+    },
+    part3: [
+      { q: "Why is consumer awareness shifting away from fast fashion?", a: "People increasingly recognize the textile industry's immense carbon and water waste, choosing ethical and long-lasting garments instead." }
+    ]
+  }
 };
