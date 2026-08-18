@@ -3,11 +3,7 @@ import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
-import {
-  VOCAB_TOPICS, VOCAB_WORDS,
-  IELTS_TOPICS, IELTS_WRITING_TOPICS,
-  IELTS_CONTENT, IELTS_WRITING_CONTENT
-} from "./vocabData";
+import { VOCAB_TOPICS, VOCAB_WORDS, IELTS_CONTENT, WRITING_TOPICS, WRITING_CONTENT } from "./vocabData";
 
 const FONTS = `
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
@@ -31,6 +27,7 @@ const COLORS = {
   greenBg: "#E4F7EE",
 };
 
+// Har bir modulga o'z rangi — bo'limlarni bir-biridan vizual ravishda ajratib turadi
 const MODULE_COLORS = {
   speaking: { accent: "#E0483E", bg: "#FCEAE8", dark: "#A8332B" },
   writing: { accent: "#3B5BDB", bg: "#EAEDFC", dark: "#28409E" },
@@ -43,12 +40,12 @@ const MODULE_COLORS = {
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 const MODULES = [
-  { id: "speaking", icon: "🗣️", name: "Speaking", desc: "AI ekzaminator bilan Part 1–3 amaliyoti", live: true },
-  { id: "writing", icon: "✍️", name: "Writing", desc: "Task 1 va Task 2, AI tekshiruvi bilan", live: true },
+  { id: "speaking", icon: "🗣", name: "Speaking", desc: "AI ekzaminator bilan Part 1–3 amaliyoti", live: true },
+  { id: "writing", icon: "✍", name: "Writing", desc: "Task 1 va Task 2, AI tekshiruvi bilan", live: true },
   { id: "reading", icon: "📖", name: "Reading", desc: "5 xil qism, javob kalitlari bilan", live: false },
   { id: "listening", icon: "🎧", name: "Listening", desc: "6 xil qism, transkript va audio", live: false },
   { id: "business", icon: "💼", name: "Business English", desc: "Ish mavzulari: muzokaralar, taqdimotlar, email", live: true },
-  { id: "vocabulary", icon: "🗂️", name: "Vocabulary & IELTS", desc: "20 biznes mavzusi + 18 IELTS Speaking + 16 IELTS Writing", live: true },
+  { id: "vocabulary", icon: "🗂", name: "Vocabulary", desc: "20 mavzu, 600 so'z — kartochkalar orqali", live: true },
 ];
 
 async function api(path, { token, method = "GET", body, timeoutMs = 55000 } = {}) {
@@ -60,7 +57,7 @@ async function api(path, { token, method = "GET", body, timeoutMs = 55000 } = {}
       method,
       headers: {
         "Content-Type": "application/json",
-        ...(token && token !== "demo-token" ? { Authorization: `Bearer ${token}` } : {}),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       body: body ? JSON.stringify(body) : undefined,
       signal: controller.signal,
@@ -175,16 +172,8 @@ function AuthScreen({ mode, setMode, onAuth }) {
     }
   }
 
-  function handleDemoLogin() {
-    onAuth("demo-token", {
-      full_name: "Demo Foydalanuvchi",
-      email: "demo@bizenglish.uz",
-      cefr_level: "B2",
-    });
-  }
-
   return (
-    <div style={{ maxWidth: 390, margin: "50px auto", padding: "0 24px" }}>
+    <div style={{ maxWidth: 380, margin: "60px auto", padding: "0 24px" }}>
       <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 18 }}>
         {["#E0483E", "#3B5BDB", "#0FA36B", "#8B5CF6", "#F5A623"].map((c) => (
           <div key={c} style={{ width: 22, height: 6, borderRadius: 3, background: c }} />
@@ -196,7 +185,7 @@ function AuthScreen({ mode, setMode, onAuth }) {
       <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft, marginBottom: 24, textAlign: "center" }}>
         {mode === "login" ? "Hisobingizga kiring" : "Yangi hisob yarating"}
       </div>
-      <form onSubmit={submit} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 24, boxShadow: "0 8px 24px rgba(30,42,94,0.06)" }}>
+      <form onSubmit={submit} style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 22, boxShadow: "0 8px 24px rgba(30,42,94,0.06)" }}>
         {mode === "register" && (
           <Field label="To'liq ism" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
         )}
@@ -220,32 +209,12 @@ function AuthScreen({ mode, setMode, onAuth }) {
             fontWeight: 700,
             cursor: loading ? "default" : "pointer",
             opacity: loading ? 0.7 : 1,
-            marginBottom: 10,
           }}
         >
           {loading ? "Yuklanmoqda..." : mode === "login" ? "Kirish" : "Ro'yxatdan o'tish"}
         </button>
-
-        <button
-          type="button"
-          onClick={handleDemoLogin}
-          style={{
-            width: "100%",
-            padding: "11px 0",
-            background: "#FDF2DF",
-            color: COLORS.amberDark,
-            border: `1px solid #F5A623`,
-            borderRadius: 10,
-            fontFamily: "Inter, sans-serif",
-            fontSize: 13,
-            fontWeight: 700,
-            cursor: "pointer",
-          }}
-        >
-          ⚡ Demo rejimida kirish
-        </button>
       </form>
-      <div style={{ textAlign: "center", marginTop: 16, fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft }}>
+      <div style={{ textAlign: "center", marginTop: 14, fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft }}>
         {mode === "login" ? "Hisobingiz yo'qmi?" : "Hisobingiz bormi?"}{" "}
         <button
           onClick={() => setMode(mode === "login" ? "register" : "login")}
@@ -272,10 +241,10 @@ function TopBar({ user, xp, streak, onLogout }) {
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: "IBM Plex Mono, monospace", fontSize: 13, fontWeight: 600, color: "#9C6B0A", background: "#FDF2DF", borderRadius: 999, padding: "5px 12px" }}>
-          🔥 {streak?.current_streak ?? 1} kun
+          🔥 {streak?.current_streak ?? 0}
         </span>
         <span style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: "IBM Plex Mono, monospace", fontSize: 13, fontWeight: 600, color: COLORS.primary, background: "#EAEDFC", borderRadius: 999, padding: "5px 12px" }}>
-          ⚡ {xp} XP
+          ⭐ {xp} XP
         </span>
         <button onClick={onLogout} style={{ background: "none", border: "none", color: COLORS.textSoft, fontFamily: "Inter, sans-serif", fontSize: 12, cursor: "pointer", marginLeft: 4 }}>
           Chiqish
@@ -298,16 +267,16 @@ function Dashboard({ onOpen, xp, streak, level }) {
   return (
     <div style={{ padding: "24px 24px 40px", maxWidth: 760, margin: "0 auto" }}>
       <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
-        <StatTile label="DARAJA" value={level || "B2"} bg="#EAEDFC" fg={COLORS.primary} />
+        <StatTile label="DARAJA" value={level || "A1"} bg="#EAEDFC" fg={COLORS.primary} />
         <StatTile label="XP BALL" value={xp} bg="#FDF2DF" fg={COLORS.amberDark} mono />
-        <StatTile label="KUNLIK SERIYA" value={`🔥 ${streak?.current_streak ?? 1}`} bg="#FCEAE8" fg="#A8332B" mono />
+        <StatTile label="KUNLIK SERIYA" value={`🔥 ${streak?.current_streak ?? 0}`} bg="#FCEAE8" fg="#A8332B" mono />
       </div>
 
       <div style={{ background: COLORS.primary, borderRadius: 16, padding: "20px 24px", marginBottom: 24 }}>
         <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600, color: "#AEB8E0", marginBottom: 10, letterSpacing: 0.3 }}>
           CEFR YO'LI
         </div>
-        <RiverPath current={level || "B2"} />
+        <RiverPath current={level || "A1"} />
       </div>
 
       <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 700, color: COLORS.textSoft, letterSpacing: 0.5, marginBottom: 10 }}>
@@ -352,7 +321,8 @@ function Dashboard({ onOpen, xp, streak, level }) {
 }
 
 function ScoreCard({ feedback }) {
-  if (!feedback) return null;
+  // AI javobidagi "BALL: ..." yoki "TAXMINIY BALL (Band): ..." qatorini ajratib,
+  // katta va yorqin ko'rinishda ko'rsatadi — o'quvchiga motivatsiya beradi.
   const match = feedback.match(/^(BALL[^:]*|TAXMINIY BALL[^:]*):\s*(.+)$/m);
   if (!match) return null;
   const label = match[1].trim();
@@ -378,10 +348,9 @@ function FeedbackView({ feedback }) {
     </div>
   );
 }
-
 function BackButton({ onBack }) {
   return (
-    <button onClick={onBack} style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.primary, background: "none", border: "none", cursor: "pointer", marginBottom: 16, padding: 0, fontWeight: 600 }}>
+    <button onClick={onBack} style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.primary, background: "none", border: "none", cursor: "pointer", marginBottom: 16, padding: 0 }}>
       ← Bosh sahifa
     </button>
   );
@@ -405,37 +374,6 @@ function BusinessModule({ token, onBack }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (token === "demo-token") {
-      setModules([
-        {
-          id: "m1",
-          title: "Xalqaro muzokaralar va bitimlar",
-          vocabulary: [
-            { term: "concession", def: "Muzokarada kelishuvga erishish uchun berilgan yon bosish." },
-            { term: "deadlock", def: "Muzokaralarning boshi berk ko'chaga kirib qolishi." },
-            { term: "win-win solution", def: "Har ikkala tomon uchun manfaatli yechim." },
-          ],
-          keyPhrases: [
-            "I see your point, however we must consider our margin.",
-            "Would you be open to a tiered pricing structure?",
-            "Let's find common ground on the delivery timeline."
-          ]
-        },
-        {
-          id: "m2",
-          title: "Biznes taqdimotlar va Pitching",
-          vocabulary: [
-            { term: "value proposition", def: "Mijozga taklif qilinayotgan asosiy qiymat va foyda." },
-            { term: "market traction", def: "Mahsulotning bozordagi dastlabki muvaffaqiyati va o'sishi." },
-          ],
-          keyPhrases: [
-            "Today, I'd like to walk you through our quarterly roadmap.",
-            "As you can see from this trajectory, user retention has doubled.",
-          ]
-        }
-      ]);
-      return;
-    }
     api("/content/business-modules", { token })
       .then(setModules)
       .catch((e) => setError(e.message));
@@ -450,15 +388,14 @@ function BusinessModule({ token, onBack }) {
         <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.textSoft }}>Yuklanmoqda...</div>
       )}
       {modules && !selected && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 10 }}>
           {modules.map((m) => (
             <button
               key={m.id}
               onClick={() => setSelected(m)}
-              style={{ textAlign: "left", background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: "16px", cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text, boxShadow: "0 2px 8px rgba(0,0,0,0.03)" }}
+              style={{ textAlign: "left", background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 10, padding: "14px", cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text }}
             >
-              <div style={{ fontWeight: 700, color: COLORS.primary, marginBottom: 4 }}>{m.title}</div>
-              <div style={{ fontSize: 12, color: COLORS.textSoft }}>Dars materiallarini ko'rish →</div>
+              {m.title}
             </button>
           ))}
         </div>
@@ -560,13 +497,6 @@ function WritingModule({ token, onBack, onXpChange }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (token === "demo-token") {
-      setLessons([
-        { id: "task1_bar", title: "Task 1 — Bar Chart: Global Energy Transition" },
-        { id: "task2_essay", title: "Task 2 — Opinion Essay: Remote Work & Productivity" }
-      ]);
-      return;
-    }
     api("/writing/lessons", { token }).then(setLessons).catch((e) => setError(e.message));
   }, [token]);
 
@@ -575,28 +505,21 @@ function WritingModule({ token, onBack, onXpChange }) {
     setFeedback(null);
     setText("");
     setCategory(l);
-    if (token === "demo-token") {
-      setSelected({
-        id: l.id,
-        lesson: "Ushbu bo'limda siz grafik yoki jadval ma'lumotlarini rasmiy tilda tahlil qilib yozishingiz kerak.",
-        taskPrompt: "Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
-        wordCountMin: 150,
-        wordCountMax: 200,
-        chart: {
-          title: "Renewable Energy Share by Country (2020 vs 2025)",
-          unit: "Percentage (%)",
-          type: "bar",
-          categories: ["Germany", "UK", "Uzbekistan", "China"],
-          series: [
-            { name: "2020", data: [45, 40, 10, 28] },
-            { name: "2025", data: [60, 52, 25, 42] }
-          ]
-        }
-      });
-      return;
-    }
     try {
       const full = await api(`/writing/lessons/${l.id}`, { token });
+      setSelected(full);
+    } catch (e) {
+      setError(e.message);
+    }
+  }
+
+  async function getAnotherTask() {
+    if (!category) return;
+    setError("");
+    setFeedback(null);
+    setText("");
+    try {
+      const full = await api(`/writing/lessons/${category.id}`, { token });
       setSelected(full);
     } catch (e) {
       setError(e.message);
@@ -606,14 +529,6 @@ function WritingModule({ token, onBack, onXpChange }) {
   async function submit() {
     setLoading(true);
     setError("");
-    if (token === "demo-token") {
-      setTimeout(() => {
-        setFeedback("BALL: Band 7.5 (Task Achievement: 7.5, Coherence & Cohesion: 7.5, Lexical Resource: 7.5, Grammatical Range: 7.5)\n\nIzoh: Matn mazmuni to'liq yoritilgan. Grammatik strukturalar to'g'ri va boy sinonimlar ishlatilgan.");
-        setLoading(false);
-        if (onXpChange) onXpChange();
-      }, 1000);
-      return;
-    }
     try {
       const data = await api("/writing/check", {
         token,
@@ -621,7 +536,7 @@ function WritingModule({ token, onBack, onXpChange }) {
         body: { lessonId: selected.id, text, taskPrompt: selected.taskPrompt, chart: selected.chart, steps: selected.steps },
       });
       setFeedback(data.feedback);
-      if (onXpChange) onXpChange();
+      onXpChange();
     } catch (e) {
       setError(e.message);
     } finally {
@@ -632,7 +547,7 @@ function WritingModule({ token, onBack, onXpChange }) {
   return (
     <div style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
       <BackButton onBack={selected ? () => { setSelected(null); setCategory(null); setFeedback(null); setText(""); } : onBack} />
-      <ModuleHeader moduleId="writing" icon="✍️" title="Writing" />
+      <ModuleHeader moduleId="writing" icon="✍" title="Writing" />
       {error && <div style={{ color: COLORS.red, fontFamily: "Inter, sans-serif", fontSize: 14, marginBottom: 12 }}>{error}</div>}
 
       {!selected && lessons && (
@@ -659,6 +574,13 @@ function WritingModule({ token, onBack, onXpChange }) {
           </div>
           {selected.chart && <ChartVisual chart={selected.chart} />}
           {selected.steps && <ProcessVisual steps={selected.steps} />}
+          <button
+            type="button"
+            onClick={getAnotherTask}
+            style={{ background: "none", border: "none", color: COLORS.primary, fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 600, cursor: "pointer", marginBottom: 10, padding: 0 }}
+          >
+            🔀 Boshqa vazifa
+          </button>
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -667,7 +589,7 @@ function WritingModule({ token, onBack, onXpChange }) {
             style={{ width: "100%", boxSizing: "border-box", padding: 12, borderRadius: 10, border: `1px solid ${COLORS.line}`, fontFamily: "Inter, sans-serif", fontSize: 14, marginBottom: 10 }}
           />
           <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft, marginBottom: 14 }}>
-            Talab: {selected.wordCountMin}-{selected.wordCountMax} so'z (Joriy so'zlar: {text.trim() ? text.trim().split(/\s+/).length : 0})
+            Talab: {selected.wordCountMin}-{selected.wordCountMax} so'z
           </div>
           <button
             onClick={submit}
@@ -678,7 +600,7 @@ function WritingModule({ token, onBack, onXpChange }) {
           </button>
           {loading && (
             <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft, marginTop: 8 }}>
-              AI matningizni tahlil qilmoqda — iltimos kuting...
+              Birinchi so'rov 30-50 soniya davom etishi mumkin (server uyg'onmoqda) — sahifani yopmang.
             </div>
           )}
         </div>
@@ -693,6 +615,7 @@ function useRecorder(token, onTranscribed) {
   const [recording, setRecording] = useState(false);
   const [busy, setBusy] = useState(false);
   const [recError, setRecError] = useState("");
+  const mediaRef = { current: null };
   const chunksRef = { current: [] };
 
   async function start() {
@@ -729,6 +652,7 @@ function useRecorder(token, onTranscribed) {
         }
       };
       recorder.start();
+      mediaRef.current = recorder;
       window.__activeRecorder = recorder;
       setRecording(true);
     } catch (e) {
@@ -768,7 +692,7 @@ function MicButton({ token, onTranscribed }) {
           opacity: busy ? 0.6 : 1,
         }}
       >
-        {busy ? "Tahlil qilinmoqda..." : recording ? "⏹ To'xtatish" : "🎙 Mikrofon orqali yozib olish"}
+        {busy ? "Tahlil qilinmoqda..." : recording ? "⏹ To'xtatish" : "🎤 Yozib olish"}
       </button>
       {recError && (
         <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.red, marginTop: 6 }}>{recError}</div>
@@ -780,7 +704,7 @@ function MicButton({ token, onTranscribed }) {
 function SpeakingModule({ token, onBack, onXpChange }) {
   const [topics, setTopics] = useState(null);
   const [topic, setTopic] = useState(null);
-  const [stage, setStage] = useState("part1");
+  const [stage, setStage] = useState("part1"); // part1 | part2 | part3
   const [answers, setAnswers] = useState({ part1: "", part2: "", part3: "" });
   const [pronunciationNotes, setPronunciationNotes] = useState({});
   const [feedback, setFeedback] = useState(null);
@@ -788,47 +712,11 @@ function SpeakingModule({ token, onBack, onXpChange }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (token === "demo-token") {
-      setTopics([
-        { id: "demo_speaking_1", theme: "Workplace Innovation & Digital Transformation" },
-        { id: "demo_speaking_2", theme: "Global Business Negotiations & Culture" }
-      ]);
-      return;
-    }
     api("/speaking/topics", { token }).then(setTopics).catch((e) => setError(e.message));
   }, [token]);
 
   async function pickTopic(t) {
     setError("");
-    if (token === "demo-token") {
-      setTopic({
-        id: t.id,
-        theme: t.theme,
-        part1Questions: [
-          "What kind of industry do you currently work in or study?",
-          "How important is technology in your daily productivity?",
-          "Do you prefer working individually or in collaborative teams?"
-        ],
-        part2: {
-          cueCardTitle: "Describe an innovative project you participated in or heard about.",
-          bulletPoints: [
-            "what the project was about",
-            "who was involved in it",
-            "what challenges were encountered",
-            "why you consider it successful"
-          ]
-        },
-        part3Questions: [
-          "How will artificial intelligence transform traditional business structures in the next decade?",
-          "Should governments actively incentivize companies that develop green technologies?"
-        ]
-      });
-      setStage("part1");
-      setAnswers({ part1: "", part2: "", part3: "" });
-      setPronunciationNotes({});
-      setFeedback(null);
-      return;
-    }
     try {
       const full = await api(`/speaking/topics/${t.id}`, { token });
       setTopic(full);
@@ -854,14 +742,6 @@ function SpeakingModule({ token, onBack, onXpChange }) {
   async function submit() {
     setLoading(true);
     setError("");
-    if (token === "demo-token") {
-      setTimeout(() => {
-        setFeedback("BALL: Band 8.0\n\nFluency & Coherence: 8.0\nLexical Resource: 8.0\nGrammar Accuracy: 8.0\nPronunciation: 8.0\n\nAjoyib nutq! Fikrlarni ifodalashda aniq va murakkab sintaksisdan samarali foydalanilgan.");
-        setLoading(false);
-        if (onXpChange) onXpChange();
-      }, 1000);
-      return;
-    }
     try {
       const data = await api("/speaking/submit", {
         token,
@@ -869,7 +749,7 @@ function SpeakingModule({ token, onBack, onXpChange }) {
         body: { topicId: topic.id, answers, pronunciationNotes },
       });
       setFeedback(data.feedback);
-      if (onXpChange) onXpChange();
+      onXpChange();
     } catch (e) {
       setError(e.message);
     } finally {
@@ -878,28 +758,46 @@ function SpeakingModule({ token, onBack, onXpChange }) {
   }
 
   const stageInfo = {
-    part1: { label: "Part 1 — Introduction", questions: topic?.part1Questions },
+    part1: { label: "Part 1", questions: topic?.part1Questions },
     part2: { label: "Part 2 — Cue Card", cue: topic?.part2 },
-    part3: { label: "Part 3 — Discussion", questions: topic?.part3Questions },
+    part3: { label: "Part 3", questions: topic?.part3Questions },
   };
 
   return (
     <div style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
       <BackButton onBack={topic ? () => { setTopic(null); setFeedback(null); } : onBack} />
-      <ModuleHeader moduleId="speaking" icon="🗣️" title="Speaking (IELTS / Multilevel format)" />
+      <ModuleHeader moduleId="speaking" icon="🗣" title="Speaking (Multilevel format)" />
       {error && <div style={{ color: COLORS.red, fontFamily: "Inter, sans-serif", fontSize: 14, marginBottom: 12 }}>{error}</div>}
 
       {!topic && topics && (
         <div>
+          <button
+            type="button"
+            onClick={async () => {
+              setError("");
+              try {
+                const full = await api("/speaking/topics/random", { token });
+                setTopic(full);
+                setStage("part1");
+                setAnswers({ part1: "", part2: "", part3: "" });
+                setPronunciationNotes({});
+                setFeedback(null);
+              } catch (e) {
+                setError(e.message);
+              }
+            }}
+            style={{ width: "100%", textAlign: "center", background: COLORS.primary, color: "#fff", border: "none", borderRadius: 10, padding: "14px", cursor: "pointer", fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 14, marginBottom: 14 }}
+          >
+            🔀 Tasodifiy mavzu bilan boshlash
+          </button>
           <div style={{ display: "grid", gap: 10 }}>
             {topics.map((t) => (
               <button
                 key={t.id}
                 onClick={() => pickTopic(t)}
-                style={{ textAlign: "left", background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 10, padding: "16px", cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text, boxShadow: "0 2px 8px rgba(0,0,0,0.03)" }}
+                style={{ textAlign: "left", background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 10, padding: "14px", cursor: "pointer", fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text }}
               >
-                <div style={{ fontWeight: 700, color: COLORS.primary, marginBottom: 4 }}>{t.theme}</div>
-                <div style={{ fontSize: 12, color: COLORS.textSoft }}>Speaking testini boshlash →</div>
+                {t.theme}
               </button>
             ))}
           </div>
@@ -919,8 +817,8 @@ function SpeakingModule({ token, onBack, onXpChange }) {
               {stageInfo[stage].questions?.map((q) => <li key={q} style={{ marginBottom: 6 }}>{q}</li>)}
             </ol>
           ) : (
-            <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 12, padding: 16, marginBottom: 14 }}>
-              <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 16, fontWeight: 700, color: COLORS.primary, marginBottom: 8 }}>
+            <div style={{ marginBottom: 14 }}>
+              <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 16, fontWeight: 600, marginBottom: 8 }}>
                 {topic.part2.cueCardTitle}
               </div>
               <ul style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: COLORS.text, paddingLeft: 20 }}>
@@ -934,32 +832,70 @@ function SpeakingModule({ token, onBack, onXpChange }) {
             value={answers[stage]}
             onChange={(e) => setAnswers({ ...answers, [stage]: e.target.value })}
             rows={6}
-            placeholder="Mikrofon orqali gapiring yoki javobingizni shu yerga yozing..."
+            placeholder="Mikrofonni bosib gapiring, yoki shu yerga to'g'ridan-to'g'ri yozing..."
             style={{ width: "100%", boxSizing: "border-box", padding: 12, borderRadius: 10, border: `1px solid ${COLORS.line}`, fontFamily: "Inter, sans-serif", fontSize: 14, marginBottom: 12 }}
           />
 
           {stage !== "part3" ? (
             <button
               onClick={next}
-              disabled={answers[stage].trim().length < 5}
-              style={{ padding: "10px 20px", background: COLORS.primary, color: "#fff", border: "none", borderRadius: 8, fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 14, cursor: "pointer", opacity: answers[stage].trim().length < 5 ? 0.6 : 1 }}
+              disabled={answers[stage].trim().length < 10}
+              style={{ padding: "10px 20px", background: COLORS.primary, color: "#fff", border: "none", borderRadius: 8, fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 14, cursor: "pointer", opacity: answers[stage].trim().length < 10 ? 0.6 : 1 }}
             >
               Keyingi qism →
             </button>
           ) : (
             <button
               onClick={submit}
-              disabled={loading || answers.part3.trim().length < 5}
-              style={{ padding: "10px 20px", background: COLORS.primary, color: "#fff", border: "none", borderRadius: 8, fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 14, cursor: loading ? "default" : "pointer", opacity: loading || answers.part3.trim().length < 5 ? 0.6 : 1 }}
+              disabled={loading || answers.part3.trim().length < 10}
+              style={{ padding: "10px 20px", background: COLORS.primary, color: "#fff", border: "none", borderRadius: 8, fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 14, cursor: loading ? "default" : "pointer", opacity: loading || answers.part3.trim().length < 10 ? 0.6 : 1 }}
             >
               {loading ? "AI baholamoqda..." : "Yakunlash va baholash"}
             </button>
+          )}
+          {loading && (
+            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft, marginTop: 8 }}>
+              Birinchi so'rov 30-50 soniya davom etishi mumkin (server uyg'onmoqda) — sahifani yopmang.
+            </div>
           )}
         </div>
       )}
 
       {feedback && <FeedbackView feedback={feedback} />}
     </div>
+  );
+}
+
+function VocabTopicCard({ topic, known, total, onOpen }) {
+  const pct = total ? Math.round((known / total) * 100) : 0;
+  return (
+    <button
+      onClick={onOpen}
+      style={{
+        textAlign: "left",
+        background: COLORS.surface,
+        border: `1px solid ${COLORS.line}`,
+        borderLeft: `4px solid ${MODULE_COLORS.vocabulary.accent}`,
+        borderRadius: 14,
+        padding: "14px 16px",
+        cursor: "pointer",
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ width: 34, height: 34, borderRadius: 9, background: MODULE_COLORS.vocabulary.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17 }}>
+          {topic.icon}
+        </div>
+        <span style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: 11, fontWeight: 600, color: COLORS.textSoft }}>{total} so'z</span>
+      </div>
+      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 15, fontWeight: 700, color: COLORS.text }}>{topic.name}</div>
+      <div style={{ background: COLORS.bg, borderRadius: 999, height: 6, overflow: "hidden" }}>
+        <div style={{ width: `${pct}%`, height: "100%", background: MODULE_COLORS.vocabulary.accent, borderRadius: 999 }} />
+      </div>
+      <div style={{ fontFamily: "Inter, sans-serif", fontSize: 11, color: COLORS.textSoft }}>{known}/{total} bilaman deb belgilangan</div>
+    </button>
   );
 }
 
@@ -974,7 +910,7 @@ function saveVocabProgress(progress) {
   try {
     localStorage.setItem("vocabProgress", JSON.stringify(progress));
   } catch {
-    // ignore
+    // localStorage ishlamasa ham kartochkalar davom etaveradi
   }
 }
 
@@ -988,7 +924,7 @@ function VocabFlashcard({ word, flipped, onFlip }) {
         border: `1.5px solid ${flipped ? c.dark : COLORS.line}`,
         borderRadius: 18,
         padding: "36px 24px",
-        minHeight: 220,
+        minHeight: 200,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -997,28 +933,28 @@ function VocabFlashcard({ word, flipped, onFlip }) {
         cursor: "pointer",
         userSelect: "none",
         boxShadow: "0 8px 24px rgba(20,25,50,0.06)",
-        transition: "all 0.2s ease",
+        transition: "background 0.15s ease",
       }}
     >
       {!flipped ? (
         <>
           <Badge tone="soon">{word.level}</Badge>
-          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 32, fontWeight: 700, color: COLORS.text, marginTop: 14 }}>
+          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 30, fontWeight: 700, color: COLORS.text, marginTop: 14 }}>
             {word.term}
           </div>
-          <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft, marginTop: 12 }}>
-            Tarjimasini ko'rish uchun bosing 👆
+          <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft, marginTop: 10 }}>
+            Tarjimasini ko'rish uchun bosing
           </div>
         </>
       ) : (
         <>
-          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 26, fontWeight: 700, color: "#fff" }}>
+          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 24, fontWeight: 700, color: "#fff" }}>
             {word.translation}
           </div>
-          <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.9)", marginTop: 10, lineHeight: 1.5, maxWidth: 500 }}>
+          <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, color: "rgba(255,255,255,0.85)", marginTop: 10, lineHeight: 1.5 }}>
             {word.def}
           </div>
-          <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(255,255,255,0.75)", marginTop: 12, fontStyle: "italic", maxWidth: 500 }}>
+          <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: "rgba(255,255,255,0.65)", marginTop: 12, fontStyle: "italic" }}>
             "{word.example}"
           </div>
         </>
@@ -1027,19 +963,260 @@ function VocabFlashcard({ word, flipped, onFlip }) {
   );
 }
 
+function renderBold(text) {
+  // "**so'z**" ko'rinishidagi qismlarni qalin qilib render qiladi.
+  const parts = text.split(/\*\*(.+?)\*\*/g);
+  return parts.map((part, i) =>
+    i % 2 === 1 ? (
+      <b key={i} style={{ color: MODULE_COLORS.vocabulary.dark }}>{part}</b>
+    ) : (
+      <span key={i}>{part}</span>
+    )
+  );
+}
+
+function IeltsPhraseGroup({ group }) {
+  return (
+    <div style={{ marginBottom: 22 }}>
+      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 14.5, color: COLORS.text, marginBottom: 10 }}>
+        {group.title}
+      </div>
+      <ol style={{ margin: 0, paddingLeft: 22, display: "flex", flexDirection: "column", gap: 8 }}>
+        {group.phrases.map((p, i) => (
+          <li key={i} style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.55, color: COLORS.text }}>
+            <b style={{ color: MODULE_COLORS.vocabulary.dark }}>{p.phrase}</b>
+            {" "}<span style={{ color: COLORS.textSoft }}>({p.translation})</span>
+            {" — "}<span style={{ fontStyle: "italic", color: COLORS.textSoft }}>{p.def}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function IeltsQA({ q, a }) {
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 13.5, color: COLORS.primary, marginBottom: 6 }}>
+        Examiner: {q}
+      </div>
+      <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.65, color: COLORS.text, fontStyle: "italic", paddingLeft: 14, borderLeft: `3px solid ${MODULE_COLORS.vocabulary.accent}` }}>
+        {renderBold(a)}
+      </div>
+    </div>
+  );
+}
+
+function IeltsContentView({ content }) {
+  if (!content) {
+    return (
+      <div style={{ textAlign: "center", padding: "40px 20px", color: COLORS.textSoft, fontFamily: "Inter, sans-serif", fontSize: 14 }}>
+        Bu mavzu uchun IELTS namunasi tayyorlanmoqda — tez orada qo'shiladi. 🛠️
+      </div>
+    );
+  }
+  return (
+    <div>
+      <div style={{ marginBottom: 26 }}>
+        <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 16, color: COLORS.text, marginBottom: 12 }}>
+          So'z birikmalari
+        </div>
+        {content.groups.map((g, i) => <IeltsPhraseGroup key={i} group={g} />)}
+      </div>
+
+      <div style={{ marginBottom: 26 }}>
+        <div style={{
+          fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13,
+          color: "#fff", background: MODULE_COLORS.vocabulary.dark, display: "inline-block",
+          padding: "4px 12px", borderRadius: 999, marginBottom: 12,
+        }}>
+          IELTS Speaking Part 1
+        </div>
+        {content.part1.map((qa, i) => <IeltsQA key={i} q={qa.q} a={qa.a} />)}
+      </div>
+
+      <div style={{ marginBottom: 26 }}>
+        <div style={{
+          fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13,
+          color: "#fff", background: MODULE_COLORS.vocabulary.dark, display: "inline-block",
+          padding: "4px 12px", borderRadius: 999, marginBottom: 12,
+        }}>
+          IELTS Speaking Part 2
+        </div>
+        <div style={{
+          background: MODULE_COLORS.vocabulary.bg, borderRadius: 12, padding: "14px 16px", marginBottom: 12,
+          fontFamily: "Inter, sans-serif", fontSize: 14,
+        }}>
+          <b style={{ color: MODULE_COLORS.vocabulary.dark }}>{content.part2.cue}</b>
+          <div style={{ color: COLORS.textSoft, marginTop: 6, fontSize: 13 }}>You should say:</div>
+          <ul style={{ margin: "4px 0 4px 18px", padding: 0, color: COLORS.textSoft, fontSize: 13 }}>
+            {content.part2.bullets.map((b, i) => <li key={i}>{b}</li>)}
+          </ul>
+          <div style={{ color: COLORS.textSoft, fontSize: 13 }}>{content.part2.closing}</div>
+        </div>
+        <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.7, color: COLORS.text, fontStyle: "italic", paddingLeft: 14, borderLeft: `3px solid ${MODULE_COLORS.vocabulary.accent}`, whiteSpace: "pre-line" }}>
+          {renderBold(content.part2.answer)}
+        </div>
+      </div>
+
+      <div>
+        <div style={{
+          fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13,
+          color: "#fff", background: MODULE_COLORS.vocabulary.dark, display: "inline-block",
+          padding: "4px 12px", borderRadius: 999, marginBottom: 12,
+        }}>
+          IELTS Speaking Part 3
+        </div>
+        {content.part3.map((qa, i) => <IeltsQA key={i} q={qa.q} a={qa.a} />)}
+      </div>
+    </div>
+  );
+}
+
+function WritingTopicCard({ topic, onOpen }) {
+  return (
+    <button
+      onClick={onOpen}
+      style={{
+        textAlign: "left", background: COLORS.surface, border: `1px solid ${COLORS.line}`,
+        borderLeft: `4px solid ${MODULE_COLORS.vocabulary.accent}`, borderRadius: 14,
+        padding: "14px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: 12,
+      }}
+    >
+      <div style={{ width: 34, height: 34, borderRadius: 9, background: MODULE_COLORS.vocabulary.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17, flexShrink: 0 }}>
+        {topic.icon}
+      </div>
+      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 14.5, fontWeight: 700, color: COLORS.text }}>
+        {topic.name}
+      </div>
+    </button>
+  );
+}
+
+function WritingContentView({ content }) {
+  if (!content) {
+    return (
+      <div style={{ textAlign: "center", padding: "40px 20px", color: COLORS.textSoft, fontFamily: "Inter, sans-serif", fontSize: 14 }}>
+        Bu mavzu uchun Writing lug'ati tayyorlanmoqda — tez orada qo'shiladi. 🛠️
+      </div>
+    );
+  }
+  return (
+    <div>
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 10 }}>
+          Asosiy atamalar
+        </div>
+        <ol style={{ margin: 0, paddingLeft: 22, display: "flex", flexDirection: "column", gap: 8 }}>
+          {content.terms.map((t, i) => (
+            <li key={i} style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.55, color: COLORS.text }}>
+              <b style={{ color: MODULE_COLORS.vocabulary.dark }}>{t.term}</b>
+              {" "}<span style={{ color: COLORS.textSoft }}>({t.translation})</span>
+              {" — "}<span style={{ fontStyle: "italic", color: COLORS.textSoft }}>{t.def}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 10 }}>
+          Akademik kollokatsiyalar
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {content.collocations.map((c, i) => (
+            <div key={i} style={{ background: COLORS.bg, borderRadius: 10, padding: "10px 14px" }}>
+              <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 13.5, color: MODULE_COLORS.vocabulary.dark, marginBottom: 3 }}>
+                {c.phrase}
+              </div>
+              <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13.5, color: COLORS.textSoft, lineHeight: 1.5 }}>
+                {renderBold(c.example)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 10 }}>
+          Namuna paragraf
+        </div>
+        <div style={{
+          fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.75, color: COLORS.text,
+          paddingLeft: 14, borderLeft: `3px solid ${MODULE_COLORS.vocabulary.accent}`, fontStyle: "italic",
+        }}>
+          {renderBold(content.sampleParagraph)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function VocabListView({ topicWords, progress, setProgress }) {
+  const byLevel = LEVELS.map((lv) => ({ level: lv, words: topicWords.filter((w) => w.level === lv) })).filter((g) => g.words.length);
+
+  function toggleKnown(word) {
+    const next = { ...progress, [word.id]: progress[word.id] === "known" ? undefined : "known" };
+    setProgress(next);
+    saveVocabProgress(next);
+  }
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
+      {byLevel.map((group) => (
+        <div key={group.level}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+            <span style={{
+              fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13,
+              color: MODULE_COLORS.vocabulary.dark, background: MODULE_COLORS.vocabulary.bg,
+              padding: "3px 10px", borderRadius: 999,
+            }}>
+              {group.level}
+            </span>
+            <div style={{ flex: 1, height: 1, background: COLORS.line }} />
+          </div>
+          <ol style={{ margin: 0, paddingLeft: 22, display: "flex", flexDirection: "column", gap: 14 }}>
+            {group.words.map((w) => (
+              <li key={w.id} style={{ fontFamily: "Inter, sans-serif", fontSize: 14.5, lineHeight: 1.6, color: COLORS.text }}>
+                <span
+                  onClick={() => toggleKnown(w)}
+                  style={{
+                    fontWeight: 700,
+                    color: progress[w.id] === "known" ? MODULE_COLORS.vocabulary.dark : COLORS.text,
+                    cursor: "pointer",
+                    borderBottom: progress[w.id] === "known" ? `2px solid ${MODULE_COLORS.vocabulary.accent}` : "2px solid transparent",
+                  }}
+                  title="Bilaman deb belgilash uchun bosing"
+                >
+                  {w.term}
+                </span>
+                {" "}<span style={{ color: COLORS.textSoft }}>({w.translation})</span>
+                {" — "}
+                <span style={{ fontStyle: "italic", color: COLORS.textSoft }}>{w.def}</span>
+                <div style={{ marginTop: 3, color: MODULE_COLORS.vocabulary.dark, fontSize: 13.5 }}>
+                  “{w.example}”
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function VocabTopicPractice({ topic, progress, setProgress, onBack }) {
   const [level, setLevel] = useState("Barchasi");
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
+  const [view, setView] = useState("card"); // "card" | "list"
 
   const topicWords = VOCAB_WORDS.filter((w) => w.topicId === topic.id);
   const words = level === "Barchasi" ? topicWords : topicWords.filter((w) => w.level === level);
-  const currentWord = words[index % (words.length || 1)] || topicWords[0];
+  const word = words[index % words.length];
   const known = topicWords.filter((w) => progress[w.id] === "known").length;
 
   function mark(status) {
-    if (!currentWord) return;
-    const next = { ...progress, [currentWord.id]: status };
+    const next = { ...progress, [word.id]: status };
     setProgress(next);
     saveVocabProgress(next);
     setFlipped(false);
@@ -1048,528 +1225,227 @@ function VocabTopicPractice({ topic, progress, setProgress, onBack }) {
 
   function skip() {
     setFlipped(false);
-    setIndex((i) => (i + 1) % (words.length || 1));
+    setIndex((i) => (i + 1) % words.length);
   }
 
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, flexWrap: "wrap", gap: 10 }}>
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-          {["Barchasi", ...LEVELS].map((lv) => (
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14, flexWrap: "wrap", gap: 10 }}>
+        <div style={{ display: "flex", gap: 4, background: COLORS.bg, borderRadius: 10, padding: 4 }}>
+          {[{ id: "card", label: "🗂 Kartochka" }, { id: "list", label: "📖 Ro'yxat" }, { id: "ielts", label: "📝 IELTS namuna" }].map((v) => (
             <button
-              key={lv}
-              onClick={() => { setLevel(lv); setIndex(0); setFlipped(false); }}
+              key={v.id}
+              onClick={() => setView(v.id)}
               style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: 12,
-                fontWeight: 700,
-                padding: "6px 12px",
-                borderRadius: 999,
-                border: `1.5px solid ${lv === level ? MODULE_COLORS.vocabulary.dark : COLORS.line}`,
-                background: lv === level ? MODULE_COLORS.vocabulary.bg : "transparent",
-                color: lv === level ? MODULE_COLORS.vocabulary.dark : COLORS.textSoft,
-                cursor: "pointer",
+                fontFamily: "Inter, sans-serif", fontSize: 12.5, fontWeight: 700,
+                padding: "7px 14px", borderRadius: 8, border: "none", cursor: "pointer",
+                background: view === v.id ? COLORS.surface : "transparent",
+                color: view === v.id ? MODULE_COLORS.vocabulary.dark : COLORS.textSoft,
+                boxShadow: view === v.id ? "0 1px 4px rgba(20,25,50,0.08)" : "none",
               }}
             >
-              {lv}
+              {v.label}
             </button>
           ))}
         </div>
         <span style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: 12, fontWeight: 600, color: COLORS.textSoft }}>
-          {words.length > 0 ? (index % words.length) + 1 : 0} / {words.length} · Bilgan so'zlar: {known}/{topicWords.length}
+          Bilgan so'zlar: {known}/{topicWords.length}
         </span>
       </div>
 
-      {currentWord && (
-        <VocabFlashcard word={currentWord} flipped={flipped} onFlip={() => setFlipped((f) => !f)} />
+      {view === "list" && (
+        <VocabListView topicWords={topicWords} progress={progress} setProgress={setProgress} />
       )}
 
-      <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
-        <button
-          onClick={() => mark("unknown")}
-          style={{ flex: 1, padding: "12px 0", background: "#FCEAE8", color: "#A8332B", border: "none", borderRadius: 10, fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 14, cursor: "pointer" }}
-        >
-          ❌ Bilmadim
-        </button>
-        <button
-          onClick={skip}
-          style={{ padding: "12px 18px", background: "none", color: COLORS.textSoft, border: `1.5px solid ${COLORS.line}`, borderRadius: 10, fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 14, cursor: "pointer" }}
-        >
-          O'tkazib yuborish
-        </button>
-        <button
-          onClick={() => mark("known")}
-          style={{ flex: 1, padding: "12px 0", background: COLORS.greenBg, color: "#0B7850", border: "none", borderRadius: 10, fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 14, cursor: "pointer" }}
-        >
-          ✓ Bilaman
-        </button>
-      </div>
-    </div>
-  );
-}
+      {view === "ielts" && (
+        <IeltsContentView content={IELTS_CONTENT[topic.id]} />
+      )}
 
-function IeltsSpeakingTopicDetail({ topic, onBack }) {
-  const content = IELTS_CONTENT[topic.id];
-
-  const renderBold = (text) => {
-    if (!text) return null;
-    const parts = text.split(/\*\*(.+?)\*\*/g);
-    return parts.map((part, i) =>
-      i % 2 === 1 ? (
-        <b key={i} style={{ color: MODULE_COLORS.speaking.dark, background: MODULE_COLORS.speaking.bg, padding: "0 4px", borderRadius: 4 }}>{part}</b>
-      ) : (
-        <span key={i}>{part}</span>
-      )
-    );
-  };
-
-  return (
-    <div>
-      <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 22, marginBottom: 20 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18, borderBottom: `1px solid ${COLORS.line}`, paddingBottom: 12 }}>
-          <span style={{ fontSize: 30 }}>{topic.icon}</span>
-          <div>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 22, fontWeight: 700, color: COLORS.primary }}>
-              {topic.name}
-            </div>
-            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft }}>
-              IELTS Speaking Topics & Lexical Resource (Band 7.5–9.0)
-            </div>
-          </div>
-        </div>
-
-        {/* VOCABULARY SECTIONS (Categorized Lists) */}
-        {content?.vocabSections?.map((section, sidx) => (
-          <div key={sidx} style={{ marginBottom: 26 }}>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
-              <span>📚</span> {section.title}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 10 }}>
-              {section.items.map((item, i) => (
-                <div key={i} style={{ background: COLORS.bg, borderRadius: 10, padding: "12px 14px", borderLeft: `3.5px solid ${MODULE_COLORS.speaking.accent}` }}>
-                  <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 6 }}>
-                    <span style={{ fontWeight: 700, color: MODULE_COLORS.speaking.dark, fontSize: 14 }}>{item.phrase}</span>
-                    <span style={{ color: COLORS.textSoft, fontSize: 12.5 }}>— {item.translation}</span>
-                  </div>
-                  <div style={{ color: COLORS.textSoft, fontSize: 12, marginTop: 4, fontStyle: "italic" }}>
-                    Definition: {item.def}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-
-        {/* PART 1 */}
-        {content?.part1 && (
-          <div style={{ marginBottom: 26 }}>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13, color: "#fff", background: MODULE_COLORS.speaking.dark, display: "inline-block", padding: "5px 14px", borderRadius: 999, marginBottom: 14 }}>
-              IELTS Speaking Part 1 — Sample Questions & Answers
-            </div>
-            {content.part1.map((qa, i) => (
-              <div key={i} style={{ marginBottom: 16 }}>
-                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.primary, marginBottom: 4 }}>
-                  Examiner: {qa.q}
-                </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.65, color: COLORS.text, fontStyle: "italic", paddingLeft: 14, borderLeft: `3px solid ${MODULE_COLORS.speaking.accent}` }}>
-                  {renderBold(qa.a)}
-                </div>
-              </div>
+      {view === "card" && (
+        <>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
+            {["Barchasi", ...LEVELS].map((lv) => (
+              <button
+                key={lv}
+                onClick={() => { setLevel(lv); setIndex(0); setFlipped(false); }}
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  padding: "6px 12px",
+                  borderRadius: 999,
+                  border: `1.5px solid ${lv === level ? MODULE_COLORS.vocabulary.dark : COLORS.line}`,
+                  background: lv === level ? MODULE_COLORS.vocabulary.bg : "transparent",
+                  color: lv === level ? MODULE_COLORS.vocabulary.dark : COLORS.textSoft,
+                  cursor: "pointer",
+                }}
+              >
+                {lv}
+              </button>
             ))}
           </div>
-        )}
+          <div style={{ textAlign: "right", marginBottom: 8 }}>
+            <span style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: 12, fontWeight: 600, color: COLORS.textSoft }}>
+              {index + 1} / {words.length}
+            </span>
+          </div>
 
-        {/* PART 2 CUE CARDS */}
-        {content?.part2Cards && (
-          <div style={{ marginBottom: 26 }}>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13, color: "#fff", background: MODULE_COLORS.speaking.dark, display: "inline-block", padding: "5px 14px", borderRadius: 999, marginBottom: 14 }}>
-              IELTS Speaking Part 2 — Cue Card Samples
-            </div>
-            {content.part2Cards.map((card, cidx) => (
-              <div key={cidx} style={{ marginBottom: 20, background: COLORS.bg, borderRadius: 14, padding: 16, border: `1px solid ${COLORS.line}` }}>
-                <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 16, color: COLORS.primary, marginBottom: 8 }}>
-                  📝 {card.title}
-                </div>
-                <div style={{ color: COLORS.textSoft, fontSize: 13, fontWeight: 600 }}>You should say:</div>
-                <ul style={{ margin: "6px 0 12px 20px", padding: 0, color: COLORS.textSoft, fontSize: 13 }}>
-                  {card.bullets.map((b, bi) => <li key={bi} style={{ marginBottom: 2 }}>{b}</li>)}
-                </ul>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.7, color: COLORS.text, fontStyle: "italic", paddingLeft: 14, borderLeft: `3.5px solid ${MODULE_COLORS.speaking.accent}`, whiteSpace: "pre-line" }}>
-                  {renderBold(card.answer)}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+          <VocabFlashcard word={word} flipped={flipped} onFlip={() => setFlipped((f) => !f)} />
 
-        {/* PART 3 */}
-        {content?.part3 && (
-          <div>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 13, color: "#fff", background: MODULE_COLORS.speaking.dark, display: "inline-block", padding: "5px 14px", borderRadius: 999, marginBottom: 14 }}>
-              IELTS Speaking Part 3 — Discussion Questions & Answers
-            </div>
-            {content.part3.map((qa, i) => (
-              <div key={i} style={{ marginBottom: 16 }}>
-                <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 14, color: COLORS.primary, marginBottom: 4 }}>
-                  Examiner: {qa.q}
-                </div>
-                <div style={{ fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.65, color: COLORS.text, fontStyle: "italic", paddingLeft: 14, borderLeft: `3px solid ${MODULE_COLORS.speaking.accent}` }}>
-                  {renderBold(qa.a)}
-                </div>
-              </div>
-            ))}
+          <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
+            <button
+              onClick={() => mark("unknown")}
+              style={{ flex: 1, padding: "12px 0", background: "#FCEAE8", color: "#A8332B", border: "none", borderRadius: 10, fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 14, cursor: "pointer" }}
+            >
+              ✕ Bilmadim
+            </button>
+            <button
+              onClick={skip}
+              style={{ padding: "12px 18px", background: "none", color: COLORS.textSoft, border: `1.5px solid ${COLORS.line}`, borderRadius: 10, fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: 14, cursor: "pointer" }}
+            >
+              O'tkazib yuborish
+            </button>
+            <button
+              onClick={() => mark("known")}
+              style={{ flex: 1, padding: "12px 0", background: COLORS.greenBg, color: "#0B7850", border: "none", borderRadius: 10, fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 14, cursor: "pointer" }}
+            >
+              ✓ Bilaman
+            </button>
           </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function IeltsWritingTopicDetail({ topic, onBack }) {
-  const content = IELTS_WRITING_CONTENT[topic.id] || {
-    title: topic.name,
-    collocations: [
-      { term: "socioeconomic implications", def: "The social and economic consequences of a policy or trend." },
-      { term: "catalyze systemic reform", def: "Initiate fundamental and widespread changes." },
-      { term: "curb unsustainable practices", def: "Stop damaging or non-renewable activities." }
-    ],
-    modelParagraph: "Scholars argue that addressing these challenges necessitates proactive policy intervention. By catalyzing systemic reform and promoting equitable resource allocation, societies can achieve long-term prosperity.",
-    band8Phrases: [
-      "pave the way for comprehensive advancement",
-      "mitigate underlying socioeconomic disparities"
-    ]
-  };
-
-  return (
-    <div>
-      <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 16, padding: 22, marginBottom: 20 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18, borderBottom: `1px solid ${COLORS.line}`, paddingBottom: 12 }}>
-          <span style={{ fontSize: 30 }}>{topic.icon}</span>
-          <div>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 22, fontWeight: 700, color: MODULE_COLORS.writing.dark }}>
-              {content.title}
-            </div>
-            <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft }}>
-              IELTS Writing Task 2 & Task 1 Academic Lexical Resource (Band 8+)
-            </div>
-          </div>
-        </div>
-
-        {/* COLLOCATIONS */}
-        <div style={{ marginBottom: 24 }}>
-          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
-            <span>📖</span> Academic Topic Collocations
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 10 }}>
-            {content.collocations.map((c, i) => (
-              <div key={i} style={{ background: COLORS.bg, borderRadius: 10, padding: "12px 14px", borderLeft: `3.5px solid ${MODULE_COLORS.writing.accent}` }}>
-                <div style={{ fontWeight: 700, color: MODULE_COLORS.writing.dark, fontSize: 14 }}>
-                  {c.term}
-                </div>
-                <div style={{ color: COLORS.textSoft, fontSize: 12.5, marginTop: 4 }}>
-                  {c.def}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* MODEL ESSAY PARAGRAPH */}
-        <div style={{ marginBottom: 24 }}>
-          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
-            <span>✍️</span> Band 8.5+ Model Essay Paragraph
-          </div>
-          <div style={{ background: MODULE_COLORS.writing.bg, borderRadius: 12, padding: "16px 18px", borderLeft: `4px solid ${MODULE_COLORS.writing.dark}`, fontFamily: "Inter, sans-serif", fontSize: 14, lineHeight: 1.7, color: COLORS.text }}>
-            {content.modelParagraph}
-          </div>
-        </div>
-
-        {/* BAND 8+ KEY PHRASES */}
-        {content.band8Phrases && (
-          <div>
-            <div style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
-              <span>✨</span> Essential Key Expressions for Essays
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {content.band8Phrases.map((phrase, pi) => (
-                <span key={pi} style={{ background: COLORS.bg, border: `1px solid ${COLORS.line}`, borderRadius: 8, padding: "6px 12px", fontFamily: "IBM Plex Mono, monospace", fontSize: 12.5, color: MODULE_COLORS.writing.dark, fontWeight: 600 }}>
-                  ✦ {phrase}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 }
 
 function VocabularyModule({ onBack }) {
-  const [tab, setTab] = useState("business"); // business | ielts_speaking | ielts_writing
-  const [activeBusinessTopic, setActiveBusinessTopic] = useState(null);
-  const [activeIeltsTopic, setActiveIeltsTopic] = useState(null);
+  const [activeTopic, setActiveTopic] = useState(null);
   const [activeWritingTopic, setActiveWritingTopic] = useState(null);
-  const [search, setSearch] = useState("");
   const [progress, setProgress] = useState(loadVocabProgress);
 
-  const totalKnown = Object.values(progress).filter((v) => v === "known").length;
+  const businessTopics = VOCAB_TOPICS.filter((t) => t.category === "business");
+  const speakingTopics = VOCAB_TOPICS.filter((t) => t.category === "speaking");
 
-  const filteredIeltsTopics = IELTS_TOPICS.filter((t) =>
-    t.name.toLowerCase().includes(search.toLowerCase()) ||
-    t.id.toLowerCase().includes(search.toLowerCase())
-  );
+  const businessWords = VOCAB_WORDS.filter((w) => businessTopics.some((t) => t.id === w.topicId));
+  const speakingWords = VOCAB_WORDS.filter((w) => speakingTopics.some((t) => t.id === w.topicId));
 
-  const filteredWritingTopics = IELTS_WRITING_TOPICS.filter((t) =>
-    t.name.toLowerCase().includes(search.toLowerCase()) ||
-    t.id.toLowerCase().includes(search.toLowerCase())
-  );
+  const businessKnown = businessWords.filter((w) => progress[w.id] === "known").length;
+  const speakingKnown = speakingWords.filter((w) => progress[w.id] === "known").length;
+  const totalKnown = businessKnown + speakingKnown;
 
-  const currentTitle = activeBusinessTopic
-    ? activeBusinessTopic.name
-    : activeIeltsTopic
-    ? activeIeltsTopic.name
-    : activeWritingTopic
-    ? activeWritingTopic.name
-    : "Vocabulary & IELTS";
+  const businessPct = businessWords.length ? Math.round((businessKnown / businessWords.length) * 100) : 0;
+  const speakingUnlocked = businessPct >= 80; // Business bosqichining katta qismi o'zlashtirilganda ochiladi
 
-  const handleBackAction = () => {
-    if (activeBusinessTopic) setActiveBusinessTopic(null);
-    else if (activeIeltsTopic) setActiveIeltsTopic(null);
-    else if (activeWritingTopic) setActiveWritingTopic(null);
-    else onBack();
-  };
+  function renderTopicGrid(topics) {
+    return (
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
+        {topics.map((t) => {
+          const topicWords = VOCAB_WORDS.filter((w) => w.topicId === t.id);
+          const known = topicWords.filter((w) => progress[w.id] === "known").length;
+          return (
+            <VocabTopicCard
+              key={t.id}
+              topic={t}
+              known={known}
+              total={topicWords.length}
+              onOpen={() => setActiveTopic(t)}
+            />
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
-    <div style={{ padding: 24, maxWidth: 820, margin: "0 auto" }}>
-      <BackButton onBack={handleBackAction} />
-      <ModuleHeader moduleId="vocabulary" icon="🗂️" title={currentTitle} />
+    <div style={{ padding: 24, maxWidth: 760, margin: "0 auto" }}>
+      <BackButton onBack={activeTopic ? () => setActiveTopic(null) : activeWritingTopic ? () => setActiveWritingTopic(null) : onBack} />
+      <ModuleHeader
+        moduleId="vocabulary"
+        icon="🗂"
+        title={activeTopic ? activeTopic.name : activeWritingTopic ? activeWritingTopic.name : "Vocabulary"}
+      />
 
-      {!activeBusinessTopic && !activeIeltsTopic && !activeWritingTopic && (
+      {!activeTopic && !activeWritingTopic && (
         <>
-          {/* THREE-TAB SELECTOR */}
-          <div style={{ display: "flex", gap: 8, marginBottom: 20, background: COLORS.surface, padding: 6, borderRadius: 12, border: `1px solid ${COLORS.line}`, flexWrap: "wrap" }}>
-            <button
-              onClick={() => { setTab("business"); setSearch(""); }}
-              style={{
-                flex: 1,
-                minWidth: 160,
-                padding: "11px 8px",
-                border: "none",
-                borderRadius: 8,
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 700,
-                fontSize: 13,
-                cursor: "pointer",
-                background: tab === "business" ? COLORS.primary : "transparent",
-                color: tab === "business" ? "#fff" : COLORS.textSoft,
-                transition: "all 0.15s ease",
-              }}
-            >
-              💼 Biznes Lug'at (600 so'z)
-            </button>
-            <button
-              onClick={() => { setTab("ielts_speaking"); setSearch(""); }}
-              style={{
-                flex: 1,
-                minWidth: 160,
-                padding: "11px 8px",
-                border: "none",
-                borderRadius: 8,
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 700,
-                fontSize: 13,
-                cursor: "pointer",
-                background: tab === "ielts_speaking" ? MODULE_COLORS.speaking.dark : "transparent",
-                color: tab === "ielts_speaking" ? "#fff" : COLORS.textSoft,
-                transition: "all 0.15s ease",
-              }}
-            >
-              🗣️ IELTS Speaking (18 mavzu)
-            </button>
-            <button
-              onClick={() => { setTab("ielts_writing"); setSearch(""); }}
-              style={{
-                flex: 1,
-                minWidth: 160,
-                padding: "11px 8px",
-                border: "none",
-                borderRadius: 8,
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 700,
-                fontSize: 13,
-                cursor: "pointer",
-                background: tab === "ielts_writing" ? MODULE_COLORS.writing.dark : "transparent",
-                color: tab === "ielts_writing" ? "#fff" : COLORS.textSoft,
-                transition: "all 0.15s ease",
-              }}
-            >
-              ✍️ IELTS Writing (16 mavzu)
-            </button>
+          <div style={{ background: MODULE_COLORS.vocabulary.bg, borderRadius: 14, padding: "14px 18px", marginBottom: 22, fontFamily: "Inter, sans-serif", fontSize: 13, color: MODULE_COLORS.vocabulary.dark }}>
+            38 ta mavzu, jami {VOCAB_WORDS.length} ta so'z (A1–C2). Jami bilgan so'zlaringiz: <b>{totalKnown}</b>
           </div>
 
-          {/* BUSINESS TAB */}
-          {tab === "business" && (
-            <div>
-              <div style={{ background: MODULE_COLORS.vocabulary.bg, borderRadius: 14, padding: "14px 18px", marginBottom: 18, fontFamily: "Inter, sans-serif", fontSize: 13, color: MODULE_COLORS.vocabulary.dark }}>
-                20 ta biznes mavzusi, jami {VOCAB_WORDS.length} ta so'z (A1–C2). Jami bilgan so'zlaringiz: <b>{totalKnown}</b>
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
-                {VOCAB_TOPICS.map((t) => {
-                  const topicWords = VOCAB_WORDS.filter((w) => w.topicId === t.id);
-                  const known = topicWords.filter((w) => progress[w.id] === "known").length;
-                  const pct = topicWords.length ? Math.round((known / topicWords.length) * 100) : 0;
-                  return (
-                    <button
-                      key={t.id}
-                      onClick={() => setActiveBusinessTopic(t)}
-                      style={{
-                        textAlign: "left",
-                        background: COLORS.surface,
-                        border: `1px solid ${COLORS.line}`,
-                        borderLeft: `4px solid ${MODULE_COLORS.vocabulary.accent}`,
-                        borderRadius: 14,
-                        padding: "16px",
-                        cursor: "pointer",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 8,
-                        boxShadow: "0 2px 6px rgba(0,0,0,0.02)",
-                      }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <div style={{ width: 36, height: 36, borderRadius: 10, background: MODULE_COLORS.vocabulary.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
-                          {t.icon}
-                        </div>
-                        <span style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: 11, fontWeight: 600, color: COLORS.textSoft }}>{topicWords.length} so'z</span>
-                      </div>
-                      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 15, fontWeight: 700, color: COLORS.text }}>{t.name}</div>
-                      <div style={{ background: COLORS.bg, borderRadius: 999, height: 6, overflow: "hidden" }}>
-                        <div style={{ width: `${pct}%`, height: "100%", background: MODULE_COLORS.vocabulary.accent, borderRadius: 999 }} />
-                      </div>
-                      <div style={{ fontFamily: "Inter, sans-serif", fontSize: 11, color: COLORS.textSoft }}>{known}/{topicWords.length} bilaman deb belgilangan</div>
-                    </button>
-                  );
-                })}
+          {/* 1-bosqich: Business */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+            <span style={{
+              fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 11,
+              color: "#fff", background: MODULE_COLORS.vocabulary.dark,
+              padding: "3px 9px", borderRadius: 999,
+            }}>
+              1-BOSQICH
+            </span>
+            <span style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text }}>
+              Biznes lug'ati
+            </span>
+            <span style={{ marginLeft: "auto", fontFamily: "IBM Plex Mono, monospace", fontSize: 12, fontWeight: 600, color: COLORS.textSoft }}>
+              {businessPct}%
+            </span>
+          </div>
+          <div style={{ marginBottom: 18 }}>{renderTopicGrid(businessTopics)}</div>
+
+          {/* 2-bosqich: Speaking (umumiy IELTS mavzulari) */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+            <span style={{
+              fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 11,
+              color: speakingUnlocked ? "#fff" : COLORS.textSoft,
+              background: speakingUnlocked ? MODULE_COLORS.vocabulary.dark : COLORS.line,
+              padding: "3px 9px", borderRadius: 999,
+            }}>
+              2-BOSQICH
+            </span>
+            <span style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: speakingUnlocked ? COLORS.text : COLORS.textSoft }}>
+              Speaking uchun umumiy mavzular
+            </span>
+          </div>
+
+          {!speakingUnlocked && (
+            <div style={{
+              background: COLORS.bg, border: `1.5px dashed ${COLORS.line}`, borderRadius: 14,
+              padding: "16px 18px", marginBottom: 12, display: "flex", alignItems: "center", gap: 12,
+            }}>
+              <span style={{ fontSize: 22 }}>🔒</span>
+              <div style={{ fontFamily: "Inter, sans-serif", fontSize: 13, color: COLORS.textSoft, lineHeight: 1.5 }}>
+                Bu bosqich Biznes lug'atining <b>80%</b>ini o'zlashtirgach ochiladi.
+                Hozirgi darajangiz: <b>{businessPct}%</b>. Davom eting — daraja ko'tariladi!
               </div>
             </div>
           )}
 
-          {/* IELTS SPEAKING TAB */}
-          {tab === "ielts_speaking" && (
-            <div>
-              <input
-                type="text"
-                placeholder="Speaking mavzulari bo'yicha qidirish (masalan: Friends, Technology, Travel)..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                style={{
-                  width: "100%",
-                  boxSizing: "border-box",
-                  padding: "12px 14px",
-                  borderRadius: 12,
-                  border: `1.5px solid ${COLORS.line}`,
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: 14,
-                  marginBottom: 16,
-                }}
-              />
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
-                {filteredIeltsTopics.map((t) => (
-                  <button
-                    key={t.id}
-                    onClick={() => setActiveIeltsTopic(t)}
-                    style={{
-                      textAlign: "left",
-                      background: COLORS.surface,
-                      border: `1px solid ${COLORS.line}`,
-                      borderLeft: `4px solid ${MODULE_COLORS.speaking.accent}`,
-                      borderRadius: 14,
-                      padding: "16px",
-                      cursor: "pointer",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 8,
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.02)",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <div style={{ width: 38, height: 38, borderRadius: 10, background: MODULE_COLORS.speaking.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
-                        {t.icon}
-                      </div>
-                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, color: MODULE_COLORS.speaking.dark }}>Band 7.5–9.0</span>
-                    </div>
-                    <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 15, fontWeight: 700, color: COLORS.text }}>{t.name}</div>
-                    <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft }}>Collocations + Part 1, 2, 3 Namunalar →</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          {speakingUnlocked && renderTopicGrid(speakingTopics)}
 
-          {/* IELTS WRITING TAB */}
-          {tab === "ielts_writing" && (
-            <div>
-              <input
-                type="text"
-                placeholder="Writing mavzulari bo'yicha qidirish (masalan: Climate, Law, Education)..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                style={{
-                  width: "100%",
-                  boxSizing: "border-box",
-                  padding: "12px 14px",
-                  borderRadius: 12,
-                  border: `1.5px solid ${COLORS.line}`,
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: 14,
-                  marginBottom: 16,
-                }}
-              />
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
-                {filteredWritingTopics.map((t) => (
-                  <button
-                    key={t.id}
-                    onClick={() => setActiveWritingTopic(t)}
-                    style={{
-                      textAlign: "left",
-                      background: COLORS.surface,
-                      border: `1px solid ${COLORS.line}`,
-                      borderLeft: `4px solid ${MODULE_COLORS.writing.accent}`,
-                      borderRadius: 14,
-                      padding: "16px",
-                      cursor: "pointer",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 8,
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.02)",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <div style={{ width: 38, height: 38, borderRadius: 10, background: MODULE_COLORS.writing.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
-                        {t.icon}
-                      </div>
-                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 700, color: MODULE_COLORS.writing.dark }}>Task 1 & Task 2</span>
-                    </div>
-                    <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 15, fontWeight: 700, color: COLORS.text }}>{t.name}</div>
-                    <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft }}>Akademik leksika + Model insho parchalari →</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* 3-bosqich: IELTS Writing lug'ati */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "26px 0 10px" }}>
+            <span style={{
+              fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 11,
+              color: "#fff", background: MODULE_COLORS.vocabulary.dark,
+              padding: "3px 9px", borderRadius: 999,
+            }}>
+              WRITING
+            </span>
+            <span style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, fontSize: 15, color: COLORS.text }}>
+              IELTS Writing lug'ati
+            </span>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
+            {WRITING_TOPICS.map((t) => (
+              <WritingTopicCard key={t.id} topic={t} onOpen={() => setActiveWritingTopic(t)} />
+            ))}
+          </div>
         </>
       )}
 
-      {activeBusinessTopic && (
-        <VocabTopicPractice topic={activeBusinessTopic} progress={progress} setProgress={setProgress} onBack={() => setActiveBusinessTopic(null)} />
-      )}
-
-      {activeIeltsTopic && (
-        <IeltsSpeakingTopicDetail topic={activeIeltsTopic} onBack={() => setActiveIeltsTopic(null)} />
+      {activeTopic && (
+        <VocabTopicPractice topic={activeTopic} progress={progress} setProgress={setProgress} onBack={() => setActiveTopic(null)} />
       )}
 
       {activeWritingTopic && (
-        <IeltsWritingTopicDetail topic={activeWritingTopic} onBack={() => setActiveWritingTopic(null)} />
+        <WritingContentView content={WRITING_CONTENT[activeWritingTopic.id]} />
       )}
     </div>
   );
@@ -1581,39 +1457,26 @@ function ComingSoonModule({ id, onBack }) {
     <div style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
       <BackButton onBack={onBack} />
       <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: 24, fontWeight: 600, color: COLORS.text, marginBottom: 6 }}>
-        {m?.icon} {m?.name}
+        {m.icon} {m.name}
       </div>
       <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.line}`, borderRadius: 14, padding: "40px 20px", textAlign: "center", fontFamily: "Inter, sans-serif", color: COLORS.textSoft, fontSize: 14 }}>
-        Ushbu modul tayyorlanmoqda. Tez kunda yangi interaktiv darslar va audio/video amaliyotlar qo'shiladi.
+        Bu bo'lim hali API'ga ulanmagan. Backend'da tayyor bo'lgach, shu yerda ishlaydi.
       </div>
     </div>
   );
 }
 
 export default function App() {
-  const [token, setToken] = useState(() => {
-    try {
-      return localStorage.getItem("token") || null;
-    } catch {
-      return null;
-    }
-  });
-  const [user, setUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem("user");
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
-    }
-  });
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
   const [authMode, setAuthMode] = useState("login");
   const [screen, setScreen] = useState("dashboard");
-  const [xp, setXp] = useState(120);
-  const [streak, setStreak] = useState({ current_streak: 3 });
+  const [xp, setXp] = useState(0);
+  const [streak, setStreak] = useState(null);
   const [loadError, setLoadError] = useState("");
 
   const refreshProgress = useCallback(async () => {
-    if (!token || token === "demo-token") return;
+    if (!token) return;
     try {
       const data = await api("/progress/me", { token });
       setXp(data.xp);
@@ -1631,24 +1494,12 @@ export default function App() {
   function handleAuth(newToken, newUser) {
     setToken(newToken);
     setUser(newUser);
-    try {
-      localStorage.setItem("token", newToken);
-      localStorage.setItem("user", JSON.stringify(newUser));
-    } catch {
-      // ignore
-    }
   }
 
   function handleLogout() {
     setToken(null);
     setUser(null);
     setScreen("dashboard");
-    try {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-    } catch {
-      // ignore
-    }
   }
 
   function openModule(id) {
@@ -1657,7 +1508,7 @@ export default function App() {
 
   if (!token) {
     return (
-      <div style={{ background: COLORS.bg, minHeight: "100vh", fontFamily: "Inter, sans-serif" }}>
+      <div style={{ background: COLORS.bg, minHeight: 500, fontFamily: "Inter, sans-serif" }}>
         <style>{FONTS}</style>
         <AuthScreen mode={authMode} setMode={setAuthMode} onAuth={handleAuth} />
       </div>
@@ -1665,7 +1516,7 @@ export default function App() {
   }
 
   return (
-    <div style={{ background: COLORS.bg, minHeight: "100vh", fontFamily: "Inter, sans-serif" }}>
+    <div style={{ background: COLORS.bg, minHeight: 500, fontFamily: "Inter, sans-serif" }}>
       <style>{FONTS}</style>
       <TopBar user={user} xp={xp} streak={streak} onLogout={handleLogout} />
       {loadError && (
