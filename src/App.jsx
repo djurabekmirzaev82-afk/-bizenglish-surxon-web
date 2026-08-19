@@ -11,6 +11,11 @@ const FONTS = `
 
 const API_BASE = "https://business-english-surxon.onrender.com/api";
 
+// AI-og'ir so'rovlar (Render sovuq ishga tushishi + LLM javobi) uchun uzunroq
+// timeout. Oddiy so'rovlar (login, ro'yxatlar) uchun qisqa timeout yetarli.
+const DEFAULT_TIMEOUT_MS = 20000;
+const AI_TIMEOUT_MS = 120000; // 2 daqiqa: cold start (~50-60s) + AI tahlili uchun joy
+
 const COLORS = {
   bg: "#F4F6FB",
   surface: "#FFFFFF",
@@ -47,7 +52,18 @@ const MODULES = [
   { id: "vocabulary", icon: "🗂", name: "Vocabulary & IELTS", desc: "20 biznes mavzusi (600 so'z) + 16 IELTS mavzusi", live: true },
 ];
 
-async function api(path, { token, method = "GET", body, timeoutMs = 55000 } = {}) {
+// Ilova ochilganda backend (Render) ni fonda "uyg'otish" uchun. Natijasini
+// kutmaymiz va xatosini ko'rsatmaymiz — maqsad faqat cold start jarayonini
+// oldindan boshlab qo'yish, shunda foydalanuvchi Speaking/Writing bo'limiga
+// yetguncha server allaqachon tayyor bo'ladi.
+function wakeBackend() {
+  fetch(`${API_BASE}/health`).catch(() => {
+    // /health yo'q bo'lsa ham, bu so'rovning o'zi Render'ni uyg'otadi
+    fetch(API_BASE.replace(/\/api$/, "")).catch(() => {});
+  });
+}
+
+async function api(path, { token, method = "GET", body, timeoutMs = DEFAULT_TIMEOUT_MS } = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   let res;
@@ -63,7 +79,7 @@ async function api(path, { token, method = "GET", body, timeoutMs = 55000 } = {}
     });
   } catch (err) {
     if (err.name === "AbortError") {
-      throw new Error("Server javob bermadi (ehtimol uyg'onmoqda). Yana bir bor urinib ko'ring.");
+      throw new Error("Server javob bermadi (ehtimol uyg'onmoqda, bu birinchi so'rovda 1 daqiqagacha vaqt olishi mumkin). Yana bir bor urinib ko'ring.");
     }
     throw new Error("Tarmoq xatoligi. Internetni tekshirib, qayta urinib ko'ring.");
   } finally {
@@ -615,6 +631,7 @@ function WritingModule({ token, onBack, onXpChange }) {
         token,
         method: "POST",
         body: { lessonId: selected.id, text, taskPrompt: selected.taskPrompt, chart: selected.chart, steps: selected.steps },
+        timeoutMs: AI_TIMEOUT_MS,
       });
       setFeedback(data.feedback);
       if (onXpChange) onXpChange();
@@ -674,7 +691,7 @@ function WritingModule({ token, onBack, onXpChange }) {
           </button>
           {loading && (
             <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.textSoft, marginTop: 8 }}>
-              AI matningizni tahlil qilmoqda — iltimos kuting...
+              AI matningizni tahlil qilmoqda — server uxlab qolgan bo'lsa, birinchi urinishda bu jarayon 1 daqiqagacha davom etishi mumkin. Iltimos, sahifani yopmasdan kuting...
             </div>
           )}
         </div>
@@ -717,6 +734,7 @@ function useRecorder(token, onTranscribed) {
             token,
             method: "POST",
             body: { audioBase64: base64, mimeType },
+            timeoutMs: AI_TIMEOUT_MS,
           });
           onTranscribed(data.transcript, data.pronunciationNote);
         } catch (e) {
@@ -766,7 +784,7 @@ function MicButton({ token, onTranscribed }) {
           opacity: busy ? 0.6 : 1,
         }}
       >
-        {busy ? "Tahlil qilinmoqda..." : recording ? "⏹ To'xtatish" : "🎙 Mikrofon orqali yozib olish"}
+        {busy ? "Tahlil qilinmoqda... (server uyg'onayotgan bo'lsa 1 daqiqagacha)" : recording ? "⏹ To'xtatish" : "🎙 Mikrofon orqali yozib olish"}
       </button>
       {recError && (
         <div style={{ fontFamily: "Inter, sans-serif", fontSize: 12, color: COLORS.red, marginTop: 6 }}>{recError}</div>
@@ -865,6 +883,7 @@ function SpeakingModule({ token, onBack, onXpChange }) {
         token,
         method: "POST",
         body: { topicId: topic.id, answers, pronunciationNotes },
+        timeoutMs: AI_TIMEOUT_MS,
       });
       setFeedback(data.feedback);
       if (onXpChange) onXpChange();
@@ -1432,6 +1451,13 @@ export default function App() {
   const [xp, setXp] = useState(120);
   const [streak, setStreak] = useState({ current_streak: 3 });
   const [loadError, setLoadError] = useState("");
+
+  // Ilova ochilgan zahoti Render backend'ini fonda uyg'otamiz. Bu real
+  // AI so'rovi emas, shuning uchun timeout/xato ko'rsatmaymiz — faqat
+  // cold start jarayonini oldindan boshlab qo'yamiz.
+  useEffect(() => {
+    wakeBackend();
+  }, []);
 
   const refreshProgress = useCallback(async () => {
     if (!token || token === "demo-token") return;
