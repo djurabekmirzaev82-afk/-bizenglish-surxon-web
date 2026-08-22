@@ -8,33 +8,7 @@ import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
-import { VOCAB_WORDS, IELTS_TOPICS, IELTS_CONTENT } from "./vocabData";
-
-// Corrected Business Vocabulary topic icons.
-// Kept in App.jsx so broken/mis-encoded icons in vocabData.js
-// cannot appear in the Vocabulary & IELTS topic cards.
-const VOCAB_TOPICS = [
-  { id: "job_interviews", icon: "💼", name: "Ish suhbati" },
-  { id: "meetings", icon: "📅", name: "Yig‘ilishlar" },
-  { id: "negotiations", icon: "🤝", name: "Muzokaralar" },
-  { id: "presentations", icon: "📊", name: "Taqdimotlar" },
-  { id: "emails", icon: "📧", name: "Elektron yozishmalar" },
-  { id: "marketing", icon: "📣", name: "Marketing" },
-  { id: "sales", icon: "💰", name: "Sotuv" },
-  { id: "finance", icon: "💳", name: "Moliya" },
-  { id: "hr", icon: "👥", name: "Kadrlar boshqaruvi" },
-  { id: "management", icon: "🎯", name: "Boshqaruv va liderlik" },
-  { id: "customer_service", icon: "🤝", name: "Mijozlarga xizmat" },
-  { id: "business_travel", icon: "✈️", name: "Ish safarlari" },
-  { id: "networking", icon: "🌐", name: "Aloqalar o‘rnatish" },
-  { id: "startups", icon: "🚀", name: "Startaplar" },
-  { id: "logistics", icon: "📦", name: "Ta’minot va logistika" },
-  { id: "technology", icon: "💻", name: "Texnologiya va IT" },
-  { id: "project_management", icon: "📋", name: "Loyiha boshqaruvi" },
-  { id: "legal", icon: "⚖️", name: "Huquq va shartnomalar" },
-  { id: "strategy", icon: "♟️", name: "Strategiya" },
-  { id: "workplace_culture", icon: "🏢", name: "Ofis madaniyati" },
-];
+import { VOCAB_TOPICS, VOCAB_WORDS, IELTS_TOPICS, IELTS_CONTENT } from "./vocabData";
 
 const FONTS = `
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
@@ -1748,6 +1722,1417 @@ function VocabularyModule({ onBack }) {
   );
 }
 
+
+const READING_VARIANTS = [
+  { id: 1, name: "Urban Mobility", topics: ["public transport", "cycling", "city planning"] },
+  { id: 2, name: "Workplace Change", topics: ["hybrid work", "office design", "productivity"] },
+  { id: 3, name: "Water and Cities", topics: ["water management", "climate", "infrastructure"] },
+  { id: 4, name: "Food Systems", topics: ["local food", "supply chains", "waste reduction"] },
+  { id: 5, name: "Learning and Memory", topics: ["learning science", "memory", "study habits"] },
+  { id: 6, name: "Renewable Energy", topics: ["solar power", "energy storage", "grids"] },
+  { id: 7, name: "Small Business", topics: ["entrepreneurship", "finance", "customer service"] },
+  { id: 8, name: "Technology and Society", topics: ["digital tools", "privacy", "automation"] },
+  { id: 9, name: "Tourism and Heritage", topics: ["tourism", "heritage", "local economies"] },
+  { id: 10, name: "Healthy Cities", topics: ["public health", "green space", "walking"] },
+  { id: 11, name: "Agriculture", topics: ["soil", "irrigation", "farm technology"] },
+  { id: 12, name: "Business Communication", topics: ["meetings", "negotiation", "remote teams"] },
+  { id: 13, name: "Science in Everyday Life", topics: ["materials", "measurement", "research"] },
+  { id: 14, name: "Transport Futures", topics: ["rail", "electric vehicles", "logistics"] },
+  { id: 15, name: "Creative Industries", topics: ["design", "media", "creative business"] },
+];
+
+const READING_STYLE_BANK = [
+  {
+    intro: "Researchers and local authorities have increasingly treated the issue as a practical design problem rather than a single policy choice.",
+    detail: "The most successful programmes usually combine several small interventions instead of relying on one expensive project.",
+    evidence: "Early measurements are useful, but the strongest conclusions often appear only after several months of observation.",
+    contrast: "However, a solution that works in one neighbourhood cannot automatically be transferred to another because local conditions differ.",
+    future: "The next stage is therefore likely to focus on flexible systems that can be adjusted as new evidence becomes available.",
+  },
+  {
+    intro: "The debate has changed considerably as organisations have collected more evidence about how people actually behave.",
+    detail: "Initial expectations were often based on simple assumptions, while later studies revealed a more complicated pattern.",
+    evidence: "Several independent projects reported improvements when participants received clear information and practical support.",
+    contrast: "The evidence does not mean that the approach is universally effective; cost, timing and local capacity still matter.",
+    future: "For that reason, specialists now recommend testing a policy on a limited scale before expanding it.",
+  },
+  {
+    intro: "What appears to be a modern challenge often has earlier precedents, although the tools available today are different.",
+    detail: "Historical records show that communities repeatedly adapted their systems when resources or social expectations changed.",
+    evidence: "Modern monitoring makes those changes easier to compare because researchers can collect information at much shorter intervals.",
+    contrast: "Yet better data do not remove the need for judgement, particularly when decisions affect groups with different priorities.",
+    future: "A balanced approach is likely to combine quantitative evidence with direct feedback from the people who use the system.",
+  },
+];
+
+function readingSeedFor(variantNo, partNo) {
+  const variant = READING_VARIANTS[(variantNo - 1) % READING_VARIANTS.length];
+  const topic = variant.topics[(partNo - 1) % variant.topics.length];
+  return { variant, topic, style: READING_STYLE_BANK[(variantNo + partNo) % READING_STYLE_BANK.length] };
+}
+
+function makeReadingParagraphs(variantNo, partNo, mode) {
+  const { variant, topic, style } = readingSeedFor(variantNo, partNo);
+  const levelText =
+    mode === "multilevel"
+      ? "The text is written for a broad professional and academic audience and gradually increases in complexity."
+      : "The text uses a more academic style, combining description, evidence, interpretation and a short discussion of limitations.";
+
+  const facts = [
+    `${variant.name} researchers began examining ${topic} after a series of practical changes affected local organisations.`,
+    `One early project focused on a relatively small group and measured behaviour before and after the intervention.`,
+    `The project found that clear instructions were more useful when they were combined with convenient access to the new system.`,
+    `A second study compared two locations and found that the results depended partly on geography, cost and existing infrastructure.`,
+    `The researchers also noted an unexpected effect: participants changed some related behaviours even when those behaviours were not part of the original plan.`,
+    `Supporters argue that the approach can be expanded, while critics point to staffing, maintenance and unequal access as continuing problems.`,
+    `The authors conclude that future decisions should be based on repeated measurement rather than a single successful demonstration.`,
+  ];
+
+  const paragraphs = [
+    `A. ${style.intro} In the case of ${variant.name.toLowerCase()}, the question is particularly relevant because ${topic} affects both institutions and ordinary users. ${levelText}`,
+    `B. ${style.detail} ${facts[0]} The first stage was deliberately modest, allowing the organisers to identify practical difficulties without committing a large budget.`,
+    `C. ${style.evidence} ${facts[1]} ${facts[2]} This result was important because it suggested that information alone was not enough to change behaviour.`,
+    `D. ${facts[3]} ${style.contrast} The comparison also showed why a successful pilot should not be treated as proof that exactly the same intervention will work everywhere.`,
+    `E. ${facts[4]} Researchers described this as a secondary effect. It was not necessarily negative, but it made the evaluation more difficult because several variables changed at once.`,
+    `F. ${facts[5]} The debate therefore moved away from a simple question of whether the idea was good or bad and towards questions of cost, access, implementation and measurement.`,
+    `G. ${style.future} ${facts[6]} The authors recommend keeping the core principle while allowing local managers to adapt the details.`,
+  ];
+
+  return { paragraphs, facts, topic, variant };
+}
+
+function makeSectionQuestions(variantNo, partNo, mode) {
+  const { paragraphs, facts, topic, variant } = makeReadingParagraphs(variantNo, partNo, mode);
+  const base = `${variantNo}-${partNo}`;
+
+  const questions = [
+    {
+      id: `${base}-1`,
+      type: "mcq",
+      prompt: `What was the main reason researchers began examining ${topic}?`,
+      options: [
+        "A series of practical changes had affected local organisations.",
+        "A new international law had been introduced.",
+        "The researchers wanted to replace all existing systems.",
+        "The project received an unlimited budget.",
+      ],
+      answer: "A series of practical changes had affected local organisations.",
+      explanation: "The opening paragraph says the research followed practical changes affecting organisations.",
+    },
+    {
+      id: `${base}-2`,
+      type: "mcq",
+      prompt: "What was a feature of the first project?",
+      options: [
+        "It began with a small group.",
+        "It lasted for twenty years.",
+        "It involved only national governments.",
+        "It avoided measuring behaviour.",
+      ],
+      answer: "It began with a small group.",
+      explanation: "Paragraph B describes the first stage as deliberately modest and focused on a relatively small group.",
+    },
+    {
+      id: `${base}-3`,
+      type: "mcq",
+      prompt: "What did the first study suggest about instructions?",
+      options: [
+        "Instructions were most useful when practical access was also available.",
+        "Instructions were unnecessary.",
+        "Instructions should be given only after a project ends.",
+        "Instructions were more important than infrastructure in every location.",
+      ],
+      answer: "Instructions were most useful when practical access was also available.",
+      explanation: "Paragraph C says clear instructions worked better when combined with convenient access.",
+    },
+    {
+      id: `${base}-4`,
+      type: "tfng",
+      prompt: "The second study found exactly the same results in both locations.",
+      options: ["TRUE", "FALSE", "NOT GIVEN"],
+      answer: "FALSE",
+      explanation: "Paragraph D says the results depended partly on geography, cost and infrastructure.",
+    },
+    {
+      id: `${base}-5`,
+      type: "tfng",
+      prompt: "Researchers observed changes in some behaviours that were not part of the original plan.",
+      options: ["TRUE", "FALSE", "NOT GIVEN"],
+      answer: "TRUE",
+      explanation: "Paragraph E explicitly describes these secondary effects.",
+    },
+    {
+      id: `${base}-6`,
+      type: "short",
+      prompt: "Complete the sentence with NO MORE THAN TWO WORDS: The first project was deliberately ______.",
+      answer: "modest",
+      accepted: ["modest"],
+      explanation: "Paragraph B uses the phrase 'deliberately modest'.",
+    },
+    {
+      id: `${base}-7`,
+      type: "short",
+      prompt: "Complete the sentence with NO MORE THAN TWO WORDS: Future decisions should be based on repeated ______.",
+      answer: "measurement",
+      accepted: ["measurement", "measurements"],
+      explanation: "The final paragraph recommends repeated measurement.",
+    },
+  ];
+
+  if (mode === "ielts") {
+    questions[3] = {
+      id: `${base}-4`,
+      type: "tfng",
+      prompt: "The authors believe that a successful pilot can always be transferred unchanged to another location.",
+      options: ["TRUE", "FALSE", "NOT GIVEN"],
+      answer: "FALSE",
+      explanation: "Paragraph D says local conditions mean a successful pilot cannot automatically be transferred.",
+    };
+    questions[4] = {
+      id: `${base}-5`,
+      type: "tfng",
+      prompt: "The secondary effects made evaluation more complicated.",
+      options: ["TRUE", "FALSE", "NOT GIVEN"],
+      answer: "TRUE",
+      explanation: "Paragraph E says several variables changed at once, making evaluation more difficult.",
+    };
+  }
+
+  return { paragraphs, questions, topic, variant };
+}
+
+function buildMultilevelVariant(variantNo) {
+  const sections = Array.from({ length: 5 }, (_, i) => {
+    const partNo = i + 1;
+    const data = makeSectionQuestions(variantNo, partNo, "multilevel");
+    return {
+      id: `part-${partNo}`,
+      title: `Part ${partNo}`,
+      subtitle: `${data.topic[0].toUpperCase()}${data.topic.slice(1)}`,
+      passage: data.paragraphs,
+      questions: data.questions,
+    };
+  });
+
+  return {
+    id: variantNo,
+    title: `Multilevel Reading — Variant ${String(variantNo).padStart(2, "0")}`,
+    mode: "multilevel",
+    duration: 60 * 60,
+    sections,
+    totalQuestions: 35,
+  };
+}
+
+function buildIeltsVariant(variantNo) {
+  const sectionSizes = [13, 13, 14];
+  const sections = sectionSizes.map((size, i) => {
+    const partNo = i + 1;
+    const data = makeSectionQuestions(variantNo, partNo, "ielts");
+    const baseQuestions = data.questions;
+    const questions = [];
+
+    for (let q = 0; q < size; q++) {
+      const template = baseQuestions[q % baseQuestions.length];
+      const copy = { ...template, id: `ielts-${variantNo}-${partNo}-${q + 1}` };
+
+      if (q >= 7 && q < 10) {
+        copy.type = "matching";
+        copy.prompt =
+          q === 8
+            ? "Which paragraph contains the information about the comparison of locations?"
+            : "Which paragraph contains the recommendation for future decisions?";
+        copy.options = ["A", "B", "C", "D", "E", "F", "G"];
+        copy.answer = q === 8 ? "D" : "G";
+        copy.explanation =
+          q === 8
+            ? "The comparison of two locations is discussed in paragraph D."
+            : "The recommendation for future decisions appears in paragraph G.";
+      }
+
+      questions.push(copy);
+    }
+
+    return {
+      id: `section-${partNo}`,
+      title: `Passage ${partNo}`,
+      subtitle: `${data.topic[0].toUpperCase()}${data.topic.slice(1)}`,
+      passage: data.paragraphs,
+      questions,
+    };
+  });
+
+  return {
+    id: variantNo,
+    title: `IELTS Academic Reading — Test ${String(variantNo).padStart(2, "0")}`,
+    mode: "ielts",
+    duration: 60 * 60,
+    sections,
+    totalQuestions: 40,
+  };
+}
+
+function buildReadingTest(mode, variantNo) {
+  return mode === "ielts"
+    ? buildIeltsVariant(variantNo)
+    : buildMultilevelVariant(variantNo);
+}
+
+function readingFormatInfo(mode) {
+  return mode === "ielts"
+    ? {
+        title: "IELTS Academic Reading",
+        duration: "60 minutes",
+        questions: "40 questions",
+        sections: "3 passages",
+        note: "Computer-delivered uslub: passage + questions, question navigator, flag, timer va yakuniy natija.",
+      }
+    : {
+        title: "Multilevel Reading",
+        duration: "60 minutes",
+        questions: "35 questions",
+        sections: "5 parts",
+        note: "Real test rejimi: 5 part, 35 savol, 60 daqiqa. Javoblar test tugamaguncha tekshirilmaydi.",
+      };
+}
+
+function normalizeReadingAnswer(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[.,!?;:]/g, "")
+    .replace(/\s+/g, " ");
+}
+
+function isReadingAnswerCorrect(question, value) {
+  const given = normalizeReadingAnswer(value);
+  if (!given) return false;
+  const accepted = question.accepted?.length
+    ? question.accepted
+    : [question.answer];
+  return accepted.some((item) => normalizeReadingAnswer(item) === given);
+}
+
+function ReadingModule({ onBack }) {
+  const [mode, setMode] = useState(null);
+  const [test, setTest] = useState(null);
+  const [sectionIndex, setSectionIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [flags, setFlags] = useState({});
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [result, setResult] = useState(null);
+  const [showFinishConfirm, setShowFinishConfirm] = useState(false);
+  const [variant, setVariant] = useState(() => {
+    try {
+      const next = Number(localStorage.getItem("readingNextVariantMultilevel") || "1");
+      return Number.isFinite(next) && next >= 1 && next <= 15 ? next : 1;
+    } catch {
+      return 1;
+    }
+  });
+  const [nextVariants, setNextVariants] = useState(() => {
+    try {
+      const ml = Number(localStorage.getItem("readingNextVariantMultilevel") || "1");
+      const ielts = Number(localStorage.getItem("readingNextVariantIelts") || "1");
+      return {
+        multilevel: Number.isFinite(ml) && ml >= 1 && ml <= 15 ? ml : 1,
+        ielts: Number.isFinite(ielts) && ielts >= 1 && ielts <= 15 ? ielts : 1,
+      };
+    } catch {
+      return { multilevel: 1, ielts: 1 };
+    }
+  });
+
+  const flatQuestions = test
+    ? test.sections.flatMap((section) =>
+        section.questions.map((question) => ({
+          ...question,
+          sectionId: section.id,
+          sectionTitle: section.title,
+        }))
+      )
+    : [];
+
+  const activeSection = test?.sections?.[sectionIndex];
+  const activeQuestion = activeSection?.questions?.[currentQuestion];
+
+  useEffect(() => {
+    if (!test || submitted || timeLeft === null) return;
+    if (timeLeft <= 0) {
+      finishTest(true);
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((value) => (value === null ? null : Math.max(0, value - 1)));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [test, submitted, timeLeft]);
+
+  useEffect(() => {
+    if (!test || submitted) return;
+    try {
+      localStorage.setItem(
+        "readingActiveSession",
+        JSON.stringify({
+          mode: test.mode,
+          variant: test.id,
+          answers,
+          flags,
+          sectionIndex,
+          currentQuestion,
+          timeLeft,
+        })
+      );
+    } catch {
+      // ignore storage errors
+    }
+  }, [test, submitted, answers, flags, sectionIndex, currentQuestion, timeLeft]);
+
+  const startTest = (selectedMode, selectedVariant = variant) => {
+    const nextTest = buildReadingTest(selectedMode, selectedVariant);
+    setMode(selectedMode);
+    setTest(nextTest);
+    setSectionIndex(0);
+    setCurrentQuestion(0);
+    setAnswers({});
+    setFlags({});
+    setTimeLeft(nextTest.duration);
+    setSubmitted(false);
+    setResult(null);
+    setShowFinishConfirm(false);
+  };
+
+  const chooseAnswer = (questionId, value) => {
+    if (submitted) return;
+    setAnswers((previous) => ({
+      ...previous,
+      [questionId]: value,
+    }));
+  };
+
+  const jumpToQuestion = (flatIndex) => {
+    if (!test) return;
+    let count = 0;
+    for (let s = 0; s < test.sections.length; s += 1) {
+      const sectionLength = test.sections[s].questions.length;
+      if (flatIndex < count + sectionLength) {
+        setSectionIndex(s);
+        setCurrentQuestion(flatIndex - count);
+        return;
+      }
+      count += sectionLength;
+    }
+  };
+
+  const moveQuestion = (direction) => {
+    if (!test) return;
+    const globalIndex = flatQuestions.findIndex((q) => q.id === activeQuestion?.id);
+    const nextIndex = Math.min(
+      Math.max(globalIndex + direction, 0),
+      flatQuestions.length - 1
+    );
+    jumpToQuestion(nextIndex);
+  };
+
+  const toggleFlag = () => {
+    if (!activeQuestion) return;
+    setFlags((previous) => ({
+      ...previous,
+      [activeQuestion.id]: !previous[activeQuestion.id],
+    }));
+  };
+
+  const finishTest = (auto = false) => {
+    if (!test) return;
+
+    let correct = 0;
+    const details = flatQuestions.map((question) => {
+      const userAnswer = answers[question.id] ?? "";
+      const isCorrect = isReadingAnswerCorrect(question, userAnswer);
+      if (isCorrect) correct += 1;
+      return {
+        ...question,
+        userAnswer,
+        isCorrect,
+      };
+    });
+
+    const unanswered = details.filter((item) => !String(item.userAnswer).trim()).length;
+    const score = Math.round((correct / test.totalQuestions) * 100);
+
+    const resultData = {
+      correct,
+      total: test.totalQuestions,
+      unanswered,
+      percentage: score,
+      details,
+      auto,
+    };
+
+    setResult(resultData);
+    setSubmitted(true);
+    setShowFinishConfirm(false);
+    try {
+      localStorage.removeItem("readingActiveSession");
+      const nextVariant = test.id >= 15 ? 1 : test.id + 1;
+      const storageKey =
+        test.mode === "ielts"
+          ? "readingNextVariantIelts"
+          : "readingNextVariantMultilevel";
+      localStorage.setItem(storageKey, String(nextVariant));
+      setNextVariants((previous) => ({
+        ...previous,
+        [test.mode]: nextVariant,
+      }));
+      setVariant(nextVariant);
+    } catch {
+      // ignore
+    }
+  };
+
+  const formatTime = (seconds) => {
+    const safe = Math.max(0, seconds || 0);
+    const min = Math.floor(safe / 60);
+    const sec = safe % 60;
+    return `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+  };
+
+  const startPage = () => {
+    const nextVariant = nextVariants.multilevel;
+    return (
+      <div style={{ padding: "26px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <BackButton onBack={onBack} />
+
+          <div style={{ marginBottom: 24 }}>
+            <div style={{
+              fontFamily: "IBM Plex Mono, monospace",
+              fontSize: 11,
+              color: MODULE_COLORS.reading.dark,
+              fontWeight: 700,
+              letterSpacing: 1.5,
+            }}>
+              READING TEST CENTRE
+            </div>
+            <h2 style={{
+              margin: "6px 0",
+              fontFamily: "Space Grotesk, sans-serif",
+              fontSize: 30,
+              color: COLORS.primary,
+            }}>
+              Real-test Reading
+            </h2>
+            <p style={{
+              margin: 0,
+              fontFamily: "Inter, sans-serif",
+              color: COLORS.textSoft,
+              lineHeight: 1.6,
+            }}>
+              Ikki xil format. 15 ta aylanuvchi variant. Test davomida javoblar
+              ko'rsatilmaydi — natija faqat yakunda chiqadi.
+            </p>
+          </div>
+
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: 16,
+          }}>
+            {["multilevel", "ielts"].map((format) => {
+              const info = readingFormatInfo(format);
+              return (
+                <div key={format} style={{
+                  background: COLORS.surface,
+                  border: `1px solid ${COLORS.line}`,
+                  borderTop: `4px solid ${MODULE_COLORS.reading.accent}`,
+                  borderRadius: 16,
+                  padding: 22,
+                }}>
+                  <div style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 12,
+                  }}>
+                    <h3 style={{
+                      margin: 0,
+                      fontFamily: "Space Grotesk, sans-serif",
+                      color: COLORS.primary,
+                      fontSize: 21,
+                    }}>
+                      {info.title}
+                    </h3>
+                    <span style={{
+                      background: MODULE_COLORS.reading.bg,
+                      color: MODULE_COLORS.reading.dark,
+                      borderRadius: 999,
+                      padding: "5px 9px",
+                      fontFamily: "IBM Plex Mono, monospace",
+                      fontSize: 10,
+                      fontWeight: 700,
+                    }}>
+                      15 VARIANTS
+                    </span>
+                  </div>
+
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gap: 7,
+                    marginBottom: 14,
+                  }}>
+                    {[
+                      ["TIME", info.duration],
+                      ["QUESTIONS", info.questions],
+                      ["FORMAT", info.sections],
+                    ].map(([label, value]) => (
+                      <div key={label} style={{
+                        background: "#F8F9FB",
+                        borderRadius: 9,
+                        padding: 9,
+                        textAlign: "center",
+                      }}>
+                        <div style={{
+                          fontFamily: "IBM Plex Mono, monospace",
+                          fontSize: 9,
+                          color: COLORS.textSoft,
+                        }}>
+                          {label}
+                        </div>
+                        <strong style={{
+                          display: "block",
+                          marginTop: 3,
+                          fontFamily: "Inter, sans-serif",
+                          fontSize: 12,
+                          color: COLORS.primary,
+                        }}>
+                          {value}
+                        </strong>
+                      </div>
+                    ))}
+                  </div>
+
+                  <p style={{
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: 12,
+                    lineHeight: 1.6,
+                    color: COLORS.textSoft,
+                    minHeight: 58,
+                  }}>
+                    {info.note}
+                  </p>
+
+                  <button
+                    onClick={() => startTest(format, nextVariants[format])}
+                    style={{
+                      width: "100%",
+                      border: "none",
+                      background: COLORS.primary,
+                      color: "#fff",
+                      borderRadius: 9,
+                      padding: "12px 14px",
+                      fontFamily: "Inter, sans-serif",
+                      fontWeight: 800,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Variant {String(nextVariants[format]).padStart(2, "0")} ni boshlash →
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+
+          <div style={{
+            marginTop: 18,
+            background: COLORS.surface,
+            border: `1px solid ${COLORS.line}`,
+            borderRadius: 14,
+            padding: 18,
+          }}>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 12,
+              flexWrap: "wrap",
+            }}>
+              <div>
+                <strong style={{
+                  fontFamily: "Inter, sans-serif",
+                  color: COLORS.primary,
+                }}>
+                  Variant rotation
+                </strong>
+                <div style={{
+                  marginTop: 4,
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: 12,
+                  color: COLORS.textSoft,
+                }}>
+                  Har yakunlangan testdan keyin keyingi variant avtomatik tanlanadi:
+                  01 → 02 → ... → 15 → 01.
+                </div>
+              </div>
+
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}>
+                <span style={{
+                  fontFamily: "IBM Plex Mono, monospace",
+                  fontSize: 11,
+                  color: COLORS.textSoft,
+                }}>
+                  Keyingi:
+                </span>
+                <select
+                  value={variant}
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setVariant(value);
+                    setNextVariants((previous) => ({
+                      ...previous,
+                      multilevel: value,
+                      ielts: value,
+                    }));
+                  }}
+                  style={{
+                    border: `1px solid ${COLORS.line}`,
+                    borderRadius: 8,
+                    padding: "8px 10px",
+                    fontFamily: "Inter, sans-serif",
+                    background: "#fff",
+                  }}
+                >
+                  {READING_VARIANTS.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      Variant {String(item.id).padStart(2, "0")} — {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  if (!test) return startPage();
+
+  if (submitted && result) {
+    return (
+      <div style={{ padding: "24px" }}>
+        <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+          <div style={{
+            background: COLORS.surface,
+            border: `1px solid ${COLORS.line}`,
+            borderRadius: 16,
+            padding: 24,
+            marginBottom: 16,
+          }}>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 16,
+              flexWrap: "wrap",
+            }}>
+              <div>
+                <div style={{
+                  fontFamily: "IBM Plex Mono, monospace",
+                  fontSize: 11,
+                  color: MODULE_COLORS.reading.dark,
+                  fontWeight: 700,
+                }}>
+                  TEST COMPLETED
+                </div>
+                <h2 style={{
+                  margin: "5px 0",
+                  fontFamily: "Space Grotesk, sans-serif",
+                  color: COLORS.primary,
+                }}>
+                  {test.title}
+                </h2>
+                <div style={{
+                  fontFamily: "Inter, sans-serif",
+                  color: COLORS.textSoft,
+                  fontSize: 13,
+                }}>
+                  {result.auto ? "Vaqt tugadi — test avtomatik topshirildi." : "Test topshirildi."}
+                </div>
+              </div>
+
+              <div style={{
+                minWidth: 120,
+                textAlign: "center",
+                padding: 14,
+                borderRadius: 12,
+                background: MODULE_COLORS.reading.bg,
+              }}>
+                <div style={{
+                  fontFamily: "IBM Plex Mono, monospace",
+                  fontSize: 10,
+                  color: MODULE_COLORS.reading.dark,
+                }}>
+                  SCORE
+                </div>
+                <strong style={{
+                  display: "block",
+                  marginTop: 2,
+                  fontFamily: "Space Grotesk, sans-serif",
+                  fontSize: 30,
+                  color: COLORS.primary,
+                }}>
+                  {result.correct}/{result.total}
+                </strong>
+                <div style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: 11,
+                  color: COLORS.textSoft,
+                }}>
+                  {result.percentage}%
+                </div>
+              </div>
+            </div>
+
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: 8,
+              marginTop: 18,
+            }}>
+              {[
+                ["CORRECT", result.correct],
+                ["WRONG", result.total - result.correct - result.unanswered],
+                ["UNANSWERED", result.unanswered],
+              ].map(([label, value]) => (
+                <div key={label} style={{
+                  padding: 11,
+                  borderRadius: 9,
+                  background: "#F8F9FB",
+                  textAlign: "center",
+                }}>
+                  <div style={{
+                    fontFamily: "IBM Plex Mono, monospace",
+                    fontSize: 9,
+                    color: COLORS.textSoft,
+                  }}>
+                    {label}
+                  </div>
+                  <strong style={{
+                    display: "block",
+                    marginTop: 3,
+                    fontFamily: "Inter, sans-serif",
+                    color: COLORS.primary,
+                  }}>
+                    {value}
+                  </strong>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{
+            background: COLORS.surface,
+            border: `1px solid ${COLORS.line}`,
+            borderRadius: 14,
+            padding: 20,
+          }}>
+            <h3 style={{
+              margin: "0 0 14px",
+              fontFamily: "Space Grotesk, sans-serif",
+              color: COLORS.primary,
+            }}>
+              Review answers
+            </h3>
+
+            <div style={{ display: "grid", gap: 9 }}>
+              {result.details.map((item, i) => (
+                <div key={item.id} style={{
+                  border: `1px solid ${item.isCorrect ? "#BFE8D3" : "#F1C3BF"}`,
+                  background: item.isCorrect ? "#F6FCF8" : "#FFF8F7",
+                  borderRadius: 10,
+                  padding: 12,
+                }}>
+                  <div style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: 10,
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: 12,
+                  }}>
+                    <strong style={{ color: COLORS.primary }}>
+                      {i + 1}. {item.prompt}
+                    </strong>
+                    <span style={{
+                      fontWeight: 800,
+                      color: item.isCorrect ? COLORS.green : COLORS.red,
+                      whiteSpace: "nowrap",
+                    }}>
+                      {item.isCorrect ? "✓ Correct" : "✕ Review"}
+                    </span>
+                  </div>
+
+                  <div style={{
+                    marginTop: 6,
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: 12,
+                    color: COLORS.textSoft,
+                  }}>
+                    Your answer: <strong>{item.userAnswer || "—"}</strong>
+                  </div>
+
+                  {!item.isCorrect && (
+                    <div style={{
+                      marginTop: 4,
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: 12,
+                      color: COLORS.textSoft,
+                    }}>
+                      Correct answer: <strong>{item.answer}</strong>
+                    </div>
+                  )}
+
+                  <div style={{
+                    marginTop: 5,
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: 11,
+                    lineHeight: 1.5,
+                    color: COLORS.textSoft,
+                  }}>
+                    {item.explanation}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{
+            display: "flex",
+            gap: 8,
+            marginTop: 16,
+            flexWrap: "wrap",
+          }}>
+            <button
+              onClick={() => {
+                setTest(null);
+                setSubmitted(false);
+                setResult(null);
+              }}
+              style={{
+                border: `1px solid ${COLORS.line}`,
+                background: "#fff",
+                color: COLORS.primary,
+                borderRadius: 9,
+                padding: "11px 16px",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 800,
+                cursor: "pointer",
+              }}
+            >
+              Reading home
+            </button>
+
+            <button
+              onClick={() => {
+                const next = nextVariants[test.mode];
+                startTest(test.mode, next);
+              }}
+              style={{
+                border: "none",
+                background: COLORS.primary,
+                color: "#fff",
+                borderRadius: 9,
+                padding: "11px 16px",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 800,
+                cursor: "pointer",
+              }}
+            >
+              Variant {String(variant).padStart(2, "0")} ni boshlash
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const globalQuestionIndex = flatQuestions.findIndex((q) => q.id === activeQuestion?.id);
+  const timerWarning = timeLeft <= 5 * 60;
+
+  return (
+    <div style={{
+      minHeight: "calc(100vh - 60px)",
+      background: "#F1F3F7",
+      paddingBottom: 24,
+    }}>
+      <div style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 20,
+        background: "#fff",
+        borderBottom: `1px solid ${COLORS.line}`,
+        boxShadow: "0 2px 10px rgba(0,0,0,0.06)",
+      }}>
+        <div style={{
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "9px 14px",
+          display: "grid",
+          gridTemplateColumns: "1fr auto 1fr",
+          alignItems: "center",
+          gap: 12,
+        }}>
+          <div style={{
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 800,
+            color: COLORS.primary,
+            fontSize: 13,
+          }}>
+            {test.title}
+          </div>
+
+          <div style={{
+            minWidth: 105,
+            textAlign: "center",
+            padding: "7px 12px",
+            borderRadius: 8,
+            background: timerWarning ? "#FFF0F0" : "#F5F7FA",
+            color: timerWarning ? COLORS.red : COLORS.primary,
+            fontFamily: "IBM Plex Mono, monospace",
+            fontWeight: 800,
+          }}>
+            {formatTime(timeLeft)}
+          </div>
+
+          <div style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            gap: 8,
+          }}>
+            <span style={{
+              fontFamily: "Inter, sans-serif",
+              fontSize: 11,
+              color: COLORS.textSoft,
+            }}>
+              {globalQuestionIndex + 1}/{test.totalQuestions}
+            </span>
+            <button
+              onClick={() => setShowFinishConfirm(true)}
+              style={{
+                border: "none",
+                background: COLORS.primary,
+                color: "#fff",
+                borderRadius: 8,
+                padding: "8px 12px",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 800,
+                cursor: "pointer",
+                fontSize: 11,
+              }}
+            >
+              Finish test
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div style={{
+        maxWidth: 1440,
+        margin: "0 auto",
+        padding: "12px 14px 0",
+      }}>
+        <div style={{
+          display: "flex",
+          gap: 6,
+          overflowX: "auto",
+          paddingBottom: 8,
+        }}>
+          {test.sections.map((section, i) => {
+            const sectionQuestions = section.questions;
+            const answered = sectionQuestions.filter((q) => String(answers[q.id] ?? "").trim()).length;
+            return (
+              <button
+                key={section.id}
+                onClick={() => {
+                  setSectionIndex(i);
+                  setCurrentQuestion(0);
+                }}
+                style={{
+                  border: `1px solid ${i === sectionIndex ? COLORS.primary : COLORS.line}`,
+                  background: i === sectionIndex ? COLORS.primary : "#fff",
+                  color: i === sectionIndex ? "#fff" : COLORS.primary,
+                  borderRadius: 8,
+                  padding: "7px 11px",
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: 800,
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                  fontSize: 11,
+                }}
+              >
+                {section.title} · {answered}/{sectionQuestions.length}
+              </button>
+            );
+          })}
+        </div>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 1.1fr) minmax(380px, 0.9fr)",
+          gap: 12,
+          alignItems: "start",
+        }}>
+          <div style={{
+            background: "#fff",
+            border: `1px solid ${COLORS.line}`,
+            borderRadius: 10,
+            padding: 20,
+            minHeight: 590,
+            maxHeight: "calc(100vh - 190px)",
+            overflowY: "auto",
+          }}>
+            <div style={{
+              fontFamily: "IBM Plex Mono, monospace",
+              fontSize: 10,
+              color: MODULE_COLORS.reading.dark,
+              fontWeight: 800,
+              marginBottom: 8,
+            }}>
+              {activeSection.title.toUpperCase()}
+            </div>
+
+            <h2 style={{
+              margin: "0 0 14px",
+              fontFamily: "Space Grotesk, sans-serif",
+              color: COLORS.primary,
+              fontSize: 22,
+            }}>
+              {activeSection.subtitle}
+            </h2>
+
+            <div style={{
+              fontFamily: "Inter, sans-serif",
+              fontSize: 14,
+              lineHeight: 1.75,
+              color: COLORS.text,
+            }}>
+              {activeSection.passage.map((paragraph) => (
+                <p key={paragraph.slice(0, 25)} style={{ margin: "0 0 15px" }}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <div style={{
+            background: "#fff",
+            border: `1px solid ${COLORS.line}`,
+            borderRadius: 10,
+            padding: 18,
+            minHeight: 590,
+          }}>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 10,
+              marginBottom: 13,
+            }}>
+              <div style={{
+                fontFamily: "IBM Plex Mono, monospace",
+                fontSize: 10,
+                color: COLORS.textSoft,
+              }}>
+                QUESTION {globalQuestionIndex + 1} OF {test.totalQuestions}
+              </div>
+
+              <button
+                onClick={toggleFlag}
+                style={{
+                  border: `1px solid ${flags[activeQuestion.id] ? COLORS.amber : COLORS.line}`,
+                  background: flags[activeQuestion.id] ? "#FFF8E8" : "#fff",
+                  color: flags[activeQuestion.id] ? COLORS.amberDark : COLORS.textSoft,
+                  borderRadius: 7,
+                  padding: "6px 9px",
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                {flags[activeQuestion.id] ? "★ Flagged" : "☆ Flag"}
+              </button>
+            </div>
+
+            <div style={{
+              fontFamily: "Inter, sans-serif",
+              fontSize: 14,
+              lineHeight: 1.65,
+              color: COLORS.text,
+              marginBottom: 15,
+            }}>
+              <strong>{activeQuestion.prompt}</strong>
+            </div>
+
+            {activeQuestion.type === "mcq" || activeQuestion.type === "tfng" || activeQuestion.type === "matching" ? (
+              <div style={{ display: "grid", gap: 8 }}>
+                {activeQuestion.options.map((option) => {
+                  const selected = answers[activeQuestion.id] === option;
+                  return (
+                    <button
+                      key={option}
+                      onClick={() => chooseAnswer(activeQuestion.id, option)}
+                      style={{
+                        textAlign: "left",
+                        border: `1px solid ${selected ? COLORS.primary : COLORS.line}`,
+                        background: selected ? "#EEF2FF" : "#fff",
+                        color: COLORS.text,
+                        borderRadius: 9,
+                        padding: "11px 12px",
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: 13,
+                        cursor: "pointer",
+                      }}
+                    >
+                      <span style={{
+                        display: "inline-flex",
+                        width: 22,
+                        height: 22,
+                        borderRadius: 5,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: selected ? COLORS.primary : "#F2F4F7",
+                        color: selected ? "#fff" : COLORS.textSoft,
+                        marginRight: 8,
+                        fontWeight: 800,
+                        fontSize: 11,
+                      }}>
+                        {option.length <= 2 ? option : "•"}
+                      </span>
+                      {option}
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <input
+                value={answers[activeQuestion.id] || ""}
+                onChange={(e) => chooseAnswer(activeQuestion.id, e.target.value)}
+                placeholder="Write your answer..."
+                style={{
+                  width: "100%",
+                  boxSizing: "border-box",
+                  border: `1px solid ${COLORS.line}`,
+                  borderRadius: 9,
+                  padding: "12px 13px",
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: 14,
+                  outline: "none",
+                }}
+              />
+            )}
+
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 8,
+              marginTop: 22,
+            }}>
+              <button
+                onClick={() => moveQuestion(-1)}
+                disabled={globalQuestionIndex === 0}
+                style={{
+                  border: `1px solid ${COLORS.line}`,
+                  background: "#fff",
+                  color: COLORS.primary,
+                  borderRadius: 8,
+                  padding: "9px 13px",
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: 800,
+                  cursor: globalQuestionIndex === 0 ? "default" : "pointer",
+                  opacity: globalQuestionIndex === 0 ? 0.45 : 1,
+                }}
+              >
+                ← Previous
+              </button>
+
+              <button
+                onClick={() => moveQuestion(1)}
+                disabled={globalQuestionIndex === flatQuestions.length - 1}
+                style={{
+                  border: "none",
+                  background: COLORS.primary,
+                  color: "#fff",
+                  borderRadius: 8,
+                  padding: "9px 14px",
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: 800,
+                  cursor: "pointer",
+                }}
+              >
+                Next →
+              </button>
+            </div>
+
+            <div style={{
+              marginTop: 20,
+              paddingTop: 14,
+              borderTop: `1px solid ${COLORS.line}`,
+            }}>
+              <div style={{
+                fontFamily: "IBM Plex Mono, monospace",
+                fontSize: 9,
+                color: COLORS.textSoft,
+                marginBottom: 8,
+              }}>
+                QUESTION NAVIGATOR
+              </div>
+
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(10, 1fr)",
+                gap: 5,
+              }}>
+                {flatQuestions.map((question, i) => {
+                  const answered = String(answers[question.id] ?? "").trim();
+                  const active = i === globalQuestionIndex;
+                  const flagged = flags[question.id];
+
+                  return (
+                    <button
+                      key={question.id}
+                      onClick={() => jumpToQuestion(i)}
+                      title={flagged ? "Flagged" : ""}
+                      style={{
+                        height: 29,
+                        border: `1px solid ${active ? COLORS.primary : flagged ? COLORS.amber : COLORS.line}`,
+                        borderRadius: 5,
+                        background: active
+                          ? COLORS.primary
+                          : answered
+                          ? "#E7F7EF"
+                          : "#fff",
+                        color: active ? "#fff" : COLORS.primary,
+                        fontFamily: "IBM Plex Mono, monospace",
+                        fontSize: 10,
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        position: "relative",
+                      }}
+                    >
+                      {i + 1}
+                      {flagged && (
+                        <span style={{
+                          position: "absolute",
+                          top: -4,
+                          right: -2,
+                          color: COLORS.amber,
+                          fontSize: 9,
+                        }}>
+                          ★
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {showFinishConfirm && (
+        <div style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 50,
+          background: "rgba(20,28,66,0.45)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 20,
+        }}>
+          <div style={{
+            width: "min(440px, 100%)",
+            background: "#fff",
+            borderRadius: 14,
+            padding: 22,
+            boxShadow: "0 20px 60px rgba(0,0,0,0.18)",
+          }}>
+            <h3 style={{
+              margin: "0 0 8px",
+              fontFamily: "Space Grotesk, sans-serif",
+              color: COLORS.primary,
+            }}>
+              Finish test?
+            </h3>
+            <p style={{
+              margin: "0 0 16px",
+              fontFamily: "Inter, sans-serif",
+              color: COLORS.textSoft,
+              lineHeight: 1.6,
+              fontSize: 13,
+            }}>
+              Testni topshirgandan keyin javoblarni o'zgartira olmaysiz.
+              Javob berilmagan savollar:{" "}
+              <strong>
+                {flatQuestions.filter((q) => !String(answers[q.id] ?? "").trim()).length}
+              </strong>.
+            </p>
+
+            <div style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: 8,
+            }}>
+              <button
+                onClick={() => setShowFinishConfirm(false)}
+                style={{
+                  border: `1px solid ${COLORS.line}`,
+                  background: "#fff",
+                  color: COLORS.primary,
+                  borderRadius: 8,
+                  padding: "10px 14px",
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                Continue test
+              </button>
+              <button
+                onClick={() => finishTest(false)}
+                style={{
+                  border: "none",
+                  background: COLORS.primary,
+                  color: "#fff",
+                  borderRadius: 8,
+                  padding: "10px 14px",
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: 800,
+                  cursor: "pointer",
+                }}
+              >
+                Submit test
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ComingSoonModule({ id, onBack }) {
   const m = MODULES.find((x) => x.id === id);
   return (
@@ -1856,9 +3241,8 @@ export default function App() {
       {screen === "writing" && <WritingModule token={token} onBack={() => setScreen("dashboard")} onXpChange={refreshProgress} />}
       {screen === "speaking" && <SpeakingModule token={token} onBack={() => setScreen("dashboard")} onXpChange={refreshProgress} />}
       {screen === "vocabulary" && <VocabularyModule onBack={() => setScreen("dashboard")} />}
-      {["reading", "listening"].includes(screen) && (
-        <ComingSoonModule id={screen} onBack={() => setScreen("dashboard")} />
-      )}
+      {screen === "reading" && <ReadingModule onBack={() => setScreen("dashboard")} />}
+      {screen === "listening" && <ComingSoonModule id={screen} onBack={() => setScreen("dashboard")} />}
     </div>
   );
 }
