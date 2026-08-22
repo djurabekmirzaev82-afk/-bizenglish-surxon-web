@@ -8,7 +8,33 @@ import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
-import { VOCAB_TOPICS, VOCAB_WORDS, IELTS_TOPICS, IELTS_CONTENT } from "./vocabData";
+import { VOCAB_WORDS, IELTS_TOPICS, IELTS_CONTENT } from "./vocabData";
+
+// Corrected Business Vocabulary topic icons.
+// Kept in App.jsx so broken/mis-encoded icons in vocabData.js
+// cannot appear in the Vocabulary & IELTS topic cards.
+const VOCAB_TOPICS = [
+  { id: "job_interviews", icon: "💼", name: "Ish suhbati" },
+  { id: "meetings", icon: "📅", name: "Yig‘ilishlar" },
+  { id: "negotiations", icon: "🤝", name: "Muzokaralar" },
+  { id: "presentations", icon: "📊", name: "Taqdimotlar" },
+  { id: "emails", icon: "📧", name: "Elektron yozishmalar" },
+  { id: "marketing", icon: "📣", name: "Marketing" },
+  { id: "sales", icon: "💰", name: "Sotuv" },
+  { id: "finance", icon: "💳", name: "Moliya" },
+  { id: "hr", icon: "👥", name: "Kadrlar boshqaruvi" },
+  { id: "management", icon: "🎯", name: "Boshqaruv va liderlik" },
+  { id: "customer_service", icon: "🤝", name: "Mijozlarga xizmat" },
+  { id: "business_travel", icon: "✈️", name: "Ish safarlari" },
+  { id: "networking", icon: "🌐", name: "Aloqalar o‘rnatish" },
+  { id: "startups", icon: "🚀", name: "Startaplar" },
+  { id: "logistics", icon: "📦", name: "Ta’minot va logistika" },
+  { id: "technology", icon: "💻", name: "Texnologiya va IT" },
+  { id: "project_management", icon: "📋", name: "Loyiha boshqaruvi" },
+  { id: "legal", icon: "⚖️", name: "Huquq va shartnomalar" },
+  { id: "strategy", icon: "♟️", name: "Strategiya" },
+  { id: "workplace_culture", icon: "🏢", name: "Ofis madaniyati" },
+];
 
 const FONTS = `
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
