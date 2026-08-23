@@ -3,6 +3,7 @@ import {
   useEffect,
   useCallback,
   useRef,
+  Fragment,
 } from "react";
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
@@ -2847,6 +2848,57 @@ function ReadingModule({ onBack }) {
     );
   }
 
+  const renderGapFillText = (text) => {
+    const parts = text.split(/(\(\d+\)\s*_{3,})/g);
+    return parts.map((part, index) => {
+      const match = part.match(/^\((\d+)\)\s*_{3,}$/);
+      if (!match) return <Fragment key={`gap-text-${index}`}>{part}</Fragment>;
+
+      const number = match[1];
+      const question = activeSection.questions.find((q) => q.prompt === number);
+      if (!question) return <Fragment key={`gap-${number}-${index}`}>{part}</Fragment>;
+
+      return (
+        <span key={`gap-${number}-${index}`} style={{
+          display: "inline-flex",
+          alignItems: "center",
+          verticalAlign: "middle",
+          margin: "0 3px",
+          gap: 4,
+        }}>
+          <span style={{
+            fontFamily: "IBM Plex Mono, monospace",
+            fontWeight: 800,
+            color: MODULE_COLORS.reading.dark,
+            fontSize: 12,
+          }}>
+            ({number})
+          </span>
+          <input
+            aria-label={`Answer ${number}`}
+            value={answers[question.id] || ""}
+            onChange={(e) => chooseAnswer(question.id, e.target.value)}
+            autoComplete="off"
+            spellCheck={false}
+            style={{
+              width: 145,
+              maxWidth: "32vw",
+              border: "none",
+              borderBottom: `2px solid ${answers[question.id] ? COLORS.primary : COLORS.textSoft}`,
+              borderRadius: 0,
+              background: "transparent",
+              padding: "3px 5px 4px",
+              fontFamily: "Inter, sans-serif",
+              fontSize: 14,
+              color: COLORS.primary,
+              outline: "none",
+            }}
+          />
+        </span>
+      );
+    });
+  };
+
   const globalQuestionIndex = flatQuestions.findIndex((q) => q.id === activeQuestion?.id);
   const timerWarning = timeLeft <= 5 * 60;
 
@@ -3002,18 +3054,33 @@ function ReadingModule({ onBack }) {
               {activeSection.subtitle}
             </h2>
 
-            <div style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: 14,
-              lineHeight: 1.75,
-              color: COLORS.text,
-            }}>
-              {activeSection.passage.map((paragraph) => (
-                <p key={paragraph.slice(0, 25)} style={{ margin: "0 0 15px" }}>
-                  {paragraph}
-                </p>
-              ))}
-            </div>
+            {activeSection.id === "ml-1-part-1" ? (
+              <div style={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: 15,
+                lineHeight: 1.9,
+                color: COLORS.text,
+              }}>
+                {activeSection.passage.map((paragraph, paragraphIndex) => (
+                  <p key={`gap-p-${paragraphIndex}`} style={{ margin: "0 0 18px" }}>
+                    {renderGapFillText(paragraph)}
+                  </p>
+                ))}
+              </div>
+            ) : (
+              <div style={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: 14,
+                lineHeight: 1.75,
+                color: COLORS.text,
+              }}>
+                {activeSection.passage.map((paragraph) => (
+                  <p key={paragraph.slice(0, 25)} style={{ margin: "0 0 15px" }}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
 
           <div style={{
@@ -3065,65 +3132,52 @@ function ReadingModule({ onBack }) {
                   color: MODULE_COLORS.reading.dark,
                   marginBottom: 10,
                 }}>
-                  ANSWER SHEET — QUESTIONS 1–6
+                  QUESTIONS 1–6 · ANSWER STATUS
                 </div>
-                <div style={{
-                  display: "grid",
-                  gap: 10,
-                }}>
-                  {activeSection.questions.map((question) => (
-                    <div key={question.id} style={{
-                      display: "grid",
-                      gridTemplateColumns: "34px minmax(0, 1fr)",
-                      alignItems: "center",
-                      gap: 8,
-                    }}>
-                      <div style={{
-                        width: 30,
-                        height: 30,
-                        borderRadius: 7,
-                        background: answers[question.id] ? COLORS.primary : "#F2F4F7",
-                        color: answers[question.id] ? "#fff" : COLORS.textSoft,
+                <div style={{ display: "grid", gap: 7 }}>
+                  {activeSection.questions.map((question) => {
+                    const value = String(answers[question.id] || "").trim();
+                    return (
+                      <div key={question.id} style={{
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "center",
-                        fontFamily: "IBM Plex Mono, monospace",
-                        fontSize: 11,
-                        fontWeight: 800,
+                        justifyContent: "space-between",
+                        gap: 10,
+                        padding: "9px 10px",
+                        borderRadius: 8,
+                        background: value ? "#EEF9F3" : "#F8F9FB",
+                        border: `1px solid ${value ? "#BFE8D3" : COLORS.line}`,
                       }}>
-                        {question.prompt}
-                      </div>
-                      <input
-                        value={answers[question.id] || ""}
-                        onChange={(e) => chooseAnswer(question.id, e.target.value)}
-                        placeholder={`Answer ${question.prompt}`}
-                        autoComplete="off"
-                        spellCheck={false}
-                        style={{
-                          width: "100%",
-                          boxSizing: "border-box",
-                          border: `1px solid ${answers[question.id] ? COLORS.primary : COLORS.line}`,
-                          borderRadius: 8,
-                          padding: "10px 12px",
+                        <strong style={{
+                          fontFamily: "IBM Plex Mono, monospace",
+                          color: COLORS.primary,
+                          fontSize: 12,
+                        }}>
+                          {question.prompt}
+                        </strong>
+                        <span style={{
                           fontFamily: "Inter, sans-serif",
-                          fontSize: 14,
-                          outline: "none",
-                        }}
-                      />
-                    </div>
-                  ))}
+                          fontSize: 11,
+                          color: value ? COLORS.green : COLORS.textSoft,
+                          fontWeight: 700,
+                        }}>
+                          {value ? "Answered" : "Not answered"}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
                 <div style={{
                   marginTop: 14,
-                  padding: "10px 12px",
+                  padding: "11px 12px",
                   borderRadius: 8,
                   background: "#F8F9FB",
                   color: COLORS.textSoft,
                   fontFamily: "Inter, sans-serif",
                   fontSize: 11,
-                  lineHeight: 1.5,
+                  lineHeight: 1.55,
                 }}>
-                  Write <strong>ONE WORD</strong> for each answer. Use a word that appears somewhere in the text.
+                  <strong>ONE WORD only.</strong> Write your answer directly in the numbered blank inside the text. Each correct answer = <strong>1 point</strong>.
                 </div>
               </div>
             ) : (
