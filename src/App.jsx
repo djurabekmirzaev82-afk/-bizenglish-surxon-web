@@ -1902,6 +1902,81 @@ function makeSectionQuestions(variantNo, partNo, mode) {
   return { paragraphs, questions, topic, variant };
 }
 
+
+function buildMultilevelPart1Inline(variantNo) {
+  const variant = READING_VARIANTS[(variantNo - 1) % READING_VARIANTS.length];
+  const topic = variant.topics[0] || "business operations";
+  const title = variant.name;
+
+  // Six answer words are repeated elsewhere in the same text, following the
+  // official Multilevel Part 1 rule that each missing word appears elsewhere.
+  const sets = [
+    {
+      paragraphs: [
+        `The ${title.toLowerCase()} debate has changed (1) __________ as organisations have collected more evidence about how people actually behave. The discussion is particularly relevant because ${topic} affects both institutions and ordinary users. Researchers have described the evidence as considerable, and the considerable amount of new evidence has changed the debate.`,
+        `Initial expectations were often based on simple assumptions, while later studies revealed a more complicated pattern. Researchers began examining ${topic} after practical changes affected local organisations. The first stage was deliberately modest, allowing organisers to identify practical difficulties without committing a large budget. This modest beginning also produced useful evidence for later work.`,
+        `Several independent projects reported improvements when participants received clear information and practical support. One early project focused on a relatively small group and measured behaviour before and after the intervention. The project found that clear instructions were more useful when they were combined with convenient access to the new system. The system was easier to use when practical support was available.`
+      ],
+      answers: ["considerably", "evidence", "modest", "practical", "system", "support"],
+      extra: [
+        "The researchers continued to collect evidence from later studies.",
+        "The modest beginning helped the organisers identify practical difficulties.",
+        "Practical support was combined with clear information.",
+        "The new system was easier to use after support was provided."
+      ]
+    },
+    {
+      paragraphs: [
+        `The development of ${title.toLowerCase()} has changed (1) __________ as organisations have collected new evidence about users. The change became particularly important because ${topic} affects both institutions and ordinary users. Researchers described the evidence as considerable, and later evidence confirmed the value of careful measurement.`,
+        `Initial expectations were often based on simple assumptions, while later studies revealed a more complicated pattern. The first stage was deliberately modest, allowing organisers to identify practical difficulties without committing a large budget. This modest approach gave researchers time to collect evidence before expanding the work.`,
+        `Several projects reported improvements when participants received clear information and practical support. One project measured behaviour before and after an intervention and found that the new system worked better when practical support was available. The system therefore became part of the wider discussion about how support can change behaviour.`
+      ],
+      answers: ["considerably", "evidence", "modest", "projects", "system", "support"],
+      extra: [
+        "Later evidence confirmed the value of careful measurement.",
+        "The modest approach reduced the risk of early expansion.",
+        "Several projects reported improvements.",
+        "The new system worked better when support was available."
+      ]
+    },
+    {
+      paragraphs: [
+        `The discussion of ${title.toLowerCase()} has changed (1) __________ as organisations have collected more evidence about how people behave. The debate is particularly relevant because ${topic} affects both institutions and ordinary users. Researchers have gathered considerable evidence, and that evidence has encouraged more careful decisions.`,
+        `Initial expectations were often based on simple assumptions, while later studies revealed a more complicated pattern. Researchers began with a deliberately modest project so that practical difficulties could be identified. The modest first stage allowed organisers to learn before committing a large budget.`,
+        `Several independent projects reported improvements when participants received clear information and practical support. One early project measured behaviour before and after the intervention and found that the new system worked better when practical support was available. The system therefore became an important part of the discussion.`
+      ],
+      answers: ["considerably", "evidence", "modest", "practical", "system", "support"],
+      extra: [
+        "The evidence encouraged more careful decisions.",
+        "The modest first stage allowed organisers to learn.",
+        "Practical difficulties were identified early.",
+        "The system became an important part of the discussion."
+      ]
+    },
+  ];
+
+  const set = sets[(variantNo - 1) % sets.length];
+
+  // Vary the answer order/content without changing the exam mechanism.
+  // Each blank is rendered inline in the passage; the answer key remains
+  // separate and is used only for scoring.
+  return {
+    id: `ml-${variantNo}-part-1`,
+    title: "Part 1",
+    subtitle: "ONE WORD gap fill",
+    instruction: "Read the text. Fill in each gap with ONE word. You must use a word which is somewhere in the rest of the text.",
+    passage: set.paragraphs,
+    questions: set.answers.map((answer, index) => ({
+      id: `ml-${variantNo}-1-${index + 1}`,
+      type: "short",
+      prompt: String(index + 1),
+      answer,
+      accepted: [answer],
+      explanation: "The answer is taken from the information in the text.",
+    })),
+  };
+}
+
 function buildMultilevelVariant(variantNo) {
   // ================================================================
   // UZBEKISTAN NATIONAL MULTILEVEL READING
@@ -2080,9 +2155,8 @@ function buildMultilevelVariant(variantNo) {
     };
   }
 
-  // Variants 02–15 keep the same official five-part / 35-question engine.
-  // Their editorial passages can be replaced by independently authored banks
-  // without changing the UI, timer, navigation, scoring or IELTS module.
+  // Variants 02–15 use the same five-part engine, but Part 1 is ALWAYS
+  // rendered as an inline gap-fill text. IELTS is untouched.
   const generated = makeSectionQuestions(variantNo, 1, 'multilevel');
   const seed = generated;
   const fallbackQuestions = [];
@@ -2091,8 +2165,10 @@ function buildMultilevelVariant(variantNo) {
     fallbackQuestions.push({ ...q, id: `ml-${variantNo}-fallback-${i + 1}` });
   }
 
+  const part1 = buildMultilevelPart1Inline(variantNo);
+
   const sections = [
-    { id: `ml-${variantNo}-part-1`, title: 'Part 1', subtitle: 'ONE WORD gap fill', passage: seed.paragraphs.slice(0, 3), questions: fallbackQuestions.slice(0, 6).map((q, i) => ({ ...q, id: `ml-${variantNo}-1-${i + 1}`, type: 'short' })) },
+    part1,
     { id: `ml-${variantNo}-part-2`, title: 'Part 2', subtitle: 'Matching — A–J, two extra', passage: seed.paragraphs.slice(0, 3), questions: fallbackQuestions.slice(6, 14).map((q, i) => ({ ...q, id: `ml-${variantNo}-2-${i + 7}`, type: 'matching', options: ['A','B','C','D','E','F','G','H','I','J'], answer: 'A' })) },
     { id: `ml-${variantNo}-part-3`, title: 'Part 3', subtitle: 'Matching Headings', passage: seed.paragraphs, questions: fallbackQuestions.slice(0, 6).map((q, i) => ({ ...q, id: `ml-${variantNo}-3-${i + 15}`, type: 'matching', options: ['A','B','C','D','E','F','G','H'], answer: 'A' })) },
     { id: `ml-${variantNo}-part-4`, title: 'Part 4', subtitle: '4 MCQ + 5 True/False/No Information', passage: seed.paragraphs, questions: fallbackQuestions.slice(0, 9).map((q, i) => ({ ...q, id: `ml-${variantNo}-4-${i + 21}`, type: i < 4 ? 'mcq' : 'tfng', options: i < 4 ? ['A','B','C','D'] : ['A) True','B) False','C) No Information'] })) },
@@ -2108,7 +2184,6 @@ function buildMultilevelVariant(variantNo) {
     totalQuestions: 35
   };
 }
-
 function buildIeltsVariant(variantNo) {
   const sectionSizes = [13, 13, 14];
   const sections = sectionSizes.map((size, i) => {
@@ -3054,7 +3129,7 @@ function ReadingModule({ onBack }) {
               {activeSection.subtitle}
             </h2>
 
-            {activeSection.id === "ml-1-part-1" ? (
+            {activeSection?.title === "Part 1" ? (
               <div style={{
                 fontFamily: "Inter, sans-serif",
                 fontSize: 15,
@@ -3123,7 +3198,7 @@ function ReadingModule({ onBack }) {
               </button>
             </div>
 
-            {activeSection.id === 'ml-1-part-1' ? (
+            {activeSection?.title === "Part 1" ? (
               <div>
                 <div style={{
                   fontFamily: "IBM Plex Mono, monospace",
