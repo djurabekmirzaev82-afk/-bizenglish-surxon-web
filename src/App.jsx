@@ -1992,14 +1992,22 @@ function buildMultilevelVariant(variantNo) {
           title: 'Part 1',
           subtitle: 'Read the text. Fill in each gap with ONE word.',
           instruction: 'You must use a word which is somewhere in the rest of the text.',
-          passage: part1Text,
+          // IMPORTANT: Part 1 is a true exam-style gap-fill.
+          // The blanks live INSIDE the reading text; answers 1–6 are entered
+          // separately in the answer panel.
+          passage: [
+            'The 1984 movie "Purple Rain" is going to be made into a musical on Broadway, New York. The film was based on the album of the same name (1) __________ by the artist Prince. He also starred in it. This should encourage people to go to see the (2) __________ version.',
+            'The producers of the new musical are excited about their project. They said: "It\'s been 40 years since Prince\'s legendary film took the world by storm. We can\'t think of a more fitting tribute to honour Prince and his legacy than with this stage adaptation of the beloved story." They added: "We can\'t wait for a new generation to discover Purple Rain and to experience its power once again, this time live."',
+            '"Purple Rain" the movie won an Academy Award for Best Original Song Score. Many critics believe "Purple Rain" is one of the greatest musical (3) __________. "Purple Rain" the album spent 24 consecutive weeks at number one in the USA\'s Billboard 200 music chart. It spent a total of 167 (4) __________ on that chart. It contains the smash hit "When Doves Cry".',
+            'The movie is about an aspiring singer and guitarist who was trying to become famous. The story shows (5) __________ complicated home life, his battles with musical rivals, and a new romance. Prince died in 2016 from an overdose of painkiller drugs. He sold over 100 million records worldwide. This makes him one of the best-selling music (6) __________ of all time.'
+          ],
           questions: [
-            makeQ('ml-1-1-1', 'short', '1. The film was based on the album of the same name ______ by the artist Prince.', null, 'made', ['made']),
-            makeQ('ml-1-1-2', 'short', '2. This should encourage people to go to see the ______ version.', null, 'musical', ['musical']),
-            makeQ('ml-1-1-3', 'short', '3. Many critics believe Purple Rain is one of the greatest musical ______.', null, 'films', ['films']),
-            makeQ('ml-1-1-4', 'short', '4. The album spent a total of 167 ______ on the Billboard 200 chart.', null, 'weeks', ['weeks']),
-            makeQ('ml-1-1-5', 'short', '5. The story shows ______ complicated home life.', null, 'his', ['his']),
-            makeQ('ml-1-1-6', 'short', '6. Prince became one of the best-selling music ______ of all time.', null, 'artists', ['artists'])
+            makeQ('ml-1-1-1', 'short', '1', null, 'made', ['made']),
+            makeQ('ml-1-1-2', 'short', '2', null, 'musical', ['musical']),
+            makeQ('ml-1-1-3', 'short', '3', null, 'films', ['films']),
+            makeQ('ml-1-1-4', 'short', '4', null, 'weeks', ['weeks']),
+            makeQ('ml-1-1-5', 'short', '5', null, 'his', ['his']),
+            makeQ('ml-1-1-6', 'short', '6', null, 'artists', ['artists'])
           ]
         },
         {
@@ -3048,17 +3056,89 @@ function ReadingModule({ onBack }) {
               </button>
             </div>
 
-            <div style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: 14,
-              lineHeight: 1.65,
-              color: COLORS.text,
-              marginBottom: 15,
-            }}>
-              <strong>{activeQuestion.prompt}</strong>
-            </div>
+            {activeSection.id === 'ml-1-part-1' ? (
+              <div>
+                <div style={{
+                  fontFamily: "IBM Plex Mono, monospace",
+                  fontSize: 10,
+                  fontWeight: 800,
+                  color: MODULE_COLORS.reading.dark,
+                  marginBottom: 10,
+                }}>
+                  ANSWER SHEET — QUESTIONS 1–6
+                </div>
+                <div style={{
+                  display: "grid",
+                  gap: 10,
+                }}>
+                  {activeSection.questions.map((question) => (
+                    <div key={question.id} style={{
+                      display: "grid",
+                      gridTemplateColumns: "34px minmax(0, 1fr)",
+                      alignItems: "center",
+                      gap: 8,
+                    }}>
+                      <div style={{
+                        width: 30,
+                        height: 30,
+                        borderRadius: 7,
+                        background: answers[question.id] ? COLORS.primary : "#F2F4F7",
+                        color: answers[question.id] ? "#fff" : COLORS.textSoft,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontFamily: "IBM Plex Mono, monospace",
+                        fontSize: 11,
+                        fontWeight: 800,
+                      }}>
+                        {question.prompt}
+                      </div>
+                      <input
+                        value={answers[question.id] || ""}
+                        onChange={(e) => chooseAnswer(question.id, e.target.value)}
+                        placeholder={`Answer ${question.prompt}`}
+                        autoComplete="off"
+                        spellCheck={false}
+                        style={{
+                          width: "100%",
+                          boxSizing: "border-box",
+                          border: `1px solid ${answers[question.id] ? COLORS.primary : COLORS.line}`,
+                          borderRadius: 8,
+                          padding: "10px 12px",
+                          fontFamily: "Inter, sans-serif",
+                          fontSize: 14,
+                          outline: "none",
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div style={{
+                  marginTop: 14,
+                  padding: "10px 12px",
+                  borderRadius: 8,
+                  background: "#F8F9FB",
+                  color: COLORS.textSoft,
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: 11,
+                  lineHeight: 1.5,
+                }}>
+                  Write <strong>ONE WORD</strong> for each answer. Use a word that appears somewhere in the text.
+                </div>
+              </div>
+            ) : (
+              <>
+                <div style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: 14,
+                  lineHeight: 1.65,
+                  color: COLORS.text,
+                  marginBottom: 15,
+                }}>
+                  <strong>{activeQuestion.prompt}</strong>
+                </div>
 
-            {activeQuestion.type === "mcq" || activeQuestion.type === "tfng" || activeQuestion.type === "matching" ? (
+                {activeQuestion.type === "mcq" || activeQuestion.type === "tfng" || activeQuestion.type === "matching" ? (
               <div style={{ display: "grid", gap: 8 }}>
                 {activeQuestion.options.map((option) => {
                   const selected = answers[activeQuestion.id] === option;
@@ -3099,21 +3179,23 @@ function ReadingModule({ onBack }) {
                 })}
               </div>
             ) : (
-              <input
-                value={answers[activeQuestion.id] || ""}
-                onChange={(e) => chooseAnswer(activeQuestion.id, e.target.value)}
-                placeholder="Write your answer..."
-                style={{
-                  width: "100%",
-                  boxSizing: "border-box",
-                  border: `1px solid ${COLORS.line}`,
-                  borderRadius: 9,
-                  padding: "12px 13px",
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: 14,
-                  outline: "none",
-                }}
-              />
+                  <input
+                    value={answers[activeQuestion.id] || ""}
+                    onChange={(e) => chooseAnswer(activeQuestion.id, e.target.value)}
+                    placeholder="Write your answer..."
+                    style={{
+                      width: "100%",
+                      boxSizing: "border-box",
+                      border: `1px solid ${COLORS.line}`,
+                      borderRadius: 9,
+                      padding: "12px 13px",
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: 14,
+                      outline: "none",
+                    }}
+                  />
+                )}
+              </>
             )}
 
             <div style={{
