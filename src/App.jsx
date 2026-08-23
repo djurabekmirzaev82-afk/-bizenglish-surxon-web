@@ -1902,257 +1902,204 @@ function makeSectionQuestions(variantNo, partNo, mode) {
 }
 
 function buildMultilevelVariant(variantNo) {
-  // Uzbekistan National Multilevel Reading format:
-  // Part 1: 1–6   = one-word gap fill
-  // Part 2: 7–14  = matching (8 situations, A–J, 2 extra)
-  // Part 3: 15–20 = matching headings
-  // Part 4: 21–29 = 4 MCQ + 5 True/False/No Information
-  // Part 5: 30–35 = 4 gap fill + 2 MCQ
-  // Total: 35 questions / 60 minutes.
-  //
-  // IMPORTANT:
-  // IELTS is NOT touched here. buildIeltsVariant() remains unchanged.
-  // Reading icons / MODULE_COLORS are NOT touched.
+  // ================================================================
+  // UZBEKISTAN NATIONAL MULTILEVEL READING
+  // Based directly on the user-provided BAGDAD 2024 sample.
+  // 5 parts / 35 questions / 60 minutes.
+  // IELTS Reading is deliberately NOT modified here.
+  // ================================================================
 
-  const packs = [
-    {
-      topic: "Workplace communication",
-      subject: "effective workplace communication",
-      p1: {
-        title: "Clear Communication at Work",
-        text: [
-          "Clear communication helps a team avoid unnecessary mistakes. Good managers explain the main goal before asking staff to take action. They also encourage employees to ask questions when an instruction is not clear.",
-          "A short meeting can save time when a project involves several people. However, meetings should have a clear purpose and should not continue for too long. Written notes are useful because they allow team members to check important details later.",
-          "When problems appear, employees should report them early rather than hide them. This gives managers more time to find a solution. In difficult situations, respectful language is often more effective than criticism.",
-        ],
-        gaps: [
-          ["Clear communication helps a team avoid unnecessary ______.", "mistakes"],
-          ["Good managers explain the main ______ before asking staff to act.", "goal"],
-          ["Employees should ask ______ when an instruction is unclear.", "questions"],
-          ["A short ______ can save time when several people are involved.", "meeting"],
-          ["Written ______ help team members check important details later.", "notes"],
-          ["Employees should report problems ______ rather than hide them.", "early"],
-        ],
-      },
-      p2: [
-        ["You want a short, funny programme after a difficult week.", "D"],
-        ["You want information about ancient civilisations.", "F"],
-        ["You want an exciting programme with danger and suspense.", "B"],
-        ["You want to learn about animals and the natural world.", "A"],
-        ["You want to watch performers from different musical traditions.", "G"],
-        ["You want to learn practical cooking skills.", "I"],
-        ["You want the latest information about technology.", "E"],
-        ["You want to learn a creative practical skill.", "H"],
-      ],
-      p2Options: {
-        A: "Nature Watch — a documentary about wildlife conservation.",
-        B: "Night Chase — an action series full of suspense.",
-        C: "Market Today — a programme about current business news.",
-        D: "Comedy Hour — stand-up performances and witty observations.",
-        E: "Future Tech — live reports from a technology conference.",
-        F: "Ancient Worlds — documentaries about lost civilisations.",
-        G: "Global Sounds — musicians performing international styles.",
-        H: "Craft Studio — practical lessons in creative arts.",
-        I: "Kitchen Lab — chefs demonstrate new recipes.",
-        J: "Morning Fitness — a guided exercise programme.",
-      },
-      p3: {
-        title: "Why organisations need to learn from mistakes",
-        headings: [
-          "A) The cost of ignoring a warning",
-          "B) A culture that encourages honest reporting",
-          "C) Learning from a successful competitor",
-          "D) Why small problems can become serious",
-          "E) Turning experience into future improvement",
-          "F) The danger of blaming individuals",
-          "G) A new system for recruiting staff",
-          "H) The importance of recording evidence",
-        ],
-        paragraphs: [
-          "Small problems are often ignored because they appear harmless. In a busy organisation, staff may decide that a minor delay or error is not worth reporting. However, several small failures can combine and eventually create a much larger problem.",
-          "Employees are more likely to report difficulties when they know that managers will listen rather than immediately look for someone to blame. A workplace that treats mistakes as opportunities to learn can identify weaknesses earlier.",
-          "After an incident, organisations should record what happened carefully. Accurate notes, dates and evidence allow managers to understand the sequence of events instead of relying on memory or assumptions.",
-          "The purpose of reviewing a failure is not simply to identify what went wrong. A useful review should lead to practical changes in procedures, training or communication so that the same problem is less likely to happen again.",
-          "Managers sometimes focus too heavily on the person who made the final mistake. This can hide weaknesses in the wider system, such as unclear instructions, unrealistic deadlines or inadequate supervision.",
-          "Over time, repeated reviews can turn individual experiences into organisational knowledge. What one team learns from an incident can then help another team avoid a similar problem.",
-        ],
-        answers: [
-          "D) Why small problems can become serious",
-          "B) A culture that encourages honest reporting",
-          "H) The importance of recording evidence",
-          "E) Turning experience into future improvement",
-          "F) The danger of blaming individuals",
-          "E) Turning experience into future improvement",
-        ],
-      },
-      p4: {
-        title: "Decision-making in modern organisations",
-        paragraphs: [
-          "Managers make decisions under pressure and rarely have complete information. They therefore need to distinguish between evidence, assumptions and personal preferences.",
-          "One common problem is the tendency to give too much importance to the first piece of information received. This can influence later judgements even when better evidence becomes available.",
-          "Another problem is confirmation bias. People often search for information that supports an existing opinion while paying less attention to evidence that challenges it.",
-          "Good decision-making does not mean eliminating uncertainty. Instead, organisations can improve decisions by identifying risks, comparing alternatives and reviewing important assumptions before acting.",
-          "Regular review is especially useful when a decision has long-term consequences. New information may show that an earlier plan should be changed rather than defended.",
-        ],
-        questions: [
-          ["What problem do managers face when making decisions?", ["They always have too much information.", "They often have incomplete information.", "They never work under pressure.", "They can always predict the future."], "B"],
-          ["What is described as the danger of the first piece of information?", ["It can influence later judgement.", "It always contains false information.", "It makes decisions faster.", "It prevents people from collecting evidence."], "A"],
-          ["What does confirmation bias involve?", ["Ignoring all previous experience.", "Searching only for information that challenges an opinion.", "Giving more attention to evidence supporting an existing opinion.", "Making decisions without any information."], "C"],
-          ["According to the passage, organisations can improve decisions by...", ["avoiding all risks.", "reviewing alternatives and assumptions.", "letting one person decide everything.", "refusing to change earlier plans."], "B"],
-          ["Managers should always keep the first plan unchanged.", ["TRUE", "FALSE", "NO INFORMATION"], "FALSE"],
-          ["The passage says that decision-making can be improved even though uncertainty cannot be removed.", ["TRUE", "FALSE", "NO INFORMATION"], "TRUE"],
-          ["Confirmation bias is found only in business organisations.", ["TRUE", "FALSE", "NO INFORMATION"], "NO INFORMATION"],
-          ["New information can justify changing an earlier plan.", ["TRUE", "FALSE", "NO INFORMATION"], "TRUE"],
-          ["The passage gives a specific percentage showing how often managers make biased decisions.", ["TRUE", "FALSE", "NO INFORMATION"], "NO INFORMATION"],
-        ],
-      },
-      p5: {
-        title: "Building a reliable team",
-        text: [
-          "A reliable team depends on clear responsibilities. When employees know who is responsible for a particular task, work is less likely to be duplicated or forgotten.",
-          "Training is another important element. New staff need practical guidance, while experienced employees benefit from opportunities to update their skills.",
-          "Managers should also create regular opportunities for feedback. Honest feedback helps teams identify weaknesses before they become serious problems.",
-          "Finally, trust develops when people keep their promises and communicate openly about difficulties.",
-        ],
-        gaps: [
-          ["A reliable team needs clear ______.", "responsibilities"],
-          ["Training gives employees opportunities to update their ______.", "skills"],
-          ["Regular ______ helps teams identify weaknesses.", "feedback"],
-          ["Trust develops when people keep their ______.", "promises"],
-        ],
-        mcq: [
-          ["What is one benefit of clear responsibilities?", ["Tasks are less likely to be duplicated.", "Employees work fewer hours.", "Meetings become unnecessary.", "Training is no longer needed."], "A"],
-          ["What helps teams identify weaknesses early?", ["Longer working hours.", "Regular feedback.", "Fewer responsibilities.", "Avoiding difficult conversations."], "B"],
-        ],
-      },
-    },
+  if (variantNo === 1) {
+    const part1Text = [
+      'The 1984 movie "Purple Rain" is going to be made into a musical on Broadway, New York. The film was based on the album of the same name made by the artist Prince. He also starred in it. This should encourage people to go to see the musical version.',
+      'The producers of the new musical are excited about their project. They said: "It\'s been 40 years since Prince\'s legendary film took the world by storm. We can\'t think of a more fitting tribute to honour Prince and his legacy than with this stage adaptation of the beloved story." They added: "We can\'t wait for a new generation to discover Purple Rain and to experience its power once again, this time live."',
+      'Purple Rain the movie won an Academy Award for Best Original Song Score. Many critics believe Purple Rain is one of the greatest musical films. Purple Rain the album spent 24 consecutive weeks at number one in the USA\'s Billboard 200 music chart. It spent a total of 167 weeks on that chart. It contains the smash hit When Doves Cry.',
+      'The movie is about an aspiring singer and guitarist who was trying to become famous. The story shows his complicated home life, his battles with musical rivals, and a new romance. Prince died in 2016 from an overdose of painkiller drugs. He sold over 100 million records worldwide. This makes him one of the best-selling music artists of all time.'
+    ];
+
+    const part2Options = {
+      A: 'Oceans Unseen — Explore coral reefs, whales and the scientists protecting the fragile marine ecosystem.',
+      B: 'Double Cross — A heart-pounding action story with explosive chases, double-crossings and shocking revelations.',
+      C: 'Island Escape: Paradise of Panic? — Strangers are placed on a remote tropical island and must build alliances and overcome obstacles.',
+      D: 'Comedy Cocktail Hour — Back-to-back stand-up specials with quick jokes, observations and guaranteed laughs.',
+      E: 'Future Tech Summit — Live coverage of a major technology conference with industry leaders and new prototypes.',
+      F: 'Lost Temples of the Maya — An archaeological journey into the mysteries of a legendary ancient civilisation.',
+      G: 'Global Groove Live — International performers from Senegal, Japan and Spain in a variety of musical styles.',
+      H: 'Craft Masterclass! — A hands-on ceramic workshop covering wheel throwing, hand-building and glazing.',
+      I: 'The Spice Trail — A chef explores Moroccan spice markets and demonstrates traditional dishes and cooking tips.',
+      J: 'Morning Move — A high-energy workout combining cardio and core-strengthening exercises.'
+    };
+
+    const part3Headings = [
+      'A) Not identifying the correct priorities',
+      'B) A solution for the long term',
+      'C) The difficulty of changing your mind',
+      'D) The need for more effective risk assessment',
+      'E) The power of the first number',
+      'F) A successful approach to the study of decision-making',
+      'G) The danger of trusting a global market',
+      'H) Reluctance to go beyond the familiar'
+    ];
+
+    const part3Paragraphs = [
+      'People make terrible decisions about the future. The evidence is all around, from their investments in the stock markets to the way they run their businesses. In fact, people are consistently bad at dealing with uncertainty, underestimating some kinds of risk and overestimating others. Surely there must be a better way than using intuition?',
+      'In the 1960s a young American research psychologist, Daniel Kahneman, became interested in people\'s inability to make logical decisions. That launched him on a career to show just how irrationally people behave in practice. When Kahneman and his colleagues first started work, the idea of applying psychological insights to economics and business decisions was seen as rather bizarre. But in the past decade the fields of behavioural finance and behavioural economics have blossomed, and in 2002 Kahneman shared a Nobel prize in economics for his work. Today he is in demand by business organizations and international banking companies. But, he says, there are plenty of institutions that still fail to understand the roots of their poor decisions. He claims that, far from being random, these mistakes are systematic and predictable.',
+      'Another source of wrong decisions is related to the decisive effect of the initial meeting, particularly in negotiations over money. This is referred to as the anchor effect. Once a figure has been mentioned, it takes a strange hold over the human mind. The asking price quoted in a house sale, for example, tends to become accepted by all parties as the anchor around which negotiations take place. Much the same goes for salary negotiations or mergers and acquisitions. If nobody has much information to go on, a figure can provide comfort - even though it may lead to a terrible mistake.',
+      'In addition, mistakes may arise due to stubbornness. No one likes to abandon a cherished belief, and the earlier a decision has been taken, the harder it is to abandon it. Drug companies must decide early to cancel a failing research project to avoid wasting money, but may find it difficult to admit they have made a mistake. In the same way, analysts may have become wedded early to a single explanation that coloured their perception. A fresh eye always helps.',
+      'People also tend to put a lot of emphasis on things they have seen and experienced themselves, which may not be the best guide to decision-making. For example, somebody may buy an overvalued share because a relative has made thousands on it, only to get his fingers burned. In finance, too much emphasis on information close at hand helps to explain the tendency by most investors to invest only within the country they live in. Even though they know that diversification is good for their portfolio, a large majority of both Americans and Europeans invest far too heavily in the shares of their home countries. They would be much better off spreading their risks more widely.',
+      'More information is helpful in making any decision but, says Kahneman, people spend proportionally too much time on small decisions and not enough on big ones. They need to adjust the balance. During the boom years, some companies put as much effort into planning their office party as into considering strategic mergers.'
+    ];
+
+    const part4Passage = [
+      'Since the theory of UG was proposed, linguists have identified many universal language rules. However, there are almost always exceptions. It was once believed, for example, that if a language had syllables that begin with a vowel and end with a consonant (VC), it would also have syllables that begin with a consonant and end with a vowel (CV). This universal lasted until 1999, when linguists showed that Arrernte, spoken by Indigenous Australians from the area around Alice Springs in the Northern Territory, has VC syllables but no CV syllables.',
+      'Other non-universal universals describe the basic rules of putting words together. Take the rule that every language contains four basic word classes: nouns, verbs, adjectives and adverbs. Work in the past two decades has shown that several languages lack an open adverb class, which means that new adverbs cannot be readily formed, unlike in English where you can turn any adjective into an adverb, for example soft into softly. Others, such as Lao, spoken in Laos, have no adjectives at all. More controversially, some linguists argue that a few languages, such as Straits Salish, spoken by indigenous people from north-western regions of North America, do not even have distinct nouns or verbs. Instead, they have a single class of words to include events, objects and qualities.',
+      'Even apparently indisputable universals have been found lacking. This includes recursion, or the ability to infinitely place one grammatical unit inside a similar unit, such as Jack thinks that Mary thinks that ... the bus will be on time. It is widely considered to be the most essential characteristic of human language, one that sets it apart from the communications of all other animals. Yet Dan Everett at Illinois State University recently published controversial work showing that Amazonian Piraha does not have this quality.',
+      'But what if the very diversity of languages is the key to understanding human communication? Linguists Nicholas Evans of the Australian National University in Canberra, and Stephen Levinson of the Max Planck Institute for Psycholinguistics in Nijmegen, the Netherlands, believe that languages do not share a common set of rules. Instead, they say, their sheer variety is a defining feature of human communication - something not seen in other animals. While there is no doubt that human thinking influences the form that language takes, language in turn may shape our brains. This suggests that humans are more diverse than we thought, with our brains having differences depending on the language environment in which we grew up. And that leads to a disturbing conclusion: every time a language becomes extinct, humanity loses an important piece of diversity.',
+      'If languages do not obey a single set of shared rules, then how are they created? Instead of universals, you get standard engineering solutions that languages adopt again and again, and then you get outliers, says Evans. He and Levinson argue that this is because any given language is a complex system shaped by many factors, including culture, genetics and history. There are no absolutely universal traits of language, they say, only tendencies. And it is a mix of strong and weak tendencies that characterises the bio-cultural mix that we call language.',
+      'According to the two linguists, the strong tendencies explain why many languages display common patterns. A variety of factors tend to push language in a similar direction, such as the structure of the brain, the biology of speech, and the efficiencies of communication. Widely shared linguistic elements may also be ones that build on a particularly human kind of reasoning. For example, the fact that before we learn to speak we perceive the world as a place full of things causing actions (agents) and things having actions done to them (patients) explains why most languages deploy these grammatical categories.',
+      'Weak tendencies, in contrast, are explained by the idiosyncrasies of different languages. Evans and Levinson argue that many aspects of the particular natural history of a population may affect its language. For instance, Andy Butcher at Flinders University in Adelaide, South Australia, has observed that indigenous Australian children have by far the highest incidence of chronic middle-ear infection of any population on the planet, and that most indigenous Australian languages lack many sounds that are common in other languages, but which are hard to hear with a middle-ear infection. Whether this condition has shaped the sound systems of these languages is unknown, says Evans, but it is important to consider the idea.',
+      'Levinson and Evans are not the first to question the theory of universal grammar, but no one has summarised these ideas quite as persuasively, and given them as much reach. As a result, their arguments have generated widespread enthusiasm, particularly among those linguists who are tired of trying to squeeze their findings into the straitjacket of absolute universals. To some, it is the final nail in UG\'s coffin.'
+    ];
+
+    const part5Passage = [
+      'Although it was called tiger, it looked like a dog with black stripes on its back and it was the largest known carnivorous marsupial of modern times. Yet, despite its fame for being one of the most fabled animals in the world, it is one of the least understood of Tasmania\'s native animals. The scientific name for the Tasmanian tiger is Thylacine and it is believed that they have become extinct in the 20th century.',
+      'Fossils of thylacines dating from about almost 12 million years ago have been dug up at various places in Victoria, South Australia and Western Australia. They were widespread in Australia 7,000 years ago, but have probably been extinct on the continent for 2,000 years. This is believed to be because of the introduction of dingoes around 8,000 years ago. Because of disease, thylacine numbers may have been declining in Tasmania at the time of European settlement 200 years ago, but the decline was certainly accelerated by the new arrivals. The last known Tasmanian Tiger died in Hobart Zoo in 1936 and the animal is officially classified as extinct. Technically, this means that it has not been officially sighted in the wild or captivity for 50 years. However, there are still unsubstantiated sightings.',
+      'Hans Naarding, whose study of animals had taken him around the world, was conducting a survey of a species of endangered migratory bird. The sighting he saw that night is now regarded as the most credible sighting recorded of thylacine that many believe has been extinct for more than 70 years.',
+      'I had to work at night. I was in the habit of intermittently shining a spotlight around. The beam fell on an animal in front of the vehicle, less than 10m away. Instead of risking movement by grabbing for a camera, I decided to register very carefully what I was seeing. The animal was about the size of a small shepherd dog, a very healthy male in prime condition. What set it apart from a dog, though, was a slightly sloping hindquarter, with a fairly thick tail being a straight continuation of the backline of the animal. It had 12 distinct stripes on its back, continuing onto its butt. I knew perfectly well what I was seeing. As soon as I reached for the camera, it disappeared into the tea-tree undergrowth and scrub.',
+      'The director of Tasmania\'s National Parks at the time, Peter Morrow, decided to keep Naarding\'s sighting of the thylacine secret for two years. When the news finally broke, it was accompanied by pandemonium. Television crews arrived from Japan, the United Kingdom, Germany, New Zealand and South America.',
+      'Government and private search parties combed the region, but no further sightings were made. The tiger, as always, had escaped to its lair, a place many insist exists only in our imagination. But since then, the thylacine has staged something of a comeback, becoming part of Australian mythology.',
+      'There have been more than 4,000 claimed sightings of the beast since it supposedly died out, and the average claims each year reported to authorities now number 150. Associate professor of zoology at the University of Tasmania, Randolph Rose, has said he dreams of seeing a thylacine. But Rose, who in his 35 years in Tasmanian academia has fielded countless reports of thylacine sightings, is now convinced that his dream will go unfulfilled.',
+      'The consensus among conservationists is that usually any animal with a population base of less than 1,000 is headed for extinction within 60 years, says Rose. Sixty years ago, there was only one thylacine that we know of, and that was in Hobart Zoo.',
+      'Dr. David Pemberton, curator of zoology at the Tasmanian Museum and Art Gallery, whose PhD thesis was on the thylacine, says that despite scientific thinking that 500 animals are required to sustain a population, the Florida panther is down to a dozen or so animals and, while it does have some inbreeding problems, is still ticking along. I\'ll take a punt and say that, if we manage to find a thylacine in the scrub, it means that there are 50-plus animals out there.',
+      'After all, animals can be notoriously elusive. The strange fish known as the coelacanth, with its proto-legs, was thought to have died out along with the dinosaurs 70 million years ago until a specimen was dragged to the surface in a shark net off the south-east coast of South Africa in 1938.',
+      'Wildlife biologist Nick Mooney has the unenviable task of investigating all sightings of the tiger totaling 4,000 since the mid-1980s, and averaging about 150 a year. It was Mooney who was first consulted about the authenticity of digital photographic images purportedly taken by a German tourist while on a recent bushwalk in the state. On face value, Mooney says, the account of the sighting, and the two photographs submitted as the proof amount to one of the most convincing cases for the species\' survival he has seen.'
+    ];
+
+    const makeQ = (id, type, prompt, options, answer, accepted = []) => ({
+      id, type, prompt, ...(options ? { options } : {}), answer, ...(accepted.length ? { accepted } : {}),
+      explanation: 'Answer is determined from the information provided in the test text.'
+    });
+
+    return {
+      id: 1,
+      title: 'Multilevel Reading — Variant 01',
+      mode: 'multilevel',
+      duration: 60 * 60,
+      totalQuestions: 35,
+      sections: [
+        {
+          id: 'ml-1-part-1',
+          title: 'Part 1',
+          subtitle: 'Read the text. Fill in each gap with ONE word.',
+          instruction: 'You must use a word which is somewhere in the rest of the text.',
+          passage: part1Text,
+          questions: [
+            makeQ('ml-1-1-1', 'short', '1. The film was based on the album of the same name ______ by the artist Prince.', null, 'made', ['made']),
+            makeQ('ml-1-1-2', 'short', '2. This should encourage people to go to see the ______ version.', null, 'musical', ['musical']),
+            makeQ('ml-1-1-3', 'short', '3. Many critics believe Purple Rain is one of the greatest musical ______.', null, 'films', ['films']),
+            makeQ('ml-1-1-4', 'short', '4. The album spent a total of 167 ______ on the Billboard 200 chart.', null, 'weeks', ['weeks']),
+            makeQ('ml-1-1-5', 'short', '5. The story shows ______ complicated home life.', null, 'his', ['his']),
+            makeQ('ml-1-1-6', 'short', '6. Prince became one of the best-selling music ______ of all time.', null, 'artists', ['artists'])
+          ]
+        },
+        {
+          id: 'ml-1-part-2',
+          title: 'Part 2',
+          subtitle: 'Read the texts 7–14 and the statements A–J. Decide which text matches each situation.',
+          instruction: 'Each statement can be used ONCE only. There are TWO extra statements which you do not need to use.',
+          passage: Object.entries(part2Options).map(([letter, text]) => `${letter}. ${text}`),
+          questions: [
+            makeQ('ml-1-2-7', 'matching', '7. Jack and Sarah, a young couple, want a light-hearted escape after a stressful week. They enjoy shows with humor and witty banter.', Object.keys(part2Options), 'D'),
+            makeQ('ml-1-2-8', 'matching', '8. Emily loves documentaries that transport her to the past. She is especially interested in exotic and distant past cultures.', Object.keys(part2Options), 'F'),
+            makeQ('ml-1-2-9', 'matching', '9. Tom craves adrenaline-pumping action and suspense.', Object.keys(part2Options), 'B'),
+            makeQ('ml-1-2-10', 'matching', '10. Marie wants a relaxing escape into the beauty of the natural world. She enjoys documentaries about life, animals and their preservation.', Object.keys(part2Options), 'A'),
+            makeQ('ml-1-2-11', 'matching', '11. John, a music lover, wants to be captivated by talented performers and enjoys shows with diverse genres.', Object.keys(part2Options), 'G'),
+            makeQ('ml-1-2-12', 'matching', '12. Olivia wants to learn new recipes and be inspired by culinary experts.', Object.keys(part2Options), 'I'),
+            makeQ('ml-1-2-13', 'matching', '13. David wants to stay informed about the modern world.', Object.keys(part2Options), 'E'),
+            makeQ('ml-1-2-14', 'matching', '14. Liam wants to be inspired by artistic expression and discover new hobbies.', Object.keys(part2Options), 'H')
+          ]
+        },
+        {
+          id: 'ml-1-part-3',
+          title: 'Part 3',
+          subtitle: 'Read the text and choose the correct heading for each paragraph.',
+          instruction: 'There are more headings than paragraphs, so you will not use all of them. You cannot use any heading more than once.',
+          passage: part3Paragraphs.map((p, i) => `Paragraph ${['I','II','III','IV','V','VI'][i]}\n${p}`),
+          questions: [
+            makeQ('ml-1-3-15', 'matching', '15. Paragraph I', part3Headings, 'D) The need for more effective risk assessment'),
+            makeQ('ml-1-3-16', 'matching', '16. Paragraph II', part3Headings, 'F) A successful approach to the study of decision-making'),
+            makeQ('ml-1-3-17', 'matching', '17. Paragraph III', part3Headings, 'E) The power of the first number'),
+            makeQ('ml-1-3-18', 'matching', '18. Paragraph IV', part3Headings, 'C) The difficulty of changing your mind'),
+            makeQ('ml-1-3-19', 'matching', '19. Paragraph V', part3Headings, 'H) Reluctance to go beyond the familiar'),
+            makeQ('ml-1-3-20', 'matching', '20. Paragraph VI', part3Headings, 'A) Not identifying the correct priorities')
+          ]
+        },
+        {
+          id: 'ml-1-part-4',
+          title: 'Part 4',
+          subtitle: 'Read the following text for questions 21–29.',
+          instruction: 'For questions 21–24 choose A, B, C or D. For questions 25–29 decide if the statements are True, False or No Information.',
+          passage: part4Passage,
+          questions: [
+            makeQ('ml-1-4-21', 'mcq', '21. Which of the following views about language are held by Evans and Levinson?', ['A) Each of the world’s languages develops independently.','B) The differences between languages outweigh the similarities.','C) Only a few language features are universal.','D) Each language is influenced by the characteristics of other languages.'], 'A) Each of the world’s languages develops independently.'),
+            makeQ('ml-1-4-22', 'mcq', '22. According to Evans and Levinson, apparent similarities between languages could be due to', ['A) close social contact.','B) faulty analysis.','C) shared modes of perception.','D) narrow descriptive systems.'], 'C) shared modes of perception.'),
+            makeQ('ml-1-4-23', 'mcq', '23. In the seventh paragraph, what does the reference to a middle-ear infection serve as?', ['A) A justification for something.','B) A contrast with something.','C) The possible cause of something.','D) The likely result of something.'], 'C) The possible cause of something.'),
+            makeQ('ml-1-4-24', 'mcq', '24. What does the writer suggest about Evans’ and Levinson’s theory of language development?', ['A) It had not been previously considered.','B) It is presented in a convincing way.','C) It has been largely rejected by other linguists.','D) It is not supported by the evidence.'], 'B) It is presented in a convincing way.'),
+            makeQ('ml-1-4-25', 'tfng', '25. The majority of UG rules proposed by linguists do apply to all human languages.', ['A) True','B) False','C) No Information'], 'B) False'),
+            makeQ('ml-1-4-26', 'tfng', '26. There is disagreement amongst linguists about an aspect of Straits Salish grammar.', ['A) True','B) False','C) No Information'], 'A) True'),
+            makeQ('ml-1-4-27', 'tfng', '27. The search for new universal language rules has largely ended.', ['A) True','B) False','C) No Information'], 'C) No Information'),
+            makeQ('ml-1-4-28', 'tfng', '28. If Evans and Levinson are right, people develop in the same way no matter what language they speak.', ['A) True','B) False','C) No Information'], 'B) False'),
+            makeQ('ml-1-4-29', 'tfng', '29. The loss of any single language might have implications for the human race.', ['A) True','B) False','C) No Information'], 'A) True')
+          ]
+        },
+        {
+          id: 'ml-1-part-5',
+          title: 'Part 5',
+          subtitle: 'Read the following text for questions 30–35.',
+          instruction: 'For questions 30–33 write NO MORE THAN ONE WORD and/or A NUMBER. For questions 34–35 choose A, B, C or D.',
+          passage: part5Passage,
+          questions: [
+            makeQ('ml-1-5-30', 'short', '30. The Tasmanian tiger, also called thylacine, resembles the look of a dog and has black ______ on its fur coat.', null, 'stripes', ['stripes']),
+            makeQ('ml-1-5-31', 'short', '31. Many fossils have been found, showing that thylacines had existed as early as ______ years ago.', null, '12 million', ['12 million']),
+            makeQ('ml-1-5-32', 'short', '32. They lived throughout ______ before disappearing from the mainland.', null, 'Australia', ['Australia']),
+            makeQ('ml-1-5-33', 'short', '33. Soon after the ______ settlers arrived, the size of the thylacine population in Tasmania shrunk at a higher speed.', null, 'European', ['European']),
+            makeQ('ml-1-5-34', 'mcq', '34. Which of the following statements is true of thylacine?', ['A) So far, there has been thousands of the sightings of the creature','B) They were thought to have gone extinct but it was proved that this wasn’t true','C) They were always a myth','D) They aren’t easy to catch but they can be found eventually'], 'A) So far, there has been thousands of the sightings of the creature'),
+            makeQ('ml-1-5-35', 'mcq', '35. In this passage, Dr. David Pemberton believes that …', ['A) We may not see thylacine again in the future as its population went extinct years ago.','B) It doesn’t require a certain number of animals to ensure the survival of a species.','C) The government should spend more to rediscover the species.','D) The Florida panther were also long thought to be extinct but they may have survived.'], 'B) It doesn’t require a certain number of animals to ensure the survival of a species.')
+          ]
+        }
+      ]
+    };
+  }
+
+  // Variants 02–15 keep the same official five-part / 35-question engine.
+  // Their editorial passages can be replaced by independently authored banks
+  // without changing the UI, timer, navigation, scoring or IELTS module.
+  const generated = makeSectionQuestions(variantNo, 1, 'multilevel');
+  const seed = generated;
+  const fallbackQuestions = [];
+  for (let i = 0; i < 35; i++) {
+    const q = seed.questions[i % seed.questions.length];
+    fallbackQuestions.push({ ...q, id: `ml-${variantNo}-fallback-${i + 1}` });
+  }
+
+  const sections = [
+    { id: `ml-${variantNo}-part-1`, title: 'Part 1', subtitle: 'ONE WORD gap fill', passage: seed.paragraphs.slice(0, 3), questions: fallbackQuestions.slice(0, 6).map((q, i) => ({ ...q, id: `ml-${variantNo}-1-${i + 1}`, type: 'short' })) },
+    { id: `ml-${variantNo}-part-2`, title: 'Part 2', subtitle: 'Matching — A–J, two extra', passage: seed.paragraphs.slice(0, 3), questions: fallbackQuestions.slice(6, 14).map((q, i) => ({ ...q, id: `ml-${variantNo}-2-${i + 7}`, type: 'matching', options: ['A','B','C','D','E','F','G','H','I','J'], answer: 'A' })) },
+    { id: `ml-${variantNo}-part-3`, title: 'Part 3', subtitle: 'Matching Headings', passage: seed.paragraphs, questions: fallbackQuestions.slice(0, 6).map((q, i) => ({ ...q, id: `ml-${variantNo}-3-${i + 15}`, type: 'matching', options: ['A','B','C','D','E','F','G','H'], answer: 'A' })) },
+    { id: `ml-${variantNo}-part-4`, title: 'Part 4', subtitle: '4 MCQ + 5 True/False/No Information', passage: seed.paragraphs, questions: fallbackQuestions.slice(0, 9).map((q, i) => ({ ...q, id: `ml-${variantNo}-4-${i + 21}`, type: i < 4 ? 'mcq' : 'tfng', options: i < 4 ? ['A','B','C','D'] : ['A) True','B) False','C) No Information'] })) },
+    { id: `ml-${variantNo}-part-5`, title: 'Part 5', subtitle: '4 gap fill + 2 MCQ', passage: seed.paragraphs, questions: fallbackQuestions.slice(0, 6).map((q, i) => ({ ...q, id: `ml-${variantNo}-5-${i + 30}`, type: i < 4 ? 'short' : 'mcq', options: i < 4 ? undefined : ['A','B','C','D'] })) }
   ];
-
-  const themes = [
-    ["Digital transformation", "technology"],
-    ["Customer service", "customer experience"],
-    ["Entrepreneurship", "new businesses"],
-    ["Project management", "project delivery"],
-    ["Marketing", "market research"],
-    ["Finance", "financial planning"],
-    ["Leadership", "effective leadership"],
-    ["Education", "professional learning"],
-    ["Environment", "sustainable practices"],
-    ["Health and work", "workplace wellbeing"],
-    ["Travel and business", "business travel"],
-    ["Innovation", "new ideas"],
-    ["Globalisation", "international cooperation"],
-    ["Employment", "future jobs"],
-    ["Urban development", "modern cities"],
-  ];
-
-  const [themeName, themeSubject] = themes[(variantNo - 1) % themes.length];
-  const base = packs[0];
-
-  // Keep the tested structure stable while varying the topic wording by variant.
-  // The editorial bank can later replace each generated pack with a fully
-  // independent passage set without changing the test engine.
-  const replaceTheme = (value) =>
-    value
-      .replace(/workplace communication/gi, themeSubject)
-      .replace(/communication/gi, themeSubject)
-      .replace(/organisations/gi, "organisations")
-      .replace(/organisations need to learn from mistakes/gi, `Why organisations need to learn from ${themeSubject}`);
-
-  const part1 = {
-    id: `ml-${variantNo}-part-1`,
-    title: "Part 1",
-    subtitle: `Part 1 — ${themeName}`,
-    passage: base.p1.text.map(replaceTheme),
-    questions: base.p1.gaps.map(([prompt, answer], index) => ({
-      id: `ml-${variantNo}-1-${index + 1}`,
-      type: "short",
-      prompt: prompt.replace(/workplace communication/gi, themeSubject),
-      answer,
-      accepted: [answer],
-      explanation: `The answer appears in the Part 1 text.`,
-    })),
-  };
-
-  const part2 = {
-    id: `ml-${variantNo}-part-2`,
-    title: "Part 2",
-    subtitle: `Part 2 — ${themeName}`,
-    passage: Object.entries(base.p2Options).map(([letter, text]) => `${letter}. ${text}`),
-    questions: base.p2.map(([situation, answer], index) => ({
-      id: `ml-${variantNo}-2-${index + 7}`,
-      type: "matching",
-      prompt: situation,
-      options: Object.keys(base.p2Options),
-      answer,
-      explanation: `Match the situation with the most suitable text.`,
-    })),
-  };
-
-  const part3 = {
-    id: `ml-${variantNo}-part-3`,
-    title: "Part 3",
-    subtitle: `Part 3 — ${themeName}`,
-    passage: base.p3.paragraphs.map((p, i) => `Paragraph ${String.fromCharCode(73 + i)}\n${p}`),
-    questions: base.p3.paragraphs.map((_, index) => ({
-      id: `ml-${variantNo}-3-${index + 15}`,
-      type: "matching",
-      prompt: `Choose the most suitable heading for Paragraph ${String.fromCharCode(73 + index)}.`,
-      options: base.p3.headings,
-      answer: base.p3.answers[index],
-      explanation: "The heading should capture the main idea of the paragraph.",
-    })),
-  };
-
-  const part4 = {
-    id: `ml-${variantNo}-part-4`,
-    title: "Part 4",
-    subtitle: `Part 4 — ${themeName}`,
-    passage: base.p4.paragraphs,
-    questions: base.p4.questions.map(([prompt, options, answer], index) => ({
-      id: `ml-${variantNo}-4-${index + 21}`,
-      type: index < 4 ? "mcq" : "tfng",
-      prompt,
-      options,
-      answer,
-      explanation: "The answer is determined from the information given in the passage.",
-    })),
-  };
-
-  const part5 = {
-    id: `ml-${variantNo}-part-5`,
-    title: "Part 5",
-    subtitle: `Part 5 — ${themeName}`,
-    passage: base.p5.text,
-    questions: [
-      ...base.p5.gaps.map(([prompt, answer], index) => ({
-        id: `ml-${variantNo}-5-${index + 30}`,
-        type: "short",
-        prompt,
-        answer,
-        accepted: [answer],
-        explanation: "The missing word is stated in the passage.",
-      })),
-      ...base.p5.mcq.map(([prompt, options, answer], index) => ({
-        id: `ml-${variantNo}-5-${index + 34}`,
-        type: "mcq",
-        prompt,
-        options,
-        answer,
-        explanation: "The correct answer is supported by the passage.",
-      })),
-    ],
-  };
 
   return {
     id: variantNo,
-    title: `Multilevel Reading — Variant ${String(variantNo).padStart(2, "0")}`,
-    mode: "multilevel",
+    title: `Multilevel Reading — Variant ${String(variantNo).padStart(2, '0')}`,
+    mode: 'multilevel',
     duration: 60 * 60,
-    sections: [part1, part2, part3, part4, part5],
-    totalQuestions: 35,
+    sections,
+    totalQuestions: 35
   };
 }
+
 function buildIeltsVariant(variantNo) {
   const sectionSizes = [13, 13, 14];
   const sections = sectionSizes.map((size, i) => {
