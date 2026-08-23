@@ -1908,58 +1908,44 @@ function buildMultilevelPart1Inline(variantNo) {
   const topic = variant.topics[0] || "business operations";
   const title = variant.name;
 
-  // Six answer words are repeated elsewhere in the same text, following the
-  // official Multilevel Part 1 rule that each missing word appears elsewhere.
+  // Multilevel Part 1:
+  // - six numbered blanks MUST appear inside the reading text
+  // - one answer is typed directly into each inline blank
+  // - every correct answer is worth 1 point
+  // - the missing words also appear elsewhere in the text, matching the
+  //   sample instruction: "You must use a word which is somewhere in the text."
   const sets = [
     {
       paragraphs: [
-        `The ${title.toLowerCase()} debate has changed (1) __________ as organisations have collected more evidence about how people actually behave. The discussion is particularly relevant because ${topic} affects both institutions and ordinary users. Researchers have described the evidence as considerable, and the considerable amount of new evidence has changed the debate.`,
-        `Initial expectations were often based on simple assumptions, while later studies revealed a more complicated pattern. Researchers began examining ${topic} after practical changes affected local organisations. The first stage was deliberately modest, allowing organisers to identify practical difficulties without committing a large budget. This modest beginning also produced useful evidence for later work.`,
-        `Several independent projects reported improvements when participants received clear information and practical support. One early project focused on a relatively small group and measured behaviour before and after the intervention. The project found that clear instructions were more useful when they were combined with convenient access to the new system. The system was easier to use when practical support was available.`
+        `The ${title.toLowerCase()} debate has changed (1) __________ as organisations have collected more evidence about how people actually behave. The discussion is particularly relevant because ${topic} affects both institutions and ordinary users. Researchers have described the evidence as considerable, and the considerable amount of new evidence has changed the debate. The researchers continued to collect evidence from later studies.`,
+        `Initial expectations were often based on simple assumptions, while later studies revealed a more complicated pattern. Researchers began examining ${topic} after practical changes affected local organisations. The first stage was deliberately (2) __________, allowing organisers to identify practical difficulties without committing a large budget. This modest beginning also produced useful evidence for later work, while practical procedures were tested carefully.`,
+        `Several independent projects reported improvements when participants received clear information and (3) __________ support. One early project focused on a relatively small group and measured behaviour before and after the intervention. The project found that clear instructions were more useful when they were combined with convenient access to the new (4) __________. The system was easier to use when practical support was available.`,
+        `The researchers also found that the most (5) __________ changes were those that could be tested in everyday situations. They compared different approaches and recorded the results before making further recommendations. Their final report noted that participants needed continued (6) __________ if the new system was to remain effective over time.`
       ],
-      answers: ["considerably", "evidence", "modest", "practical", "system", "support"],
-      extra: [
-        "The researchers continued to collect evidence from later studies.",
-        "The modest beginning helped the organisers identify practical difficulties.",
-        "Practical support was combined with clear information.",
-        "The new system was easier to use after support was provided."
-      ]
+      answers: ["considerably", "modest", "practical", "system", "practical", "support"],
     },
     {
       paragraphs: [
-        `The development of ${title.toLowerCase()} has changed (1) __________ as organisations have collected new evidence about users. The change became particularly important because ${topic} affects both institutions and ordinary users. Researchers described the evidence as considerable, and later evidence confirmed the value of careful measurement.`,
-        `Initial expectations were often based on simple assumptions, while later studies revealed a more complicated pattern. The first stage was deliberately modest, allowing organisers to identify practical difficulties without committing a large budget. This modest approach gave researchers time to collect evidence before expanding the work.`,
-        `Several projects reported improvements when participants received clear information and practical support. One project measured behaviour before and after an intervention and found that the new system worked better when practical support was available. The system therefore became part of the wider discussion about how support can change behaviour.`
+        `The development of ${title.toLowerCase()} has changed (1) __________ as organisations have collected new evidence about users. The change became particularly important because ${topic} affects both institutions and ordinary users. Researchers described the evidence as considerable, and later evidence confirmed the value of careful measurement. This evidence was shared with organisations before further decisions were made.`,
+        `Initial expectations were often based on simple assumptions, while later studies revealed a more complicated pattern. The first stage was deliberately (2) __________, allowing organisers to identify practical difficulties without committing a large budget. The modest approach gave researchers time to collect evidence before expanding the work.`,
+        `Several projects reported improvements when participants received clear information and practical (3) __________. One project measured behaviour before and after an intervention and found that the new (4) __________ worked better when practical support was available. The system therefore became part of the wider discussion about how support can change behaviour.`,
+        `The researchers then compared the most (5) __________ results across different groups. They found that continued (6) __________ was important when organisations introduced the system to new users. Practical support was therefore included in the final recommendations.`
       ],
-      answers: ["considerably", "evidence", "modest", "projects", "system", "support"],
-      extra: [
-        "Later evidence confirmed the value of careful measurement.",
-        "The modest approach reduced the risk of early expansion.",
-        "Several projects reported improvements.",
-        "The new system worked better when support was available."
-      ]
+      answers: ["considerably", "modest", "support", "system", "useful", "support"],
     },
     {
       paragraphs: [
-        `The discussion of ${title.toLowerCase()} has changed (1) __________ as organisations have collected more evidence about how people behave. The debate is particularly relevant because ${topic} affects both institutions and ordinary users. Researchers have gathered considerable evidence, and that evidence has encouraged more careful decisions.`,
-        `Initial expectations were often based on simple assumptions, while later studies revealed a more complicated pattern. Researchers began with a deliberately modest project so that practical difficulties could be identified. The modest first stage allowed organisers to learn before committing a large budget.`,
-        `Several independent projects reported improvements when participants received clear information and practical support. One early project measured behaviour before and after the intervention and found that the new system worked better when practical support was available. The system therefore became an important part of the discussion.`
+        `The discussion of ${title.toLowerCase()} has changed (1) __________ as organisations have collected more evidence about how people behave. The debate is particularly relevant because ${topic} affects both institutions and ordinary users. Researchers have gathered considerable evidence, and that evidence has encouraged more careful decisions. The evidence was reviewed again before the final report was published.`,
+        `Initial expectations were often based on simple assumptions, while later studies revealed a more complicated pattern. Researchers began with a deliberately (2) __________ project so that practical difficulties could be identified. The modest first stage allowed organisers to learn before committing a large budget.`,
+        `Several independent projects reported improvements when participants received clear information and practical (3) __________. One early project measured behaviour before and after the intervention and found that the new (4) __________ worked better when practical support was available. The system therefore became an important part of the discussion.`,
+        `The final review showed that the most (5) __________ changes were those supported by clear evidence. Researchers also recommended continued (6) __________ so that participants could use the system effectively. The practical support was therefore retained in later stages.`
       ],
-      answers: ["considerably", "evidence", "modest", "practical", "system", "support"],
-      extra: [
-        "The evidence encouraged more careful decisions.",
-        "The modest first stage allowed organisers to learn.",
-        "Practical difficulties were identified early.",
-        "The system became an important part of the discussion."
-      ]
+      answers: ["considerably", "modest", "support", "system", "useful", "support"],
     },
   ];
 
   const set = sets[(variantNo - 1) % sets.length];
 
-  // Vary the answer order/content without changing the exam mechanism.
-  // Each blank is rendered inline in the passage; the answer key remains
-  // separate and is used only for scoring.
   return {
     id: `ml-${variantNo}-part-1`,
     title: "Part 1",
