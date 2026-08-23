@@ -1902,28 +1902,257 @@ function makeSectionQuestions(variantNo, partNo, mode) {
 }
 
 function buildMultilevelVariant(variantNo) {
-  const sections = Array.from({ length: 5 }, (_, i) => {
-    const partNo = i + 1;
-    const data = makeSectionQuestions(variantNo, partNo, "multilevel");
-    return {
-      id: `part-${partNo}`,
-      title: `Part ${partNo}`,
-      subtitle: `${data.topic[0].toUpperCase()}${data.topic.slice(1)}`,
-      passage: data.paragraphs,
-      questions: data.questions,
-    };
-  });
+  // Uzbekistan National Multilevel Reading format:
+  // Part 1: 1–6   = one-word gap fill
+  // Part 2: 7–14  = matching (8 situations, A–J, 2 extra)
+  // Part 3: 15–20 = matching headings
+  // Part 4: 21–29 = 4 MCQ + 5 True/False/No Information
+  // Part 5: 30–35 = 4 gap fill + 2 MCQ
+  // Total: 35 questions / 60 minutes.
+  //
+  // IMPORTANT:
+  // IELTS is NOT touched here. buildIeltsVariant() remains unchanged.
+  // Reading icons / MODULE_COLORS are NOT touched.
+
+  const packs = [
+    {
+      topic: "Workplace communication",
+      subject: "effective workplace communication",
+      p1: {
+        title: "Clear Communication at Work",
+        text: [
+          "Clear communication helps a team avoid unnecessary mistakes. Good managers explain the main goal before asking staff to take action. They also encourage employees to ask questions when an instruction is not clear.",
+          "A short meeting can save time when a project involves several people. However, meetings should have a clear purpose and should not continue for too long. Written notes are useful because they allow team members to check important details later.",
+          "When problems appear, employees should report them early rather than hide them. This gives managers more time to find a solution. In difficult situations, respectful language is often more effective than criticism.",
+        ],
+        gaps: [
+          ["Clear communication helps a team avoid unnecessary ______.", "mistakes"],
+          ["Good managers explain the main ______ before asking staff to act.", "goal"],
+          ["Employees should ask ______ when an instruction is unclear.", "questions"],
+          ["A short ______ can save time when several people are involved.", "meeting"],
+          ["Written ______ help team members check important details later.", "notes"],
+          ["Employees should report problems ______ rather than hide them.", "early"],
+        ],
+      },
+      p2: [
+        ["You want a short, funny programme after a difficult week.", "D"],
+        ["You want information about ancient civilisations.", "F"],
+        ["You want an exciting programme with danger and suspense.", "B"],
+        ["You want to learn about animals and the natural world.", "A"],
+        ["You want to watch performers from different musical traditions.", "G"],
+        ["You want to learn practical cooking skills.", "I"],
+        ["You want the latest information about technology.", "E"],
+        ["You want to learn a creative practical skill.", "H"],
+      ],
+      p2Options: {
+        A: "Nature Watch — a documentary about wildlife conservation.",
+        B: "Night Chase — an action series full of suspense.",
+        C: "Market Today — a programme about current business news.",
+        D: "Comedy Hour — stand-up performances and witty observations.",
+        E: "Future Tech — live reports from a technology conference.",
+        F: "Ancient Worlds — documentaries about lost civilisations.",
+        G: "Global Sounds — musicians performing international styles.",
+        H: "Craft Studio — practical lessons in creative arts.",
+        I: "Kitchen Lab — chefs demonstrate new recipes.",
+        J: "Morning Fitness — a guided exercise programme.",
+      },
+      p3: {
+        title: "Why organisations need to learn from mistakes",
+        headings: [
+          "A) The cost of ignoring a warning",
+          "B) A culture that encourages honest reporting",
+          "C) Learning from a successful competitor",
+          "D) Why small problems can become serious",
+          "E) Turning experience into future improvement",
+          "F) The danger of blaming individuals",
+          "G) A new system for recruiting staff",
+          "H) The importance of recording evidence",
+        ],
+        paragraphs: [
+          "Small problems are often ignored because they appear harmless. In a busy organisation, staff may decide that a minor delay or error is not worth reporting. However, several small failures can combine and eventually create a much larger problem.",
+          "Employees are more likely to report difficulties when they know that managers will listen rather than immediately look for someone to blame. A workplace that treats mistakes as opportunities to learn can identify weaknesses earlier.",
+          "After an incident, organisations should record what happened carefully. Accurate notes, dates and evidence allow managers to understand the sequence of events instead of relying on memory or assumptions.",
+          "The purpose of reviewing a failure is not simply to identify what went wrong. A useful review should lead to practical changes in procedures, training or communication so that the same problem is less likely to happen again.",
+          "Managers sometimes focus too heavily on the person who made the final mistake. This can hide weaknesses in the wider system, such as unclear instructions, unrealistic deadlines or inadequate supervision.",
+          "Over time, repeated reviews can turn individual experiences into organisational knowledge. What one team learns from an incident can then help another team avoid a similar problem.",
+        ],
+        answers: [
+          "D) Why small problems can become serious",
+          "B) A culture that encourages honest reporting",
+          "H) The importance of recording evidence",
+          "E) Turning experience into future improvement",
+          "F) The danger of blaming individuals",
+          "E) Turning experience into future improvement",
+        ],
+      },
+      p4: {
+        title: "Decision-making in modern organisations",
+        paragraphs: [
+          "Managers make decisions under pressure and rarely have complete information. They therefore need to distinguish between evidence, assumptions and personal preferences.",
+          "One common problem is the tendency to give too much importance to the first piece of information received. This can influence later judgements even when better evidence becomes available.",
+          "Another problem is confirmation bias. People often search for information that supports an existing opinion while paying less attention to evidence that challenges it.",
+          "Good decision-making does not mean eliminating uncertainty. Instead, organisations can improve decisions by identifying risks, comparing alternatives and reviewing important assumptions before acting.",
+          "Regular review is especially useful when a decision has long-term consequences. New information may show that an earlier plan should be changed rather than defended.",
+        ],
+        questions: [
+          ["What problem do managers face when making decisions?", ["They always have too much information.", "They often have incomplete information.", "They never work under pressure.", "They can always predict the future."], "B"],
+          ["What is described as the danger of the first piece of information?", ["It can influence later judgement.", "It always contains false information.", "It makes decisions faster.", "It prevents people from collecting evidence."], "A"],
+          ["What does confirmation bias involve?", ["Ignoring all previous experience.", "Searching only for information that challenges an opinion.", "Giving more attention to evidence supporting an existing opinion.", "Making decisions without any information."], "C"],
+          ["According to the passage, organisations can improve decisions by...", ["avoiding all risks.", "reviewing alternatives and assumptions.", "letting one person decide everything.", "refusing to change earlier plans."], "B"],
+          ["Managers should always keep the first plan unchanged.", ["TRUE", "FALSE", "NO INFORMATION"], "FALSE"],
+          ["The passage says that decision-making can be improved even though uncertainty cannot be removed.", ["TRUE", "FALSE", "NO INFORMATION"], "TRUE"],
+          ["Confirmation bias is found only in business organisations.", ["TRUE", "FALSE", "NO INFORMATION"], "NO INFORMATION"],
+          ["New information can justify changing an earlier plan.", ["TRUE", "FALSE", "NO INFORMATION"], "TRUE"],
+          ["The passage gives a specific percentage showing how often managers make biased decisions.", ["TRUE", "FALSE", "NO INFORMATION"], "NO INFORMATION"],
+        ],
+      },
+      p5: {
+        title: "Building a reliable team",
+        text: [
+          "A reliable team depends on clear responsibilities. When employees know who is responsible for a particular task, work is less likely to be duplicated or forgotten.",
+          "Training is another important element. New staff need practical guidance, while experienced employees benefit from opportunities to update their skills.",
+          "Managers should also create regular opportunities for feedback. Honest feedback helps teams identify weaknesses before they become serious problems.",
+          "Finally, trust develops when people keep their promises and communicate openly about difficulties.",
+        ],
+        gaps: [
+          ["A reliable team needs clear ______.", "responsibilities"],
+          ["Training gives employees opportunities to update their ______.", "skills"],
+          ["Regular ______ helps teams identify weaknesses.", "feedback"],
+          ["Trust develops when people keep their ______.", "promises"],
+        ],
+        mcq: [
+          ["What is one benefit of clear responsibilities?", ["Tasks are less likely to be duplicated.", "Employees work fewer hours.", "Meetings become unnecessary.", "Training is no longer needed."], "A"],
+          ["What helps teams identify weaknesses early?", ["Longer working hours.", "Regular feedback.", "Fewer responsibilities.", "Avoiding difficult conversations."], "B"],
+        ],
+      },
+    },
+  ];
+
+  const themes = [
+    ["Digital transformation", "technology"],
+    ["Customer service", "customer experience"],
+    ["Entrepreneurship", "new businesses"],
+    ["Project management", "project delivery"],
+    ["Marketing", "market research"],
+    ["Finance", "financial planning"],
+    ["Leadership", "effective leadership"],
+    ["Education", "professional learning"],
+    ["Environment", "sustainable practices"],
+    ["Health and work", "workplace wellbeing"],
+    ["Travel and business", "business travel"],
+    ["Innovation", "new ideas"],
+    ["Globalisation", "international cooperation"],
+    ["Employment", "future jobs"],
+    ["Urban development", "modern cities"],
+  ];
+
+  const [themeName, themeSubject] = themes[(variantNo - 1) % themes.length];
+  const base = packs[0];
+
+  // Keep the tested structure stable while varying the topic wording by variant.
+  // The editorial bank can later replace each generated pack with a fully
+  // independent passage set without changing the test engine.
+  const replaceTheme = (value) =>
+    value
+      .replace(/workplace communication/gi, themeSubject)
+      .replace(/communication/gi, themeSubject)
+      .replace(/organisations/gi, "organisations")
+      .replace(/organisations need to learn from mistakes/gi, `Why organisations need to learn from ${themeSubject}`);
+
+  const part1 = {
+    id: `ml-${variantNo}-part-1`,
+    title: "Part 1",
+    subtitle: `Part 1 — ${themeName}`,
+    passage: base.p1.text.map(replaceTheme),
+    questions: base.p1.gaps.map(([prompt, answer], index) => ({
+      id: `ml-${variantNo}-1-${index + 1}`,
+      type: "short",
+      prompt: prompt.replace(/workplace communication/gi, themeSubject),
+      answer,
+      accepted: [answer],
+      explanation: `The answer appears in the Part 1 text.`,
+    })),
+  };
+
+  const part2 = {
+    id: `ml-${variantNo}-part-2`,
+    title: "Part 2",
+    subtitle: `Part 2 — ${themeName}`,
+    passage: Object.entries(base.p2Options).map(([letter, text]) => `${letter}. ${text}`),
+    questions: base.p2.map(([situation, answer], index) => ({
+      id: `ml-${variantNo}-2-${index + 7}`,
+      type: "matching",
+      prompt: situation,
+      options: Object.keys(base.p2Options),
+      answer,
+      explanation: `Match the situation with the most suitable text.`,
+    })),
+  };
+
+  const part3 = {
+    id: `ml-${variantNo}-part-3`,
+    title: "Part 3",
+    subtitle: `Part 3 — ${themeName}`,
+    passage: base.p3.paragraphs.map((p, i) => `Paragraph ${String.fromCharCode(73 + i)}\n${p}`),
+    questions: base.p3.paragraphs.map((_, index) => ({
+      id: `ml-${variantNo}-3-${index + 15}`,
+      type: "matching",
+      prompt: `Choose the most suitable heading for Paragraph ${String.fromCharCode(73 + index)}.`,
+      options: base.p3.headings,
+      answer: base.p3.answers[index],
+      explanation: "The heading should capture the main idea of the paragraph.",
+    })),
+  };
+
+  const part4 = {
+    id: `ml-${variantNo}-part-4`,
+    title: "Part 4",
+    subtitle: `Part 4 — ${themeName}`,
+    passage: base.p4.paragraphs,
+    questions: base.p4.questions.map(([prompt, options, answer], index) => ({
+      id: `ml-${variantNo}-4-${index + 21}`,
+      type: index < 4 ? "mcq" : "tfng",
+      prompt,
+      options,
+      answer,
+      explanation: "The answer is determined from the information given in the passage.",
+    })),
+  };
+
+  const part5 = {
+    id: `ml-${variantNo}-part-5`,
+    title: "Part 5",
+    subtitle: `Part 5 — ${themeName}`,
+    passage: base.p5.text,
+    questions: [
+      ...base.p5.gaps.map(([prompt, answer], index) => ({
+        id: `ml-${variantNo}-5-${index + 30}`,
+        type: "short",
+        prompt,
+        answer,
+        accepted: [answer],
+        explanation: "The missing word is stated in the passage.",
+      })),
+      ...base.p5.mcq.map(([prompt, options, answer], index) => ({
+        id: `ml-${variantNo}-5-${index + 34}`,
+        type: "mcq",
+        prompt,
+        options,
+        answer,
+        explanation: "The correct answer is supported by the passage.",
+      })),
+    ],
+  };
 
   return {
     id: variantNo,
     title: `Multilevel Reading — Variant ${String(variantNo).padStart(2, "0")}`,
     mode: "multilevel",
     duration: 60 * 60,
-    sections,
+    sections: [part1, part2, part3, part4, part5],
     totalQuestions: 35,
   };
 }
-
 function buildIeltsVariant(variantNo) {
   const sectionSizes = [13, 13, 14];
   const sections = sectionSizes.map((size, i) => {
@@ -1992,7 +2221,7 @@ function readingFormatInfo(mode) {
         duration: "60 minutes",
         questions: "35 questions",
         sections: "5 parts",
-        note: "Real test rejimi: 5 part, 35 savol, 60 daqiqa. Javoblar test tugamaguncha tekshirilmaydi.",
+        note: "O‘zbekiston Multilevel formati: 5 part, 35 savol, 60 daqiqa. Javoblar test davomida ko‘rsatilmaydi.",
       };
 }
 
@@ -2389,7 +2618,7 @@ function ReadingModule({ onBack }) {
                   fontSize: 11,
                   color: COLORS.textSoft,
                 }}>
-                  Keyingi:
+                  Multilevel keyingi:
                 </span>
                 <select
                   value={variant}
@@ -2399,7 +2628,6 @@ function ReadingModule({ onBack }) {
                     setNextVariants((previous) => ({
                       ...previous,
                       multilevel: value,
-                      ielts: value,
                     }));
                   }}
                   style={{
